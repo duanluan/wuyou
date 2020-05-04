@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.SysOperLogMapper">
+
+  <select id="page" resultType="com.ruoyi.system.domain.SysOperLog">
+    select sol.* from sys_oper_log sol
+    <where>
+      <if test="operLog.title != null and operLog.title != ''">
+        and sol.title like concat('%', #{operLog.title}, '%')
+      </if>
+      <if test="operLog.businessType != null">
+        and sol.business_type = #{operLog.businessType}
+      </if>
+      <if test="operLog.businessTypes != null and operLog.businessTypes.length > 0">
+        and sol.business_type in
+        <foreach collection="businessTypes" item="businessType" open="(" separator="," close=")">
+          #{operLog.businessType}
+        </foreach>
+      </if>
+      <if test="operLog.status != null">
+        and sol.status = #{operLog.status}
+      </if>
+      <if test="operLog.operName != null and operLog.operName != ''">
+        and sol.oper_name like concat('%', #{operLog.operName}, '%')
+      </if>
+      <if test="operLog.params.beginTime != null and operLog.params.beginTime != ''"><!-- 开始时间检索 -->
+        and sol.date_format(oper_time, '%y%m%d') &gt;= date_format(#{operLog.params.beginTime}, '%y%m%d')
+      </if>
+      <if test="operLog.params.endTime != null and operLog.params.endTime != ''"><!-- 结束时间检索 -->
+        and sol.date_format(oper_time, '%y%m%d') &lt;= date_format(#{operLog.params.endTime}, '%y%m%d')
+      </if>
+    </where>
+  </select>
+
+  <update id="clean">
+    truncate table sys_oper_log
+  </update>
+
+</mapper> 

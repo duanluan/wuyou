@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.SysConfigMapper">
+
+  <select id="page" resultType="com.ruoyi.system.domain.SysConfig">
+    select * from sys_config
+    <where>
+      <if test="config.configName != null and config.configName != ''">
+        and config_name like concat('%', #{config.configName}, '%')
+      </if>
+      <if test="config.configType != null and config.configType != ''">
+        and config_type = #{config.configType}
+      </if>
+      <if test="config.configKey != null and config.configKey != ''">
+        and config_key like concat('%', #{config.configKey}, '%')
+      </if>
+      <if test="config.params.beginTime != null and config.params.beginTime != ''"><!-- 开始时间检索 -->
+        and date_format(create_time,'%y%m%d') &gt;= date_format(#{config.params.beginTime},'%y%m%d')
+      </if>
+      <if test="config.params.endTime != null and config.params.endTime != ''"><!-- 结束时间检索 -->
+        and date_format(create_time,'%y%m%d') &lt;= date_format(#{config.params.endTime},'%y%m%d')
+      </if>
+    </where>
+  </select>
+</mapper>

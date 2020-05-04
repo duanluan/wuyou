@@ -1,0 +1,62 @@
+# 数据源配置
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    # druid 全局配置
+    druid:
+      # 配置一个连接在池中最小生存的时间，单位是毫秒
+      min-evictable-idle-time-millis: 300000
+      # 配置一个连接在池中最大生存的时间，单位是毫秒
+      max-evictable-idle-time-millis: 900000
+      # 用来检测连接是否有效的 sql，要求是一个查询语句，常用 select 'x'。如果 validationQuery 为 null，testOnBorrow、testOnReturn、testWhileIdle 都不会起作用。
+      validation-query: SELECT 1 FROM DUAL
+      # 建议配置为 true，不影响性能，并且保证安全性。申请连接的时候检测，如果空闲时间大于 timeBetweenEvictionRunsMillis，执行 validationQuery 检测连接是否有效。
+      test-while-idle: true
+      # 申请连接时执行 validationQuery 检测连接是否有效，做了这个配置会降低性能。
+      test-on-borrow: false
+      # 归还连接时执行 validationQuery 检测连接是否有效，做了这个配置会降低性能。
+      test-on-return: false
+      web-stat-filter:
+        enabled: true
+      statViewServlet:
+        enabled: true
+        # 设置白名单，不填则允许所有访问
+        allow:
+        url-pattern: /druid/*
+        # 控制台管理用户名和密码
+        login-username:
+        login-password:
+      filter:
+        stat:
+          enabled: true
+          # 慢 SQL 记录
+          log-slow-sql: true
+          slow-sql-millis: 1000
+          merge-sql: true
+        wall:
+          config:
+            multi-statement-allow: true
+    dynamic:
+      # 设置默认的数据源或者数据源组，默认值为 master
+      primary: master
+      # 设置严格模式，默认 false。启动后在未匹配到指定数据源时候回抛出异常，不启动会使用默认数据源。
+      strict: false
+      datasource:
+        master:
+          url: jdbc:mysql://localhost:3306/ry?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+          username: root
+          password:
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          # 以下可以针对每个库重新设置 druid 参数
+      # druid 全局配置
+      druid:
+        # 初始连接数
+        initial-size: 5
+        # 最小连接池数量
+        min-idle: 10
+        # 最大连接池数量
+        max-active: 20
+        # 配置获取连接等待超时的时间
+        max-wait: 60000
+        # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+        time-between-eviction-runs-millis: 60000

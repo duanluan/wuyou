@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.SysUserOnlineMapper">
+
+  <select id="page" resultType="com.ruoyi.system.domain.SysUserOnline">
+    select suo.* from sys_user_online suo
+    <where>
+      <if test="userOnline.ipaddr != null and userOnline.ipaddr != ''">
+        and suo.ipaddr like concat('%', #{userOnline.ipaddr}, '%')
+      </if>
+      <if test="userOnline.loginName != null and userOnline.loginName != ''">
+        and suo.login_name like concat('%', #{userOnline.loginName}, '%')
+      </if>
+    </where>
+  </select>
+
+  <select id="selectOnlineByExpired" resultType="com.ruoyi.system.domain.SysUserOnline">
+    select *
+    from sys_user_online
+    where #{lastAccessTime} >= last_access_time
+    order by last_access_time
+  </select>
+</mapper> 

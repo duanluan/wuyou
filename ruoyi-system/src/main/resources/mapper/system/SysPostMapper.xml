@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.SysPostMapper">
+
+  <select id="page" resultType="com.ruoyi.system.domain.SysPost">
+    select sp.* from sys_post sp
+    <where>
+      <if test="post.postCode != null and post.postCode != ''">
+        and sp.post_code like concat('%', #{post.postCode}, '%')
+      </if>
+      <if test="post.status != null and post.status != ''">
+        and sp.status = #{status}
+      </if>
+      <if test="post.postName != null and post.postName != ''">
+        and sp.post_name like concat('%', #{post.postName}, '%')
+      </if>
+    </where>
+  </select>
+
+  <select id="listByUser" resultType="com.ruoyi.system.domain.SysPost">
+    select p.post_id, p.post_name, p.post_code
+    from sys_user u
+           LEFT JOIN sys_user_post up ON u.user_id = up.user_id
+           LEFT JOIN sys_post p ON up.post_id = p.post_id
+    where up.user_id = #{userId}
+  </select>
+</mapper> 
