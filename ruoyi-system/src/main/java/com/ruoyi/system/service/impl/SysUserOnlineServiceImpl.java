@@ -89,4 +89,9 @@ public class SysUserOnlineServiceImpl extends ServiceImpl<SysUserOnlineMapper, S
     String lastAccessTime = DateUtils.parseDateToStr(DateUtils.YYYY_MM_DD_HH_MM_SS, expiredDate);
     return userOnlineMapper.selectOnlineByExpired(lastAccessTime);
   }
+
+  @Override
+  public boolean saveOnline(SysUserOnline userOnline) {
+    return userOnlineMapper.saveOnline(userOnline) > 0;
+  }
 }

@@ -22,4 +22,9 @@
     where #{lastAccessTime} >= last_access_time
     order by last_access_time
   </select>
+
+  <insert id="saveOnline" parameterType="com.ruoyi.system.domain.SysUserOnline">
+    replace into sys_user_online(session_id, login_name, dept_name, ipaddr, login_location, browser, os, status, start_timestamp, last_access_time, expire_time)
+    values (#{sessionId}, #{loginName}, #{deptName}, #{ipaddr}, #{loginLocation}, #{browser}, #{os}, #{status}, #{startTimestamp}, #{lastAccessTime}, #{expireTime})
+  </insert>
 </mapper> 

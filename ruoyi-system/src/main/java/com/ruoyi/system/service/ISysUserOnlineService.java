@@ -61,4 +61,6 @@ public interface ISysUserOnlineService extends IService<SysUserOnline> {
    * @return 会话集合
    */
   List<SysUserOnline> selectOnlineByExpired(Date expiredDate);
+
+  boolean saveOnline(SysUserOnline userOnline);
 }

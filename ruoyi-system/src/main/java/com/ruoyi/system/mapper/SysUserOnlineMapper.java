@@ -30,4 +30,5 @@ public interface SysUserOnlineMapper extends BaseMapper<SysUserOnline> {
    */
   List<SysUserOnline> selectOnlineByExpired(String lastAccessTime);
 
+  int saveOnline(SysUserOnline userOnline);
 }
