@@ -70,7 +70,7 @@ public class SysDeptController extends BaseController {
   @ResponseBody
   @PostMapping("/add")
   public Result addSave(@Validated SysDept dept) {
-    if (!deptService.checkNameUnique(dept)) {
+    if (deptService.checkNameUnique(dept)) {
       return error("新增部门'" + dept.getDeptName() + "'失败，部门名称已存在");
     }
     dept.setCreateBy(ShiroUtils.getLoginName());
@@ -98,7 +98,7 @@ public class SysDeptController extends BaseController {
   @ResponseBody
   @PostMapping("/edit")
   public Result editSave(@Validated SysDept dept) {
-    if (!deptService.checkNameUnique(dept)) {
+    if (deptService.checkNameUnique(dept)) {
       return error("修改部门'" + dept.getDeptName() + "'失败，部门名称已存在");
     } else if (dept.getParentId().equals(dept.getDeptId())) {
       return error("修改部门'" + dept.getDeptName() + "'失败，上级部门不能是自己");
