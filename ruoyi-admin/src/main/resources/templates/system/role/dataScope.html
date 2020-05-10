@@ -45,7 +45,7 @@
 <th:block th:include="include :: ztree-js"/>
 <script type="text/javascript">
 
-$(function () {
+$(() => {
   var url = ctx + "system/dept/roleDeptTreeData?roleId=" + $("#roleId").val();
   var options = {
     id: "deptTrees",

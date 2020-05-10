@@ -66,7 +66,7 @@ var removeFlag = [[${@permission.hasPermi('system:config:remove')}]];
 var datas = [[${@dict.getType('sys_yes_no')}]];
 var prefix = ctx + "system/config";
 
-$(function () {
+$(() => {
   var options = {
     url: prefix + "/list",
     createUrl: prefix + "/add",
@@ -86,14 +86,14 @@ $(function () {
       {
         field: 'configName',
         title: '参数名称',
-        formatter: function (value, row, index) {
+        formatter: (value, row, index) => {
           return $.table.tooltip(value);
         }
       },
       {
         field: 'configKey',
         title: '参数键名',
-        formatter: function (value, row, index) {
+        formatter: (value, row, index) => {
           return $.table.tooltip(value);
         }
       },
@@ -105,7 +105,7 @@ $(function () {
         field: 'configType',
         title: '系统内置',
         align: 'center',
-        formatter: function (value, row, index) {
+        formatter: (value, row, index) => {
           return $.table.selectDictLabel(datas, value);
         }
       },
@@ -113,7 +113,7 @@ $(function () {
         field: 'remark',
         title: '备注',
         align: 'center',
-        formatter: function (value, row, index) {
+        formatter: (value, row, index) => {
           return $.table.tooltip(value, 10, "open");
         }
       },
@@ -124,7 +124,7 @@ $(function () {
       {
         title: '操作',
         align: 'center',
-        formatter: function (value, row, index) {
+        formatter: (value, row, index) => {
           var actions = [];
           actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.configId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
           actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.configId + '\')"><i class="fa fa-remove"></i>删除</a>');

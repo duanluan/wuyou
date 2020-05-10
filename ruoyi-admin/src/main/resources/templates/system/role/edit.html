@@ -53,7 +53,7 @@
 <th:block th:include="include :: footer"/>
 <th:block th:include="include :: ztree-js"/>
 <script type="text/javascript">
-$(function () {
+$(() => {
   var url = ctx + "system/menu/roleMenuTreeData?roleId=" + $("#roleId").val();
   var options = {
     id: "menuTrees",

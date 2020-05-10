@@ -67,7 +67,7 @@ $(function () {
         field: 'status',
         title: '用户状态',
         align: 'center',
-        formatter: function (value, row, index) {
+        formatter: (value, row, index) => {
           return $.table.selectDictLabel(datas, value);
         }
       },

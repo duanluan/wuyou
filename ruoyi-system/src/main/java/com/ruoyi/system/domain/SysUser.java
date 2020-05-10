@@ -8,6 +8,7 @@ import com.ruoyi.common.annotation.Excel.ColumnType;
 import com.ruoyi.common.annotation.Excel.Type;
 import com.ruoyi.common.annotation.Excels;
 import com.ruoyi.common.core.domain.BaseEntity;
+import com.ruoyi.system.domain.validation.SaveUserGroup;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -54,7 +55,7 @@ public class SysUser extends BaseEntity {
    */
   @Excel(name = "登录名称")
   @Size(min = 0, max = 30, message = "登录账号长度不能超过30个字符")
-  @NotBlank(message = "登录账号不能为空")
+  @NotBlank(message = "登录账号不能为空", groups = SaveUserGroup.class)
   private String loginName;
   /**
    * 用户名称

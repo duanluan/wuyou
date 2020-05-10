@@ -52,7 +52,7 @@ $(function () {
     },
       {
         title: "序号",
-        formatter: function (value, row, index) {
+        formatter: (value, row, index) => {
           return $.table.serialNumber(index);
         }
       },

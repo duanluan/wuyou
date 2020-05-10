@@ -9,8 +9,8 @@
   <version>4.2.0</version>
 
   <name>ruoyi</name>
-  <url>http://www.ruoyi.vip</url>
-  <description>若依管理系统</description>
+  <url>https://github.com/duanluan/ruoyi</url>
+  <description>若一管理系统</description>
 
   <properties>
     <ruoyi.version>4.2.0</ruoyi.version>

@@ -99,7 +99,7 @@
     <script>
       var prefix = ctx + "system/menu";
 
-      $(function () {
+      $(() => {
         var menuType = $('input[name="menuType"]:checked').val();
         menuVisible(menuType);
       });
@@ -149,7 +149,7 @@
         }
       }
 
-      $(function () {
+      $(() => {
         $("input[name='icon']").focus(function () {
           $(".icon-drop").show();
         });
