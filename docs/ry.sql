@@ -1,3 +1,22 @@
+/*
+ Navicat Premium Data Transfer
+
+ Source Server         : Localhost_MySQL_WampServer
+ Source Server Type    : MySQL
+ Source Server Version : 50728
+ Source Host           : localhost:3306
+ Source Schema         : ry
+
+ Target Server Type    : MySQL
+ Target Server Version : 50728
+ File Encoding         : 65001
+
+ Date: 10/05/2020 15:48:08
+*/
+
+SET NAMES utf8mb4;
+SET FOREIGN_KEY_CHECKS = 0;
+
 -- ----------------------------
 -- Table structure for gen_table
 -- ----------------------------
@@ -68,7 +87,7 @@ CREATE TABLE `sys_config`  (
   `update_time` timestamp(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
   `remark` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`config_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 100 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '参数配置表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '参数配置表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_config
@@ -99,21 +118,21 @@ CREATE TABLE `sys_dept`  (
   `update_time` timestamp(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
   `remark` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '备注',
   PRIMARY KEY (`dept_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 200 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '部门表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 110 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '部门表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_dept
 -- ----------------------------
-INSERT INTO `sys_dept` VALUES (100, 0, '0', '若依科技', 0, '若依', '15888888888', 'ry@qq.com', 0, 0, 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '');
-INSERT INTO `sys_dept` VALUES (101, 100, '0,100', '深圳总公司', 1, '若依', '15888888888', 'ry@qq.com', 0, 0, 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '');
-INSERT INTO `sys_dept` VALUES (102, 100, '0,100', '长沙分公司', 2, '若依', '15888888888', 'ry@qq.com', 0, 0, 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '');
-INSERT INTO `sys_dept` VALUES (103, 101, '0,100,101', '研发部门', 1, '若依', '15888888888', 'ry@qq.com', 0, 0, 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '');
-INSERT INTO `sys_dept` VALUES (104, 101, '0,100,101', '市场部门', 2, '若依', '15888888888', 'ry@qq.com', 0, 0, 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '');
-INSERT INTO `sys_dept` VALUES (105, 101, '0,100,101', '测试部门', 3, '若依', '15888888888', 'ry@qq.com', 0, 0, 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '');
-INSERT INTO `sys_dept` VALUES (106, 101, '0,100,101', '财务部门', 4, '若依', '15888888888', 'ry@qq.com', 0, 0, 'admin', '2018-03-16 11:33:00', 'ry', '2020-05-03 10:50:54', '');
-INSERT INTO `sys_dept` VALUES (107, 101, '0,100,101', '运维部门', 5, '若依', '15888888888', 'ry@qq.com', 0, 0, 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '');
-INSERT INTO `sys_dept` VALUES (108, 102, '0,100,102', '市场部门', 1, '若依', '15888888888', 'ry@qq.com', 0, 0, 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '');
-INSERT INTO `sys_dept` VALUES (109, 102, '0,100,102', '财务部门', 2, '若依', '15888888888', 'ry@qq.com', 0, 0, 'admin', '2018-03-16 11:33:00', 'ry', '2020-05-03 10:50:56', '');
+INSERT INTO `sys_dept` VALUES (100, 0, '0', '若一', 0, '若一', '15888888888', 'ry@qq.com', 0, 0, 'admin', '2018-03-16 11:33:00', 'admin', '2020-05-10 05:36:32', '');
+INSERT INTO `sys_dept` VALUES (101, 100, '0,100', '中国总公司', 1, '若一', '15888888888', 'ry@qq.com', 0, 0, 'admin', '2018-03-16 11:33:00', 'admin', '2020-05-10 05:36:24', '');
+INSERT INTO `sys_dept` VALUES (102, 100, '0,100', '美国分公司', 2, '若一', '15888888888', 'ry@qq.com', 0, 0, 'admin', '2018-03-16 11:33:00', 'admin', '2020-05-10 05:36:32', '');
+INSERT INTO `sys_dept` VALUES (103, 101, '0,100,101', '研发部门', 1, '若一', '15888888888', 'ry@qq.com', 0, 0, 'admin', '2018-03-16 11:33:00', 'admin', '2020-05-10 05:35:11', '');
+INSERT INTO `sys_dept` VALUES (104, 101, '0,100,101', '市场部门', 2, '若一', '15888888888', 'ry@qq.com', 0, 0, 'admin', '2018-03-16 11:33:00', 'admin', '2020-05-10 05:35:28', '');
+INSERT INTO `sys_dept` VALUES (105, 101, '0,100,101', '测试部门', 3, '若一', '15888888888', 'ry@qq.com', 0, 0, 'admin', '2018-03-16 11:33:00', 'admin', '2020-05-10 05:35:31', '');
+INSERT INTO `sys_dept` VALUES (106, 101, '0,100,101', '财务部门', 4, '若一', '15888888888', 'ry@qq.com', 0, 0, 'admin', '2018-03-16 11:33:00', 'admin', '2020-05-10 05:35:35', '');
+INSERT INTO `sys_dept` VALUES (107, 101, '0,100,101', '运维部门', 5, '若一', '15888888888', 'ry@qq.com', 0, 0, 'admin', '2018-03-16 11:33:00', 'admin', '2020-05-10 05:35:38', '');
+INSERT INTO `sys_dept` VALUES (108, 102, '0,100,102', '市场部门', 1, '若一', '15888888888', 'ry@qq.com', 0, 0, 'admin', '2018-03-16 11:33:00', 'admin', '2020-05-10 05:36:28', '');
+INSERT INTO `sys_dept` VALUES (109, 102, '0,100,102', '财务部门', 2, '若一', '15888888888', 'ry@qq.com', 0, 0, 'admin', '2018-03-16 11:33:00', 'admin', '2020-05-10 05:36:32', '');
 
 -- ----------------------------
 -- Table structure for sys_dict_data
@@ -135,7 +154,7 @@ CREATE TABLE `sys_dict_data`  (
   `update_time` timestamp(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
   `remark` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`dict_code`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 102 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '字典数据表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 30 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '字典数据表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_dict_data
@@ -186,7 +205,7 @@ CREATE TABLE `sys_dict_type`  (
   `remark` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`dict_id`) USING BTREE,
   UNIQUE INDEX `dict_type`(`dict_type`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 100 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '字典类型表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '字典类型表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_dict_type
@@ -221,7 +240,7 @@ CREATE TABLE `sys_job`  (
   `update_time` timestamp(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
   `remark` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '备注信息',
   PRIMARY KEY (`job_id`, `job_name`, `job_group`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 100 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '定时任务调度表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '定时任务调度表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_job
@@ -284,7 +303,7 @@ CREATE TABLE `sys_menu`  (
   `update_time` timestamp(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
   `remark` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '备注',
   PRIMARY KEY (`menu_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2000 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '菜单权限表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1062 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '菜单权限表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_menu
@@ -389,7 +408,7 @@ CREATE TABLE `sys_notice`  (
   `update_time` timestamp(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
   `remark` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`notice_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '通知公告表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '通知公告表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_notice
@@ -470,7 +489,7 @@ CREATE TABLE `sys_role`  (
   `update_time` timestamp(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
   `remark` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`role_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 100 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '角色信息表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '角色信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_role
@@ -618,13 +637,13 @@ CREATE TABLE `sys_user`  (
   `update_time` timestamp(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
   `remark` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`user_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 100 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户信息表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES (1, 103, 'admin', '若依', '00', 'ry@163.com', '15888888888', 1, '', '29c67a30398638269fe600f73a054934', '111111', 0, 0, '127.0.0.1', '2020-05-03 23:10:57', 'admin', '2018-03-16 11:33:00', 'ry', '2020-05-03 23:10:56', '管理员');
-INSERT INTO `sys_user` VALUES (2, 105, 'ry', '若依', '00', 'ry@qq.com', '15666666666', 1, '', '8e6d98b90472783cc73c17047ddccf36', '222222', 0, 0, '127.0.0.1', '2020-05-03 16:21:48', 'admin', '2018-03-16 11:33:00', 'ry', '2020-05-03 16:21:48', '测试员');
+INSERT INTO `sys_user` VALUES (1, 103, 'admin', '若一', '00', 'ry@qq.com', '15888888888', 0, '', '29c67a30398638269fe600f73a054934', '111111', 0, 0, '127.0.0.1', '2020-05-10 15:06:01', 'admin', '2020-04-22 10:21:00', 'ry', '2020-05-10 15:06:01', '管理员');
+INSERT INTO `sys_user` VALUES (2, 105, 'ry', '若一', '00', 'ry@qq.com', '15666666666', 1, '', '8e6d98b90472783cc73c17047ddccf36', '222222', 0, 0, '127.0.0.1', '2020-05-03 16:21:48', 'admin', '2020-04-22 10:21:00', 'admin', '2020-05-10 05:40:43', '测试员');
 
 -- ----------------------------
 -- Table structure for sys_user_online
@@ -648,7 +667,7 @@ CREATE TABLE `sys_user_online`  (
 -- ----------------------------
 -- Records of sys_user_online
 -- ----------------------------
-INSERT INTO `sys_user_online` VALUES ('7511965b-47a8-4176-9b7b-dae03fa91d4f', 'admin', '研发部门', '127.0.0.1', '内网IP', 'Chrome 8', 'Windows 10', 'on_line', '2020-05-03 23:04:13', '2020-05-03 23:48:38', 1800000);
+INSERT INTO `sys_user_online` VALUES ('7ce9813e-046a-48cb-b474-5effdeba7305', 'admin', '研发部门', '127.0.0.1', '内网IP', 'Chrome 8', 'Windows 10', 'on_line', '2020-05-10 15:05:42', '2020-05-10 15:46:43', 1800000);
 
 -- ----------------------------
 -- Table structure for sys_user_post
@@ -663,8 +682,8 @@ CREATE TABLE `sys_user_post`  (
 -- ----------------------------
 -- Records of sys_user_post
 -- ----------------------------
-INSERT INTO `sys_user_post` VALUES (1, 1);
-INSERT INTO `sys_user_post` VALUES (2, 2);
+INSERT INTO `sys_user_post` VALUES (0, 4);
+INSERT INTO `sys_user_post` VALUES (3, 4);
 
 -- ----------------------------
 -- Table structure for sys_user_role
@@ -679,7 +698,8 @@ CREATE TABLE `sys_user_role`  (
 -- ----------------------------
 -- Records of sys_user_role
 -- ----------------------------
-INSERT INTO `sys_user_role` VALUES (1, 1);
-INSERT INTO `sys_user_role` VALUES (2, 2);
+INSERT INTO `sys_user_role` VALUES (0, 2);
+INSERT INTO `sys_user_role` VALUES (3, 2);
+INSERT INTO `sys_user_role` VALUES (4, 2);
 
 SET FOREIGN_KEY_CHECKS = 1;

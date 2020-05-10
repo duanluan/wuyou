@@ -1084,7 +1084,9 @@ label {
   color: #6379bb;
   border-bottom: 1px solid #ddd;
   margin: 8px 10px 25px 10px;
-  padding-bottom: 5px
+  padding-bottom: 5px;
+  float: left;
+  width: 100%;
 }
 
 .main-content {

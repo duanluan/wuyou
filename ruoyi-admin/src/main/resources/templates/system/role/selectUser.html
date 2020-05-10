@@ -37,7 +37,7 @@
 var datas = [[${@dict.getType('sys_normal_disable')}]];
 var prefix = ctx + "system/role/authUser";
 
-$(function () {
+$(() => {
   var options = {
     url: prefix + "/unallocatedList",
     createUrl: prefix + "/add",
@@ -86,7 +86,7 @@ $(function () {
         field: 'status',
         title: '用户状态',
         align: 'center',
-        formatter: function (value, row, index) {
+        formatter: (value, row, index) => {
           return $.table.selectDictLabel(datas, value);
         }
       },

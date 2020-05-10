@@ -77,7 +77,7 @@ var table = {
           id: options.id,
           url: options.url,                                   // 请求后台的URL（*）
           contentType: "application/x-www-form-urlencoded",   // 编码类型
-          method: 'post',                                     // 请求方式（*）
+          method: options.method ? options.method : 'post',                                      // 请求方式（*）
           cache: false,                                       // 是否使用缓存
           height: options.height,                             // 表格的高度
           striped: options.striped,                           // 是否显示行间隔色
@@ -182,8 +182,15 @@ var table = {
       initEvent: function () {
         // 实例ID信息
         var optionsIds = $.table.getOptionsIds();
+        // 所有事件
+        const TABLE_EVENTS = ['all.bs.table', 'click-row.bs.table',
+          'dbl-click-row.bs.table', 'click-cell.bs.table', 'dbl-click-cell.bs.table', 'sort.bs.table',
+          'check.bs.table', 'uncheck.bs.table', 'check-all.bs.table', 'uncheck-all.bs.table', 'check-some.bs.table', 'uncheck-some.bs.table',
+          'load-success.bs.table', 'load-error.bs.table', 'column-switch.bs.table', 'page-change.bs.table', 'search.bs.table', 'toggle.bs.table', 'pre-body.bs.table',
+          'post-body.bs.table', 'post-header.bs.table', 'post-footer.bs.table', 'expand-row.bs.table', 'collapse-row.bs.table',
+          'refresh-options.bs.table', 'reset-view.bs.table', 'refresh.bs.table', 'scroll-body.bs.table'];
         // 监听事件处理
-        $(optionsIds).on(TABLE_EVENTS, function () {
+        $(optionsIds).on(TABLE_EVENTS.join(' '), function () {
           table.set($(this).attr("id"));
         });
         // 选中、取消、全部选中、全部取消（事件）
@@ -1081,6 +1088,26 @@ var table = {
         };
         $.ajax(config)
       },
+      // 符合 RESTful 规范的保存信息 刷新表格
+      save1: function (url, type, data, callback) {
+        var config = {
+          url: url,
+          type: type,
+          dataType: "json",
+          data: data,
+          beforeSend: function () {
+            $.modal.loading("正在处理中，请稍后...");
+            $.modal.disable();
+          },
+          success: function (result) {
+            if (typeof callback == "function") {
+              callback(result);
+            }
+            $.operate.successCallback(result);
+          }
+        };
+        $.ajax(config)
+      },
       // 保存信息 弹出提示框
       saveModal: function (url, data, callback) {
         var config = {
@@ -1534,7 +1561,7 @@ table_type = {
 /** 消息状态码 */
 web_status = {
   SUCCESS: 0,
-  FAIL: 500,
+  FAIL: 1,
   WARNING: 301
 };
 

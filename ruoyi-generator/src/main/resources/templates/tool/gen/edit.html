@@ -261,7 +261,7 @@ $(function () {
     columns: [{
       title: "序号",
       width: "5%",
-      formatter: function (value, row, index) {
+      formatter: (value, row, index) => {
         // 编号隐藏域
         var columnIdHtml = $.common.sprintf("<input type='hidden' name='columns[%s].columnId' value='%s'>", index, row.columnId);
         // 排序隐藏域
@@ -285,7 +285,7 @@ $(function () {
         field: 'columnComment',
         title: '字段描述',
         width: "10%",
-        formatter: function (value, row, index) {
+        formatter: (value, row, index) => {
           var html = $.common.sprintf("<input class='form-control' type='text' name='columns[%s].columnComment' value='%s'>", index, value);
           return html;
         }
@@ -303,7 +303,7 @@ $(function () {
         field: 'javaType',
         title: 'Java类型',
         width: "10%",
-        formatter: function (value, row, index) {
+        formatter: (value, row, index) => {
           var data = [{ index: index, javaType: value }];
           return $("#javaTypeTpl").tmpl(data).html();
         }
@@ -312,7 +312,7 @@ $(function () {
         field: 'javaField',
         title: 'Java属性',
         width: "10%",
-        formatter: function (value, row, index) {
+        formatter: (value, row, index) => {
           var html = $.common.sprintf("<input class='form-control' type='text' name='columns[%s].javaField' value='%s' required>", index, value);
           return html;
         }
@@ -321,7 +321,7 @@ $(function () {
         field: 'isInsert',
         title: '插入',
         width: "5%",
-        formatter: function (value, row, index) {
+        formatter: (value, row, index) => {
           var isCheck = value == 1 ? 'checked' : '';
           var html = $.common.sprintf("<label class='check-box'><input type='checkbox' name='columns[%s].isInsert' value='1' %s></label>", index, isCheck);
           return html;
@@ -331,7 +331,7 @@ $(function () {
         field: 'isEdit',
         title: '编辑',
         width: "5%",
-        formatter: function (value, row, index) {
+        formatter: (value, row, index) => {
           var isCheck = value == 1 ? 'checked' : '';
           var html = $.common.sprintf("<label class='check-box'><input type='checkbox' name='columns[%s].isEdit' value='1' %s></label>", index, isCheck);
           return html;
@@ -341,7 +341,7 @@ $(function () {
         field: 'isList',
         title: '列表',
         width: "5%",
-        formatter: function (value, row, index) {
+        formatter: (value, row, index) => {
           var isCheck = value == 1 ? 'checked' : '';
           var html = $.common.sprintf("<label class='check-box'><input type='checkbox' name='columns[%s].isList' value='1' %s></label>", index, isCheck);
           return html;
@@ -351,7 +351,7 @@ $(function () {
         field: 'isQuery',
         title: '查询',
         width: "5%",
-        formatter: function (value, row, index) {
+        formatter: (value, row, index) => {
           var isCheck = value == 1 ? 'checked' : '';
           var html = $.common.sprintf("<label class='check-box'><input type='checkbox' name='columns[%s].isQuery' value='1' %s></label>", index, isCheck);
           return html;
@@ -361,7 +361,7 @@ $(function () {
         field: 'queryType',
         title: '查询方式',
         width: "10%",
-        formatter: function (value, row, index) {
+        formatter: (value, row, index) => {
           var data = [{ index: index, queryType: value }];
           return $("#queryTypeTpl").tmpl(data).html();
         }
@@ -370,7 +370,7 @@ $(function () {
         field: 'isRequired',
         title: '必填',
         width: "5%",
-        formatter: function (value, row, index) {
+        formatter: (value, row, index) => {
           var isCheck = value == 1 ? 'checked' : '';
           var html = $.common.sprintf("<label class='check-box'><input type='checkbox' name='columns[%s].isRequired' value='1' %s></label>", index, isCheck);
           return html;
@@ -380,7 +380,7 @@ $(function () {
         field: 'htmlType',
         title: '显示类型',
         width: "12%",
-        formatter: function (value, row, index) {
+        formatter: (value, row, index) => {
           var data = [{ index: index, htmlType: value }];
           return $("#htmlTypeTpl").tmpl(data).html();
         }
@@ -389,7 +389,7 @@ $(function () {
         field: 'dictType',
         title: '字典类型',
         width: "13%",
-        formatter: function (value, row, index) {
+        formatter: (value, row, index) => {
           var html = $.common.sprintf("<input class='form-control' type='text' name='columns[%s].dictType' value='%s' id='columns_dict_%s'>", index, value, row.columnId);
           return "<div class='input-group'>" + html + "<span class='input-group-addon input-sm' onclick='selectDictTree(" + row.columnId + ", this)'><i class='fa fa-search'></i></span></div>";
         },

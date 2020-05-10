@@ -55,7 +55,7 @@ $(function () {
     },
       {
         title: "序号",
-        formatter: function (value, row, index) {
+        formatter: (value, row, index) => {
           return $.table.serialNumber(index);
         }
       },
@@ -92,7 +92,7 @@ $(function () {
         field: 'status',
         title: '会话状态',
         align: 'center',
-        formatter: function (value, row, index) {
+        formatter: (value, row, index) => {
           if (value == 'on_line') {
             return '<span class="badge badge-primary">在线</span>';
           } else if (value == 'off_line') {
@@ -113,7 +113,7 @@ $(function () {
       {
         title: '操作',
         align: 'center',
-        formatter: function (value, row, index) {
+        formatter: (value, row, index) => {
           var msg = '<a class="btn btn-danger btn-xs ' + forceFlag + '" href="javascript:void(0)" onclick="forceLogout(\'' + row.sessionId + '\')"><i class="fa fa-sign-out"></i>强退</a> ';
           return msg;
         }

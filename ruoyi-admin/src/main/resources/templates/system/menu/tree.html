@@ -37,7 +37,7 @@
     <th:block th:include="include :: footer"/>
     <th:block th:include="include :: ztree-js"/>
     <script th:inline="javascript">
-      $(function () {
+      $(() => {
         var url = ctx + "system/menu/menuTreeData";
         var options = {
           url: url,

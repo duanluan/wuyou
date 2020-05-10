@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!--360浏览器优先以webkit内核解析-->
-  <title>若依介绍</title>
+  <title>若一介绍</title>
   <link rel="shortcut icon" href="favicon.ico">
   <link href="../static/lib/bootstrap/css/bootstrap.min.css" th:href="@{/lib/bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
   <link href="../static/lib/font-awesome/css/font-awesome.min.css" th:href="@{/lib/font-awesome/css/font-awesome.min.css}" rel="stylesheet"/>
@@ -14,19 +14,19 @@
 
 <body class="gray-bg">
 <div class="row  border-bottom white-bg dashboard-header">
-  <div class="col-sm-12">
-    <blockquote class="text-warning" style="font-size:14px">
-      领取阿里云通用云产品1888优惠券
-      <br><a target="_blank" href="https://www.aliyun.com/minisite/goods?userCode=brki8iof">https://www.aliyun.com/minisite/goods?userCode=brki8iof</a><br>
-      领取腾讯云通用云产品2860优惠券
-      <br><a target="_blank" href="https://cloud.tencent.com/redirect.php?redirect=1025&cps_key=198c8df2ed259157187173bc7f4f32fd&from=console">https://cloud.tencent.com/redirect.php?redirect=1025&cps_key=198c8df2ed259157187173bc7f4f32fd&from=console</a><br>
-      <h4 class="text-danger">云产品通用红包，可叠加官网常规优惠使用。(仅限新用户)</h4>
-    </blockquote>
+  <!--<div class="col-sm-12">-->
+  <!--  <blockquote class="text-warning" style="font-size:14px">-->
+  <!--    领取阿里云通用云产品1888优惠券-->
+  <!--    <br><a target="_blank" href="https://www.aliyun.com/minisite/goods?userCode=brki8iof">https://www.aliyun.com/minisite/goods?userCode=brki8iof</a><br>-->
+  <!--    领取腾讯云通用云产品2860优惠券-->
+  <!--    <br><a target="_blank" href="https://cloud.tencent.com/redirect.php?redirect=1025&cps_key=198c8df2ed259157187173bc7f4f32fd&from=console">https://cloud.tencent.com/redirect.php?redirect=1025&cps_key=198c8df2ed259157187173bc7f4f32fd&from=console</a><br>-->
+  <!--    <h4 class="text-danger">云产品通用红包，可叠加官网常规优惠使用。(仅限新用户)</h4>-->
+  <!--  </blockquote>-->
 
-    <hr>
-  </div>
+  <!--  <hr>-->
+  <!--</div>-->
   <div class="col-sm-3">
-    <h2>Hello,Guest</h2>
+    <h2>Hello, [[${user?.userName}]]</h2>
     <small>移动设备访问请扫描以下二维码：</small>
     <br>
     <br>
@@ -34,22 +34,22 @@
     <br>
   </div>
   <div class="col-sm-5">
-    <h2>若依后台管理框架</h2>
-    <p>一直想做一款后台管理系统，看了很多优秀的开源项目但是发现没有合适自己的。于是利用空闲休息时间开始自己写一套后台系统。如此有了若依管理系统。，她可以用于所有的Web应用程序，如<b>网站管理后台</b>，<b>网站会员中心</b>，<b>CMS</b>，<b>CRM</b>，<b>OA</b>等等，当然，您也可以对她进行深度定制，以做出更强系统。所有前端后台代码封装过后十分精简易上手，出错概率低。同时支持移动客户端访问。系统会陆续更新一些实用功能。</p>
+    <h2>若一后台管理框架</h2>
+    <p>Spring Boot + MyBatis Plus + Shiro + Thymeleaf 快速开发框架</p>
     <p>
       <b>当前版本：</b><span>v[[${version}]]</span>
     </p>
     <p>
-      <span class="label label-warning">&yen;免费开源</span>
+      <span class="label label-warning">&yen; 免费开源</span>
     </p>
     <br>
     <p>
-      <a class="btn btn-success btn-outline" href="https://gitee.com/y_project/RuoYi" target="_blank">
-        <i class="fa fa-cloud"> </i> 访问码云
+      <a class="btn btn-success btn-outline" href="https://github.com/duanluan/ruoyi" target="_blank">
+        <i class="fa fa-cloud"> </i> 访问 GitHub
       </a>
-      <a class="btn btn-white btn-bitbucket" href="http://ruoyi.vip" target="_blank">
-        <i class="fa fa-home"></i> 访问主页
-      </a>
+      <!--<a class="btn btn-white btn-bitbucket" href="https://github.com/duanluan/ruoyi" target="_blank">-->
+      <!--  <i class="fa fa-home"></i> 访问主页-->
+      <!--</a>-->
     </p>
   </div>
   <div class="col-sm-4">
@@ -58,10 +58,9 @@
       <li>核心框架：Spring Boot。</li>
       <li>安全框架：Apache Shiro。</li>
       <li>模板引擎：Thymeleaf。</li>
-      <li>持久层框架：MyBatis。</li>
+      <li>持久层框架：MyBatis Plus。</li>
       <li>定时任务:Quartz。</li>
       <li>数据库连接池：Druid。</li>
-      <li>工具类：Fastjson。</li>
       <li>更多……</li>
     </ol>
   </div>
@@ -77,14 +76,8 @@
 
         </div>
         <div class="ibox-content">
-          <p><i class="fa fa-send-o"></i> 官网：<a href="http://www.ruoyi.vip" target="_blank">http://www.ruoyi.vip</a>
-          </p>
-          <p><i class="fa fa-qq"></i> QQ群：<s>满1389287</s> <s>满1679294</s> <s>满1529866</s> <s>满1772718</s> <s>满1366522</s> <s>满1382251</s> <s>满1145125</s> <s>满86752435</s> <s>满134072510</s> <s>满210336300</s> <a href="https://jq.qq.com/?_wv=1027&k=5omzbKc" target="_blank">339522636</a>
-          </p>
-          <p><i class="fa fa-weixin"></i> 微信：<a href="javascript:;">/ *若依</a>
-          </p>
-          <p><i class="fa fa-credit-card"></i> 支付宝：<a href="javascript:;" class="支付宝信息">/ *若依</a>
-          </p>
+          <p><i class="fa fa-send-o"></i> GitHub：<a href="https://github.com/duanluan/ruoyi" target="_blank">https://github.com/duanluan/ruoyi</a></p>
+          <p><i class="fa fa-qq"></i> QQ 群：<a href="#" target="_blank">暂无</a></p>
         </div>
       </div>
     </div>
@@ -906,15 +899,15 @@
     <div class="col-sm-4">
       <div class="ibox float-e-margins">
         <div class="ibox-title">
-          <h5>捐赠</h5>
+          <h5>捐赠（暂无）</h5>
         </div>
         <div class="ibox-content">
           <div class="alert alert-warning">
             请作者喝杯咖啡（点击图片放大）
           </div>
           <p id="pay-qrcode">
-            <a href="javascript:;"><img th:src="@{/img/pay.png}" width="100%" alt="请使用手机支付宝或者微信扫码支付">
-            </a>
+            <!--<a href="javascript:;"><img th:src="@{/img/pay.png}" width="100%" alt="请使用手机支付宝或者微信扫码支付">-->
+            <!--</a>-->
           </p>
 
         </div>

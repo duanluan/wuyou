@@ -60,7 +60,7 @@
       var datas = [[${@dict.getType('sys_show_hide')}]];
       var prefix = ctx + "system/menu";
 
-      $(function () {
+      $(() => {
         var options = {
           code: "menuId",
           parentCode: "parentId",
@@ -80,7 +80,7 @@
               title: '菜单名称',
               field: 'menuName',
               width: '20%',
-              formatter: function (value, row, index) {
+              formatter: (value, row, index) => {
                 if ($.common.isEmpty(row.icon)) {
                   return row.menuName;
                 } else {
@@ -99,7 +99,7 @@
               title: '请求地址',
               width: '15%',
               align: "left",
-              formatter: function (value, row, index) {
+              formatter: (value, row, index) => {
                 return $.table.tooltip(value);
               }
             },
@@ -123,7 +123,7 @@
               title: '可见',
               width: '10%',
               align: "left",
-              formatter: function (value, row, index) {
+              formatter: (value, row, index) => {
                 if (row.menuType == 'F') {
                   return '-';
                 }
@@ -135,7 +135,7 @@
               title: '权限标识',
               width: '15%',
               align: "left",
-              formatter: function (value, row, index) {
+              formatter: (value, row, index) => {
                 return $.table.tooltip(value);
               }
             },
@@ -143,7 +143,7 @@
               title: '操作',
               width: '20%',
               align: "left",
-              formatter: function (value, row, index) {
+              formatter: (value, row, index) => {
                 var actions = [];
                 actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.menuId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
                 actions.push('<a class="btn btn-info btn-xs ' + addFlag + '" href="javascript:void(0)" onclick="$.operate.add(\'' + row.menuId + '\')"><i class="fa fa-plus"></i>新增</a> ');

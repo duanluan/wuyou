@@ -1,4 +1,4 @@
-<!-- 通用CSS -->
+<!-- 通用 CSS -->
 <head th:fragment=header(title)>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,7 +16,7 @@
   <link th:href="@{/css/ry-ui.css}" rel="stylesheet"/>
 </head>
 
-<!-- 通用JS -->
+<!-- 通用 JS -->
 <div th:fragment="footer">
   <a id="scroll-up" href="#" class="btn btn-sm display"><i class="fa fa-angle-double-up"></i></a>
   <script th:src="@{/lib/jquery.min.js}"></script>
@@ -34,8 +34,8 @@
   <!-- jquery-validate 表单树插件 -->
   <script th:src="@{/lib/bootstrap-treetable/bootstrap-treetable.js}"></script>
   <!-- jquery-export 表格导出插件 -->
-  <script th:src="@{/lib/bootstrap-table/extensions/export/bootstrap-table-export.js}"></script>
-  <script th:src="@{/lib/bootstrap-table/extensions/export/tableExport.js}"></script>
+  <script th:src="@{/lib/bootstrap-table/extensions/export/bootstrap-table-export.min.js}"></script>
+  <script th:src="@{/lib/tableExport/tableExport.min.js}"></script>
   <!-- 遮罩层 -->
   <script th:src="@{/lib/blockUI/jquery.blockUI.js}"></script>
   <script th:src="@{/lib/iCheck/icheck.min.js}"></script>
@@ -46,7 +46,7 @@
   <script th:inline="javascript"> var ctx = [[@{/}]]; </script>
 </div>
 
-<!-- ztree树插件 -->
+<!-- ztree 树插件 -->
 <div th:fragment="ztree-css">
   <link th:href="@{/lib/zTree/css/metroStyle/metroStyle.css}" rel="stylesheet"/>
 </div>
@@ -54,7 +54,7 @@
   <script th:src="@{/lib/zTree/js/jquery.ztree.all.min.js}"></script>
 </div>
 
-<!-- select2下拉框插件 -->
+<!-- select2 下拉框插件 -->
 <div th:fragment="select2-css">
   <link th:href="@{/lib/select2/select2.min.css}" rel="stylesheet"/>
   <link th:href="@{/lib/select2/select2-bootstrap.css}" rel="stylesheet"/>
@@ -63,7 +63,7 @@
   <script th:src="@{/lib/select2/select2.min.js}"></script>
 </div>
 
-<!-- bootstrap-select下拉框插件 -->
+<!-- bootstrap-select 下拉框插件 -->
 <div th:fragment="bootstrap-select-css">
   <link th:href="@{/lib/bootstrap-select/bootstrap-select.css}" rel="stylesheet"/>
 </div>
@@ -71,7 +71,7 @@
   <script th:src="@{/lib/bootstrap-select/bootstrap-select.js}"></script>
 </div>
 
-<!-- datetimepicker日期和时间插件 -->
+<!-- datetimepicker 日期和时间插件 -->
 <div th:fragment="datetimepicker-css">
   <link th:href="@{/lib/datapicker/bootstrap-datetimepicker.min.css}" rel="stylesheet"/>
 </div>
@@ -79,7 +79,7 @@
   <script th:src="@{/lib/datapicker/bootstrap-datetimepicker.min.js}"></script>
 </div>
 
-<!-- ui布局插件 -->
+<!-- ui 布局插件 -->
 <div th:fragment="layout-latest-css">
   <link th:href="@{/lib/jquery-layout/jquery.layout-latest.css}" rel="stylesheet"/>
 </div>
@@ -87,7 +87,7 @@
   <script th:src="@{/lib/jquery-layout/jquery.layout-latest.js}"></script>
 </div>
 
-<!-- summernote富文本编辑器插件 -->
+<!-- summernote 富文本编辑器插件 -->
 <div th:fragment="summernote-css">
   <link th:href="@{/lib/summernote/summernote.css}" rel="stylesheet"/>
   <link th:href="@{/lib/summernote/summernote-bs3.css}" rel="stylesheet"/>
@@ -97,7 +97,7 @@
   <script th:src="@{/lib/summernote/summernote-zh-CN.js}"></script>
 </div>
 
-<!-- cropbox图像裁剪插件 -->
+<!-- cropbox 图像裁剪插件 -->
 <div th:fragment="cropbox-css">
   <link th:href="@{/lib/cropbox/cropbox.css}" rel="stylesheet"/>
 </div>
@@ -105,7 +105,7 @@
   <script th:src="@{/lib/cropbox/cropbox.js}"></script>
 </div>
 
-<!-- jasny功能扩展插件 -->
+<!-- jasny 功能扩展插件 -->
 <div th:fragment="jasny-bootstrap-css">
   <link th:href="@{/lib/jasny/jasny-bootstrap.min.css}" rel="stylesheet"/>
 </div>
@@ -113,7 +113,7 @@
   <script th:src="@{/lib/jasny/jasny-bootstrap.min.js}"></script>
 </div>
 
-<!-- fileinput文件上传插件 -->
+<!-- fileinput 文件上传插件 -->
 <div th:fragment="bootstrap-fileinput-css">
   <link th:href="@{/lib/bootstrap-fileinput/fileinput.min.css}" rel="stylesheet"/>
 </div>
@@ -121,7 +121,7 @@
   <script th:src="@{/lib/bootstrap-fileinput/fileinput.min.js}"></script>
 </div>
 
-<!-- duallistbox双列表框插件 -->
+<!-- duallistbox 双列表框插件 -->
 <div th:fragment="bootstrap-duallistbox-css">
   <link th:href="@{/lib/duallistbox/bootstrap-duallistbox.min.css}" rel="stylesheet"/>
 </div>
@@ -129,17 +129,17 @@
   <script th:src="@{/lib/duallistbox/bootstrap-duallistbox.min.js}"></script>
 </div>
 
-<!-- suggest搜索自动补全 -->
+<!-- suggest 搜索自动补全 -->
 <div th:fragment="bootstrap-suggest-js">
   <script th:src="@{/lib/suggest/bootstrap-suggest.min.js}"></script>
 </div>
 
-<!-- typeahead搜索自动补全 -->
+<!-- typeahead 搜索自动补全 -->
 <div th:fragment="bootstrap-typeahead-js">
   <script th:src="@{/lib/typeahead/bootstrap3-typeahead.min.js}"></script>
 </div>
 
-<!-- jsonview格式化和语法高亮JSON格式数据查看插件 -->
+<!-- jsonview 格式化和语法高亮 JSON 格式数据查看插件 -->
 <div th:fragment="jsonview-css">
   <link th:href="@{/lib/jsonview/jquery.jsonview.css}" rel="stylesheet"/>
 </div>
@@ -147,7 +147,7 @@
   <script th:src="@{/lib/jsonview/jquery.jsonview.js}"></script>
 </div>
 
-<!-- jquery.steps表单向导插件 -->
+<!-- jquery.steps 表单向导插件 -->
 <div th:fragment="jquery-steps-css">
   <link th:href="@{/lib/staps/jquery.steps.css}" rel="stylesheet"/>
 </div>
@@ -155,17 +155,17 @@
   <script th:src="@{/lib/staps/jquery.steps.min.js}"></script>
 </div>
 
-<!-- ECharts百度统计图表插件 -->
+<!-- ECharts 百度统计图表插件 -->
 <div th:fragment="echarts-js">
   <script th:src="@{/lib/report/echarts/echarts-all.js}"></script>
 </div>
 
-<!-- peity图表组合插件 -->
+<!-- peity 图表组合插件 -->
 <div th:fragment="peity-js">
   <script th:src="@{/lib/report/peity/jquery.peity.min.js}"></script>
 </div>
 
-<!-- sparkline线状图插件 -->
+<!-- sparkline 线状图插件 -->
 <div th:fragment="sparkline-js">
   <script th:src="@{/lib/report/sparkline/jquery.sparkline.min.js}"></script>
 </div>

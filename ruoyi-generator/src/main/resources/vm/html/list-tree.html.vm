@@ -119,7 +119,7 @@ $(function () {
             field: '${javaField}',
             title: '${comment}',
             align: 'left',
-            formatter: function (value, row, index) {
+            formatter: (value, row, index) => {
               return $.table.selectDictLabel(${javaField}Datas, value);
             }
           },
@@ -135,7 +135,7 @@ $(function () {
         title: '操作',
         align: 'center',
         align: 'left',
-        formatter: function (value, row, index) {
+        formatter: (value, row, index) => {
           var actions = [];
           actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.${pkColumn.javaField} + '\')"><i class="fa fa-edit"></i>编辑</a> ');
           actions.push('<a class="btn btn-info  btn-xs ' + addFlag + '" href="javascript:void(0)" onclick="$.operate.add(\'' + row.${pkColumn.javaField} + '\')"><i class="fa fa-plus"></i>新增</a> ');

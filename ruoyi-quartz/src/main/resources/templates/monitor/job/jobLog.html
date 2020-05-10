@@ -94,14 +94,14 @@ $(function () {
       {
         field: 'jobGroup',
         title: '任务分组',
-        formatter: function (value, row, index) {
+        formatter: (value, row, index) => {
           return $.table.selectDictLabel(groupDatas, value);
         }
       },
       {
         field: 'invokeTarget',
         title: '调用目标字符串',
-        formatter: function (value, row, index) {
+        formatter: (value, row, index) => {
           return $.table.tooltip(value);
         }
       },
@@ -113,7 +113,7 @@ $(function () {
         field: 'status',
         title: '状态',
         align: 'center',
-        formatter: function (value, row, index) {
+        formatter: (value, row, index) => {
           return $.table.selectDictLabel(statusDatas, value);
         }
       },
@@ -125,7 +125,7 @@ $(function () {
       {
         title: '操作',
         align: 'center',
-        formatter: function (value, row, index) {
+        formatter: (value, row, index) => {
           var actions = [];
           actions.push('<a class="btn btn-warning btn-xs ' + detailFlag + '" href="javascript:void(0)" onclick="$.operate.detail(\'' + row.jobLogId + '\')"><i class="fa fa-search"></i>详细</a>');
           return actions.join('');

@@ -49,7 +49,7 @@
 var prefix = ctx + "system/user/authRole";
 var userRoles = [[${userRoles}]]
 
-$(function () {
+$(() => {
   var options = {
     url: ctx + "system/role/list",
     sortName: "roleSort",
@@ -60,7 +60,7 @@ $(function () {
     clickToSelect: true,
     columns: [{
       checkbox: true,
-      formatter: function (value, row, index) {
+      formatter: (value, row, index) => {
         for (var i = 0; i < userRoles.length; i++) {
           if (userRoles[i].roleId == row.roleId) {
             return { checked: true };
