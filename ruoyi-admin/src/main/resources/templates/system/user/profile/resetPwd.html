@@ -83,7 +83,7 @@ $("#form-user-resetPwd").validate({
 
 function submitHandler() {
   if ($.validate.form()) {
-    $.operate.save(ctx + "system/user/profile/resetPwd", $('#form-user-resetPwd').serialize());
+    $.operate.save1(ctx + "system/user/profile/resetPwd", 'PUT', $('#form-user-resetPwd').serialize());
   }
 }
 </script>

@@ -199,7 +199,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
   @Override
   public boolean insert(SysUser user) {
     // 新增用户信息
-    boolean result = super.save(user);
+    boolean result = userMapper.insert(user) > 0;
     // 新增用户岗位关联
     insertUserPost(user);
     // 新增用户与角色管理
@@ -267,7 +267,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
   public void insertUserRole(Long userId, Long[] roleIds) {
     if (roleIds != null) {
       // 新增用户与角色管理
-      List<SysUserRole> list = new ArrayList<SysUserRole>();
+      List<SysUserRole> list = new ArrayList<>();
       for (Long roleId : roleIds) {
         SysUserRole ur = new SysUserRole();
         ur.setUserId(userId);

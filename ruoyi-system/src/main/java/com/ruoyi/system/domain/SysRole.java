@@ -33,14 +33,14 @@ public class SysRole extends BaseEntity {
    * 角色名称
    */
   @Excel(name = "角色名称")
-  @Size(min = 0, max = 30, message = "角色名称长度不能超过30个字符")
+  @Size(max = 30, message = "角色名称长度不能超过30个字符")
   @NotBlank(message = "角色名称不能为空")
   private String roleName;
   /**
    * 角色权限
    */
   @Excel(name = "角色权限")
-  @Size(min = 0, max = 100, message = "权限字符长度不能超过100个字符")
+  @Size(max = 100, message = "权限字符长度不能超过100个字符")
   @NotBlank(message = "权限字符不能为空")
   private String roleKey;
   /**

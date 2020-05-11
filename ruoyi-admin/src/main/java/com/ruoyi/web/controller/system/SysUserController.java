@@ -31,13 +31,11 @@ import static com.ruoyi.common.core.domain.Result.*;
  *
  * @author ruoyi
  */
-@RequestMapping
+@RequestMapping("system/users")
 @Controller
 public class SysUserController extends BaseController {
 
   private static final String PREFIX = "system/user";
-  private static final String VIEW_PREFIX = "/" + PREFIX;
-  private static final String API_PREFIX = VIEW_PREFIX + "s";
   private static final String LOG_TITLE = "用户管理";
 
   @Autowired
@@ -55,7 +53,7 @@ public class SysUserController extends BaseController {
    * @return 管理页面路径
    */
   @RequiresPermissions("system:user:view")
-  @GetMapping(VIEW_PREFIX)
+  @GetMapping
   public String user() {
     return PREFIX + "/list";
   }
@@ -69,7 +67,7 @@ public class SysUserController extends BaseController {
    */
   @RequiresPermissions("system:user:list")
   @ResponseBody
-  @GetMapping(API_PREFIX)
+  @GetMapping("/list")
   public Result list(Page<SysUser> page, SysUser user) {
     return Result.success(userService.page(page, user));
   }
@@ -83,7 +81,7 @@ public class SysUserController extends BaseController {
   @RequiresPermissions("system:user:export")
   @Log(title = LOG_TITLE, businessType = BusinessType.EXPORT)
   @ResponseBody
-  @PostMapping(API_PREFIX + "/export")
+  @PostMapping("/export")
   public Result export(SysUser user) {
     List<SysUser> list = userService.list(user);
     ExcelUtil<SysUser> util = new ExcelUtil<>(SysUser.class);
@@ -101,7 +99,7 @@ public class SysUserController extends BaseController {
   @Log(title = LOG_TITLE, businessType = BusinessType.IMPORT)
   @RequiresPermissions("system:user:import")
   @ResponseBody
-  @PostMapping(API_PREFIX + "/importData")
+  @PostMapping("/importData")
   public Result importData(MultipartFile file, boolean updateSupport) throws Exception {
     ExcelUtil<SysUser> util = new ExcelUtil<>(SysUser.class);
     List<SysUser> userList = util.importExcel(file.getInputStream());
@@ -117,7 +115,7 @@ public class SysUserController extends BaseController {
    */
   @RequiresPermissions("system:user:view")
   @ResponseBody
-  @GetMapping(API_PREFIX + "/importTemplate")
+  @GetMapping("/importTemplate")
   public Result importTemplate() {
     ExcelUtil<SysUser> util = new ExcelUtil<>(SysUser.class);
     return util.importTemplateExcel("用户数据");
@@ -129,7 +127,7 @@ public class SysUserController extends BaseController {
    * @param userId 用户 ID
    * @return 修改页面路径
    */
-  @GetMapping(VIEW_PREFIX + "/edit/{userId}")
+  @GetMapping("/{userId}")
   public String edit(@PathVariable("userId") Long userId, ModelMap mmap) {
     mmap.put("roles", roleService.listByUserId(userId));
     mmap.put("posts", postService.listByUser(userId));
@@ -148,23 +146,23 @@ public class SysUserController extends BaseController {
   @Log(title = LOG_TITLE, businessType = BusinessType.UPDATE)
   @RequiresPermissions("system:user:edit")
   @ResponseBody
-  @PostMapping(API_PREFIX)
+  @PostMapping
   public Result save(@Validated SysUser user) {
-      if (userService.checkLoginNameUnique(user.getLoginName())) {
-        return error("新增用户'" + user.getLoginName() + "'失败，登录账号已存在");
-      } else if (userService.checkPhoneUnique(user)) {
-        return error("新增用户'" + user.getLoginName() + "'失败，手机号码已存在");
-      } else if (userService.checkEmailUnique(user)) {
-        return error("新增用户'" + user.getLoginName() + "'失败，邮箱账号已存在");
-      }
-      user.setSalt(ShiroUtils.randomSalt());
-      user.setPassword(passwordService.encryptPassword(user.getLoginName(), user.getPassword(), user.getSalt()));
-      user.setCreateBy(ShiroUtils.getLoginName());
-      return custom(userService.insert(user));
+    if (userService.checkLoginNameUnique(user.getLoginName())) {
+      return error("新增用户'" + user.getLoginName() + "'失败，登录账号已存在");
+    } else if (userService.checkPhoneUnique(user)) {
+      return error("新增用户'" + user.getLoginName() + "'失败，手机号码已存在");
+    } else if (userService.checkEmailUnique(user)) {
+      return error("新增用户'" + user.getLoginName() + "'失败，邮箱账号已存在");
+    }
+    user.setSalt(ShiroUtils.randomSalt());
+    user.setPassword(passwordService.encryptPassword(user.getLoginName(), user.getPassword(), user.getSalt()));
+    user.setCreateBy(ShiroUtils.getLoginName());
+    return custom(userService.insert(user));
   }
 
   /**
-   * 保存
+   * 修改
    *
    * @param user 用户
    * @return 是否成功
@@ -172,16 +170,34 @@ public class SysUserController extends BaseController {
   @Log(title = LOG_TITLE, businessType = BusinessType.UPDATE)
   @RequiresPermissions("system:user:edit")
   @ResponseBody
-  @PutMapping(API_PREFIX)
+  @PutMapping
   public Result update(@Validated SysUser user) {
-      userService.checkAllowed(user);
-      if (userService.checkPhoneUnique(user)) {
-        return error("修改用户'" + user.getLoginName() + "'失败，手机号码已存在");
-      } else if (userService.checkEmailUnique(user)) {
-        return error("修改用户'" + user.getLoginName() + "'失败，邮箱账号已存在");
-      }
-      user.setUpdateBy(ShiroUtils.getLoginName());
-      return custom(userService.update(user));
+    userService.checkAllowed(user);
+    if (userService.checkPhoneUnique(user)) {
+      return error("修改用户'" + user.getLoginName() + "'失败，手机号码已存在");
+    } else if (userService.checkEmailUnique(user)) {
+      return error("修改用户'" + user.getLoginName() + "'失败，邮箱账号已存在");
+    }
+    user.setUpdateBy(ShiroUtils.getLoginName());
+    return custom(userService.update(user));
+  }
+
+  /**
+   * 删除
+   *
+   * @param ids 用户 ID 集合
+   * @return 是否成功
+   */
+  @Log(title = LOG_TITLE, businessType = BusinessType.DELETE)
+  @RequiresPermissions("system:user:remove")
+  @ResponseBody
+  @DeleteMapping
+  public Result remove(String ids) {
+    try {
+      return custom(userService.deleteByIds(ids));
+    } catch (Exception e) {
+      return error(e.getMessage());
+    }
   }
 
   /**
@@ -192,7 +208,7 @@ public class SysUserController extends BaseController {
    */
   @Log(title = "重置密码", businessType = BusinessType.UPDATE)
   @RequiresPermissions("system:user:resetPwd")
-  @GetMapping(API_PREFIX + "/resetPwd/{userId}")
+  @GetMapping("/{userId}/resetPwd")
   public String resetPwd(@PathVariable("userId") Long userId, ModelMap mmap) {
     mmap.put("user", userService.getById(userId));
     return PREFIX + "/resetPwd";
@@ -207,7 +223,7 @@ public class SysUserController extends BaseController {
   @Log(title = "重置密码", businessType = BusinessType.UPDATE)
   @RequiresPermissions("system:user:resetPwd")
   @ResponseBody
-  @PostMapping(API_PREFIX + "/resetPwd")
+  @PutMapping("/{userId}/resetPwd")
   public Result resetPwdSave(SysUser user) {
     userService.checkAllowed(user);
     user.setSalt(ShiroUtils.randomSalt());
@@ -227,7 +243,7 @@ public class SysUserController extends BaseController {
    * @param userId 用户 ID
    * @return 授权角色页面路径
    */
-  @GetMapping(VIEW_PREFIX + "/authRole/{userId}")
+  @GetMapping("/{userId}/authRole")
   public String authRole(@PathVariable("userId") Long userId, ModelMap mmap) {
     SysUser user = userService.getById(userId);
     // 获取用户所属的角色列表
@@ -247,28 +263,10 @@ public class SysUserController extends BaseController {
   @Log(title = LOG_TITLE, businessType = BusinessType.GRANT)
   @RequiresPermissions("system:user:add")
   @ResponseBody
-  @PostMapping(API_PREFIX + "/authRole/insertAuthRole")
+  @PutMapping("/{userId}/authRole")
   public Result insertAuthRole(Long userId, Long[] roleIds) {
     userService.insertUserAuth(userId, roleIds);
     return success();
-  }
-
-  /**
-   * 删除
-   *
-   * @param ids 用户 ID 集合
-   * @return 是否成功
-   */
-  @Log(title = LOG_TITLE, businessType = BusinessType.DELETE)
-  @RequiresPermissions("system:user:remove")
-  @ResponseBody
-  @PostMapping(API_PREFIX + "/remove")
-  public Result remove(String ids) {
-    try {
-      return custom(userService.deleteByIds(ids));
-    } catch (Exception e) {
-      return error(e.getMessage());
-    }
   }
 
   /**
@@ -278,7 +276,7 @@ public class SysUserController extends BaseController {
    * @return 是否存在
    */
   @ResponseBody
-  @GetMapping(API_PREFIX + "/checkLoginNameUnique")
+  @GetMapping("/checkLoginNameUnique")
   public boolean checkLoginNameUnique(SysUser user) {
     return userService.checkLoginNameUnique(user.getLoginName());
   }
@@ -290,7 +288,7 @@ public class SysUserController extends BaseController {
    * @return 是否存在
    */
   @ResponseBody
-  @GetMapping(API_PREFIX + "/checkPhoneUnique")
+  @GetMapping("/checkPhoneUnique")
   public boolean checkPhoneUnique(SysUser user) {
     return userService.checkPhoneUnique(user);
   }
@@ -302,7 +300,7 @@ public class SysUserController extends BaseController {
    * @return 是否存在
    */
   @ResponseBody
-  @GetMapping(API_PREFIX + "/checkEmailUnique")
+  @GetMapping("/checkEmailUnique")
   public boolean checkEmailUnique(SysUser user) {
     return userService.checkEmailUnique(user);
   }
@@ -316,7 +314,7 @@ public class SysUserController extends BaseController {
   @Log(title = LOG_TITLE, businessType = BusinessType.UPDATE)
   @RequiresPermissions("system:user:edit")
   @ResponseBody
-  @PostMapping(API_PREFIX + "/changeStatus")
+  @PutMapping("/changeStatus")
   public Result changeStatus(SysUser user) {
     userService.checkAllowed(user);
     return custom(userService.changeStatus(user));

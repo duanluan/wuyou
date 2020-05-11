@@ -61,7 +61,7 @@ public class SysPostController extends BaseController {
   @Log(title = "岗位管理", businessType = BusinessType.DELETE)
   @RequiresPermissions("system:post:remove")
   @ResponseBody
-  @PostMapping("/remove")
+  @DeleteMapping
   public Result remove(String ids) {
     try {
       return custom(postService.removeByIds(ids));

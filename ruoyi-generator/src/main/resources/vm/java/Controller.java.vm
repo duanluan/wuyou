@@ -142,7 +142,7 @@ public class ${ClassName}Controller extends BaseController {
      */
     @RequiresPermissions("${permissionPrefix}:remove")
     @Log(title = "${functionName}", businessType = BusinessType.DELETE)
-    @PostMapping("/remove")
+    @DeleteMapping
     @ResponseBody
     public Result remove(String ids) {
       return toAjax(${className}Service.delete${ClassName}ByIds(ids));

@@ -4,14 +4,12 @@ import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.pagination.optimize.JsqlParserCountOptimize;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
  * MyBatis Plus 配置
  *
  * @author duanluan
  */
-@EnableTransactionManagement
 @Configuration
 public class MyBatisPlusConfig {
 

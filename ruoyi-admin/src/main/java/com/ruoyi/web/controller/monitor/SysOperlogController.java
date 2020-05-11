@@ -58,7 +58,7 @@ public class SysOperlogController extends BaseController {
 
   @RequiresPermissions("monitor:operlog:remove")
   @ResponseBody
-  @PostMapping("/remove")
+  @DeleteMapping
   public Result remove(String ids) {
     return custom(operLogService.removeByIds(ids));
   }

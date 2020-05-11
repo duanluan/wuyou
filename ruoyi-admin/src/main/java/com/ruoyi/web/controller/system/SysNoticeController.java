@@ -93,7 +93,7 @@ public class SysNoticeController extends BaseController {
   @Log(title = "通知公告", businessType = BusinessType.DELETE)
   @RequiresPermissions("system:notice:remove")
   @ResponseBody
-  @PostMapping("/remove")
+  @DeleteMapping
   public Result remove(String ids) {
     return custom(noticeService.removeByIds(ids));
   }

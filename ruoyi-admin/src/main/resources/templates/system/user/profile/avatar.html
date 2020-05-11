@@ -71,7 +71,7 @@ function submitHandler() {
   $.ajax({
     url: ctx + "system/user/profile/updateAvatar",
     data: formdata,
-    type: "post",
+    type: "PUT",
     processData: false,
     contentType: false,
     success: function (result) {

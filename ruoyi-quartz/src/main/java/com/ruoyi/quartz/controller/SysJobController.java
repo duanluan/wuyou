@@ -61,7 +61,7 @@ public class SysJobController extends BaseController {
 
   @Log(title = "定时任务", businessType = BusinessType.DELETE)
   @RequiresPermissions("monitor:job:remove")
-  @PostMapping("/remove")
+  @DeleteMapping
   @ResponseBody
   public Result remove(String ids) throws SchedulerException {
     jobService.deleteJobByIds(ids);

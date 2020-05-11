@@ -37,7 +37,7 @@ public class SysJob extends BaseEntity {
    * 任务名称
    */
   @Excel(name = "任务名称")
-  @Size(min = 0, max = 64, message = "任务名称不能超过64个字符")
+  @Size(max = 64, message = "任务名称不能超过64个字符")
   @NotBlank(message = "任务名称不能为空")
   private String jobName;
   /**
@@ -49,14 +49,14 @@ public class SysJob extends BaseEntity {
    * 调用目标字符串
    */
   @Excel(name = "调用目标字符串")
-  @Size(min = 0, max = 1000, message = "调用目标字符串长度不能超过500个字符")
+  @Size(max = 1000, message = "调用目标字符串长度不能超过500个字符")
   @NotBlank(message = "调用目标字符串不能为空")
   private String invokeTarget;
   /**
    * cron执行表达式
    */
   @Excel(name = "执行表达式 ")
-  @Size(min = 0, max = 255, message = "Cron执行表达式不能超过255个字符")
+  @Size(max = 255, message = "Cron执行表达式不能超过255个字符")
   @NotBlank(message = "Cron执行表达式不能为空")
   private String cronExpression;
   /**

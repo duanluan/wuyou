@@ -66,7 +66,7 @@ public class SysJobLogController extends BaseController {
 
   @Log(title = "调度日志", businessType = BusinessType.DELETE)
   @RequiresPermissions("monitor:job:remove")
-  @PostMapping("/remove")
+  @DeleteMapping
   @ResponseBody
   public Result remove(String ids) {
     return custom(jobLogService.removeByIds(ids));

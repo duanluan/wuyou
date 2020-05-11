@@ -46,8 +46,10 @@
 </div>
 <th:block th:include="include :: footer"/>
 <script th:inline="javascript">
-var prefix = ctx + "system/user/authRole";
-var userRoles = [[${userRoles}]]
+const userRoles = [[${userRoles}]],
+  selector = { userId: '#userId' },
+  $id = $(selector.userId),
+  id = $id.val();
 
 $(() => {
   var options = {
@@ -96,7 +98,7 @@ $(() => {
 function submitHandler(index, layero) {
   var rows = $.table.selectFirstColumns();
   var data = { "userId": $("#userId").val(), "roleIds": rows.join() };
-  $.operate.saveTab(prefix + "/insertAuthRole", data);
+  $.operate.save1(ctx + 'system/users/' + id, 'PUT', data)
 }
 </script>
 </body>

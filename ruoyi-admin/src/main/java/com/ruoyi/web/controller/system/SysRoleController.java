@@ -150,7 +150,7 @@ public class SysRoleController extends BaseController {
   @Log(title = "角色管理", businessType = BusinessType.DELETE)
   @RequiresPermissions("system:role:remove")
   @ResponseBody
-  @PostMapping("/remove")
+  @DeleteMapping
   public Result remove(String ids) {
     try {
       return custom(roleService.deleteByIds(ids));

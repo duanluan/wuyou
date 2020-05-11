@@ -110,7 +110,7 @@ public class SysDictTypeController extends BaseController {
   @Log(title = "字典类型", businessType = BusinessType.DELETE)
   @RequiresPermissions("system:dict:remove")
   @ResponseBody
-  @PostMapping("/remove")
+  @DeleteMapping
   public Result remove(String ids) {
     return custom(dictTypeService.removeByIds(ids));
   }

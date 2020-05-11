@@ -23,6 +23,10 @@
 </div>
 <th:block th:include="include :: footer"/>
 <script type="text/javascript">
+const selector = { userId: '#userId' },
+  $id = $(selector.userId),
+  id = $id.val();
+
 $("#form-user-resetPwd").validate({
   rules: {
     password: {
@@ -36,7 +40,7 @@ $("#form-user-resetPwd").validate({
 
 function submitHandler() {
   if ($.validate.form()) {
-    $.operate.save(ctx + "system/user/resetPwd", $('#form-user-resetPwd').serialize());
+    $.operate.save1(ctx + 'system/users/' + id + '/resetPwd', 'PUT', $('#form-user-resetPwd').serialize())
   }
 }
 </script>

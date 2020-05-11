@@ -27,7 +27,7 @@ public class SysNotice extends BaseEntity {
   /**
    * 公告标题
    */
-  @Size(min = 0, max = 50, message = "公告标题不能超过50个字符")
+  @Size(max = 50, message = "公告标题不能超过50个字符")
   @NotBlank(message = "公告标题不能为空")
   private String noticeTitle;
   /**

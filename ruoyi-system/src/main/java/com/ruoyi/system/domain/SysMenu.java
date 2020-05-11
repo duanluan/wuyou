@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,12 +31,13 @@ public class SysMenu extends BaseEntity {
   /**
    * 菜单名称
    */
-  @Size(min = 0, max = 50, message = "菜单名称长度不能超过50个字符")
+  @Size(max = 50, message = "菜单名称长度不能超过50个字符")
   @NotBlank(message = "菜单名称不能为空")
   private String menuName;
   /**
    * 父菜单名称
    */
+  @TableField(exist = false)
   private String parentName;
   /**
    * 父菜单ID
@@ -49,7 +51,7 @@ public class SysMenu extends BaseEntity {
   /**
    * 菜单URL
    */
-  @Size(min = 0, max = 200, message = "请求地址不能超过200个字符")
+  @Size(max = 200, message = "请求地址不能超过200个字符")
   private String url;
   /**
    * 打开方式：menuItem页签 menuBlank新窗口
@@ -58,7 +60,7 @@ public class SysMenu extends BaseEntity {
   /**
    * 类型（1: 目录, 2: 菜单, 3: 按钮）
    */
-  @NotBlank(message = "菜单类型不能为空")
+  @NotNull(message = "菜单类型不能为空")
   private Integer menuType;
   /**
    * 菜单状态:0显示,1隐藏
@@ -67,7 +69,7 @@ public class SysMenu extends BaseEntity {
   /**
    * 权限字符串
    */
-  @Size(min = 0, max = 100, message = "权限标识长度不能超过100个字符")
+  @Size(max = 100, message = "权限标识长度不能超过100个字符")
   private String perms;
   /**
    * 菜单图标

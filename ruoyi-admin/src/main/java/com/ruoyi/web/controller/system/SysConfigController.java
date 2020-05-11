@@ -114,7 +114,7 @@ public class SysConfigController extends BaseController {
   @Log(title = "参数管理", businessType = BusinessType.DELETE)
   @RequiresPermissions("system:config:remove")
   @ResponseBody
-  @PostMapping("/remove")
+  @DeleteMapping
   public Result remove(String ids) {
     return custom(configService.removeByIds(ids));
   }

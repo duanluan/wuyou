@@ -134,7 +134,7 @@ public class GenController extends BaseController {
 
   @RequiresPermissions("tool:gen:remove")
   @Log(title = "代码生成", businessType = BusinessType.DELETE)
-  @PostMapping("/remove")
+  @DeleteMapping
   @ResponseBody
   public Result remove(String ids) {
     genTableService.removeByIds(ids);

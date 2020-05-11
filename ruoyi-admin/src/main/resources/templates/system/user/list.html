@@ -94,8 +94,7 @@ const editFlag = [[${@permission.hasPermi('system:user:edit')}]],
   removeFlag = [[${@permission.hasPermi('system:user:remove')}]],
   resetPwdFlag = [[${@permission.hasPermi('system:user:resetPwd')}]],
 
-  prefix = ctx + 'system/user',
-  apiPrefix = prefix + 's';
+  prefix = ctx + 'system/users';
 
 $(() => {
   let panehHidden = false;
@@ -110,13 +109,13 @@ $(() => {
 function queryUserList() {
   $.table.init({
     method: 'GET',
-    url: apiPrefix,
-    createUrl: prefix + '/edit/0',
-    updateUrl: prefix + '/edit/{id}',
-    removeUrl: apiPrefix + '/remove',
-    exportUrl: apiPrefix + '/export',
-    importUrl: apiPrefix + '/importData',
-    importTemplateUrl: apiPrefix + '/importTemplate',
+    url: prefix + '/list',
+    createUrl: prefix + '/0',
+    updateUrl: prefix + '/{id}',
+    removeUrl: prefix,
+    exportUrl: prefix + '/export',
+    importUrl: prefix + '/importData',
+    importTemplateUrl: prefix + '/importTemplate',
     sortName: 'createTime',
     sortOrder: 'desc',
     modalName: '用户',
@@ -165,7 +164,7 @@ function queryUserList() {
         return `
           <a class="btn btn-success btn-xs ${editFlag}" href="javascript:void(0)" onclick="$.operate.edit(${id})"><i class="fa fa-edit"></i>编辑</a>
           <a class="btn btn-danger btn-xs ${removeFlag}" href="javascript:void(0)" onclick="$.operate.remove(${id})"><i class="fa fa-remove"></i>删除</a>
-          <a tabindex="0" class="btn btn-info btn-xs" role="button" data-container="body" data-placement="left" data-toggle="popover" data-html="true" data-trigger="hover" data-content="${more}"><i class="fa fa-chevron-circle-right"></i>更多操作</a>
+          <a tabindex="0" class="btn btn-info btn-xs" role="button" data-container="body" data-toggle="popover" data-placement="left" data-html="true" data-trigger="manual" data-content="${more}"><i class="fa fa-chevron-circle-right"></i>更多操作</a>
         `;
       }
     }]
@@ -210,14 +209,12 @@ function dept() {
 
 /* 用户管理-重置密码 */
 function resetPwd(userId) {
-  var url = prefix + '/resetPwd/' + userId;
-  $.modal.open("重置密码", url, '800', '300');
+  $.modal.open("重置密码", prefix + '/' + userId + '/resetPwd', '800', '300');
 }
 
 /* 用户管理-分配角色 */
 function authRole(userId) {
-  var url = prefix + '/authRole/' + userId;
-  $.modal.openTab("用户分配角色", url);
+  $.modal.open("用户分配角色", prefix + '/' + userId + '/authRole');
 }
 
 /* 用户状态显示 */
@@ -233,14 +230,14 @@ function statusTools(row) {
 /* 用户管理-停用 */
 function disable(userId) {
   $.modal.confirm("确认要停用用户吗？", function () {
-    $.operate.post(prefix + "/changeStatus", { "userId": userId, "status": 1 });
+    $.operate.put(prefix + "/changeStatus", { "userId": userId, "status": 1 });
   })
 }
 
 /* 用户管理启用 */
 function enable(userId) {
   $.modal.confirm("确认要启用用户吗？", function () {
-    $.operate.post(prefix + "/changeStatus", { "userId": userId, "status": 0 });
+    $.operate.put(prefix + "/changeStatus", { "userId": userId, "status": 0 });
   })
 }
 </script>

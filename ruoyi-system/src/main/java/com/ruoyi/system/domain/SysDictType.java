@@ -31,14 +31,14 @@ public class SysDictType extends BaseEntity {
    * 字典名称
    */
   @Excel(name = "字典名称")
-  @Size(min = 0, max = 100, message = "字典类型名称长度不能超过100个字符")
+  @Size(max = 100, message = "字典类型名称长度不能超过100个字符")
   @NotBlank(message = "字典名称不能为空")
   private String dictName;
   /**
    * 字典类型
    */
   @Excel(name = "字典类型")
-  @Size(min = 0, max = 100, message = "字典类型类型长度不能超过100个字符")
+  @Size(max = 100, message = "字典类型类型长度不能超过100个字符")
   @NotBlank(message = "字典类型不能为空")
   private String dictType;
   /**

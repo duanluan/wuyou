@@ -129,7 +129,7 @@ public class SysProfileController extends BaseController {
    */
   @Log(title = "个人信息", businessType = BusinessType.UPDATE)
   @ResponseBody
-  @PostMapping("/updateAvatar")
+  @PutMapping("/updateAvatar")
   public Result updateAvatar(@RequestParam("avatarfile") MultipartFile file) {
     SysUser currentUser = ShiroUtils.getSysUser();
     try {

@@ -194,7 +194,7 @@ public class DemoOperateController extends BaseController {
    * 删除用户
    */
   @ResponseBody
-  @PostMapping("/remove")
+  @DeleteMapping
   public Result remove(String ids) {
     Integer[] userIds = Convert.toIntArray(ids);
     for (Integer userId : userIds) {

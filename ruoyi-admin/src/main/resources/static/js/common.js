@@ -41,7 +41,7 @@ $(function () {
   $(document).on("mouseenter", '.table [data-toggle="popover"]', function () {
     var _this = this;
     $(this).popover("show");
-    $(".popover").on("mouseleave", function () {
+    $(document).on("mouseleave", ".popover", function () {
       $(_this).popover('hide');
     });
   })

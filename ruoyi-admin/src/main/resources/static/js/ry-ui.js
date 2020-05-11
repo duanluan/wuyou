@@ -908,13 +908,21 @@ var table = {
         };
         $.ajax(config)
       },
-      // post请求传输
+      // post 请求传输
       post: function (url, data, callback) {
         $.operate.submit(url, "post", "json", data, callback);
       },
-      // get请求传输
+      // put 请求传输
+      put: function (url, data, callback) {
+        $.operate.submit(url, "put", "json", data, callback);
+      },
+      // get 请求传输
       get: function (url, callback) {
         $.operate.submit(url, "get", "json", "", callback);
+      },
+      // delete 请求传输
+      delete: function (url, callback) {
+        $.operate.submit(url, "delete", "json", "", callback);
       },
       // 详细信息
       detail: function (id, width, height) {
@@ -964,7 +972,7 @@ var table = {
             $.operate.get(url);
           } else {
             var data = { "ids": id };
-            $.operate.submit(url, "post", "json", data);
+            $.operate.submit(url, "DELETE", "json", data);
           }
         });
 
@@ -980,7 +988,7 @@ var table = {
         $.modal.confirm("确认要删除选中的" + rows.length + "条数据吗?", function () {
           var url = table.options.removeUrl;
           var data = { "ids": rows.join() };
-          $.operate.submit(url, "post", "json", data);
+          $.operate.submit(url, "DELETE", "json", data);
         });
       },
       // 清空信息
