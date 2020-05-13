@@ -77,7 +77,7 @@ var table = {
           id: options.id,
           url: options.url,                                   // 请求后台的URL（*）
           contentType: "application/x-www-form-urlencoded",   // 编码类型
-          method: options.method ? options.method : 'post',                                      // 请求方式（*）
+          method: options.method ? options.method : 'post',   // 请求方式（*）
           cache: false,                                       // 是否使用缓存
           height: options.height,                             // 表格的高度
           striped: options.striped,                           // 是否显示行间隔色
@@ -110,6 +110,7 @@ var table = {
           clickToSelect: options.clickToSelect,				        // 是否启用点击选中行
           singleSelect: options.singleSelect,                 // 是否单选checkbox
           mobileResponsive: options.mobileResponsive,         // 是否支持移动端适配
+          cardView: options.cardView,                         // 是否启用显示卡片视图
           detailView: options.detailView,                     // 是否启用显示细节视图
           onClickRow: options.onClickRow,                     // 点击某行触发的事件
           onDblClickRow: options.onDblClickRow,               // 双击某行触发的事件
