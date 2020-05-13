@@ -10,6 +10,7 @@ import com.ruoyi.framework.util.ShiroUtils;
 import com.ruoyi.system.domain.SysDept;
 import com.ruoyi.system.domain.SysRole;
 import com.ruoyi.system.domain.SysUser;
+import com.ruoyi.system.enums.SysDeptStatus;
 import com.ruoyi.system.service.ISysDeptService;
 import com.ruoyi.system.service.ISysUserService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -102,6 +103,9 @@ public class SysDeptController extends BaseController {
       return error("修改部门'" + dept.getDeptName() + "'失败，部门名称已存在");
     } else if (dept.getParentId().equals(dept.getDeptId())) {
       return error("修改部门'" + dept.getDeptName() + "'失败，上级部门不能是自己");
+    } else if (SysDeptStatus.DISABLE.getValue().equals(dept.getStatus())
+      && deptService.countNormalChildrenById(dept.getDeptId()) > 0) {
+      return error("该部门包含未停用的子部门！");
     }
     dept.setUpdateBy(ShiroUtils.getLoginName());
     return custom(deptService.update(dept));

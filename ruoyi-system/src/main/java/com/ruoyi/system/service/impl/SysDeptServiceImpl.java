@@ -213,4 +213,15 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
     SysDept info = super.getOne(new QueryWrapper<>(sysDeptQuerier));
     return info != null && info.getDeptId() != deptId;
   }
+
+  /**
+   * 根据 ID 查询所有子部门（正常状态）
+   *
+   * @param deptId 部门 ID
+   * @return 子部门数
+   */
+  @Override
+  public int countNormalChildrenById(Long deptId) {
+    return deptMapper.countNormalChildrenById(deptId);
+  }
 }

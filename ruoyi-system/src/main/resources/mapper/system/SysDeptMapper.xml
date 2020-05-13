@@ -41,6 +41,14 @@
     where find_in_set(#{deptId}, ancestors)
   </select>
 
+  <select id="countNormalChildrenById" resultType="java.lang.Integer">
+    select count(*)
+    from sys_dept
+    where status = 0
+      and del_flag = 0
+      and find_in_set(#{deptId}, ancestors)
+  </select>
+
   <update id="updateChildren">
     update sys_dept set ancestors =
     <foreach collection="depts" item="item" index="index" separator=" " open="case dept_id" close="end">

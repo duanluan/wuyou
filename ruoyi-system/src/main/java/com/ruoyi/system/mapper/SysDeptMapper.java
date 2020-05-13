@@ -54,10 +54,18 @@ public interface SysDeptMapper extends BaseMapper<SysDept> {
   void updateStatus(SysDept dept);
 
   /**
-   * 根据ID查询所有子部门
+   * 根据 ID 查询所有子部门
    *
    * @param deptId 部门ID
    * @return 部门列表
    */
   List<SysDept> listChildrenById(Long deptId);
+
+  /**
+   * 根据 ID 查询所有子部门（正常状态）
+   *
+   * @param deptId 部门 ID
+   * @return 子部门数
+   */
+  int countNormalChildrenById(Long deptId);
 }

@@ -80,4 +80,12 @@ public interface ISysDeptService extends IService<SysDept> {
    * @return 结果
    */
   boolean checkNameUnique(SysDept dept);
+
+  /**
+   * 根据 ID 查询所有子部门（正常状态）
+   *
+   * @param deptId 部门 ID
+   * @return 子部门数
+   */
+  int countNormalChildrenById(Long deptId);
 }
