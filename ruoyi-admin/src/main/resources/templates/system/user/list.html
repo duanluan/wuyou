@@ -158,13 +158,13 @@ function queryUserList() {
       formatter: (value, row, index) => {
         const id = row.userId;
         const more = `
-          <a class='btn btn-default btn-xs ${resetPwdFlag}' href='javascript:void(0)' onclick='resetPwd(${id})'><i class='fa fa-key'></i>重置密码</a>
-          <a class='btn btn-default btn-xs ${editFlag}' href='javascript:void(0)' onclick='authRole(${id})'><i class='fa fa-check-square-o'></i>分配角色</a>
+          <button class='btn btn-default btn-xs ${resetPwdFlag}' onclick='resetPwd(${id})'><i class='fa fa-key'></i> 重置密码</button>
+          <button class='btn btn-default btn-xs ${editFlag}' onclick='authRole(${id})'><i class='fa fa-check-square-o'></i> 分配角色</button>
         `;
         return `
-          <a class="btn btn-success btn-xs ${editFlag}" href="javascript:void(0)" onclick="$.operate.edit(${id})"><i class="fa fa-edit"></i>编辑</a>
-          <a class="btn btn-danger btn-xs ${removeFlag}" href="javascript:void(0)" onclick="$.operate.remove(${id})"><i class="fa fa-remove"></i>删除</a>
-          <a tabindex="0" class="btn btn-info btn-xs" role="button" data-container="body" data-toggle="popover" data-placement="left" data-html="true" data-trigger="manual" data-content="${more}"><i class="fa fa-chevron-circle-right"></i>更多操作</a>
+          <button class="btn btn-success btn-xs ${editFlag}" onclick="$.operate.edit(${id})"><i class="fa fa-edit"></i> 编辑</button>
+          <button class="btn btn-danger btn-xs ${removeFlag}" onclick="$.operate.remove(${id})"><i class="fa fa-remove"></i> 删除</button>
+          <button tabindex="0" class="btn btn-info btn-xs" data-container="body" data-toggle="popover" data-placement="left" data-html="true" data-trigger="manual" data-content="${more}"><i class="fa fa-chevron-circle-right"></i> 更多操作</button>
         `;
       }
     }]

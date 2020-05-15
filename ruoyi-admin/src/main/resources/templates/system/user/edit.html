@@ -118,7 +118,7 @@
 <th:block th:include="include :: footer"/>
 <th:block th:include="include :: select2-js"/>
 <script type="text/javascript">
-const prefix = ctx + "system/users",
+let prefix = ctx + "system/users",
   id = '[[${user?.userId}]]';
 
 $("#form-user-edit").validate({
@@ -187,11 +187,12 @@ function submitHandler() {
     data.push({ "name": "status", "value": status });
     data.push({ "name": "roleIds", "value": roleIds });
     data.push({ "name": "postIds", "value": postIds });
-    let type = 'post';
+    let type = 'post', newPrefix = prefix;
     if (id) {
       type = 'put';
+      newPrefix = newPrefix + "/" + id;
     }
-    $.operate.save1(prefix, type, data);
+    $.operate.save1(newPrefix, type, data);
   }
 }
 

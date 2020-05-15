@@ -37,13 +37,6 @@
     </div>
   </form>
 </div>
-
-<div class="row">
-  <div class="col-sm-offset-5 col-sm-10">
-    <button type="button" class="btn btn-sm btn-primary" onclick="submitHandler()"><i class="fa fa-check"></i>保 存</button>&nbsp;
-    <button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i class="fa fa-reply-all"></i>关 闭</button>
-  </div>
-</div>
 <th:block th:include="include :: footer"/>
 <script th:inline="javascript">
 const userRoles = [[${userRoles}]],

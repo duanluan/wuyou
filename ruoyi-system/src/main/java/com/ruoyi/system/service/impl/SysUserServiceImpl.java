@@ -310,6 +310,10 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
    */
   @Override
   public boolean checkLoginNameUnique(String loginName) {
+    if(StringUtils.isBlank(loginName)){
+      return false;
+    }
+
     SysUser sysUserQuerier = new SysUser();
     sysUserQuerier.setLoginName(loginName);
     return super.count(new QueryWrapper<>(sysUserQuerier)) > 0;
@@ -323,9 +327,14 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
    */
   @Override
   public boolean checkPhoneUnique(SysUser user) {
+    String phonenumber = user.getPhonenumber();
+    if(StringUtils.isBlank(phonenumber)){
+      return false;
+    }
+
     long userId = user.getUserId() == null ? -1L : user.getUserId();
     SysUser sysUserQuerier = new SysUser();
-    sysUserQuerier.setPhonenumber(user.getPhonenumber());
+    sysUserQuerier.setPhonenumber(phonenumber);
     SysUser info = super.getOne(new QueryWrapper<>(sysUserQuerier));
     return info != null && info.getUserId() != userId;
   }
@@ -338,9 +347,14 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
    */
   @Override
   public boolean checkEmailUnique(SysUser user) {
+    String email = user.getEmail();
+    if(StringUtils.isBlank(email)){
+      return false;
+    }
+
     long userId = user.getUserId() == null ? -1L : user.getUserId();
     SysUser sysUserQuerier = new SysUser();
-    sysUserQuerier.setEmail(user.getEmail());
+    sysUserQuerier.setEmail(email);
     SysUser info = super.getOne(new QueryWrapper<>(sysUserQuerier));
     return info != null && info.getUserId() != userId;
   }

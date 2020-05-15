@@ -170,8 +170,8 @@ public class SysUserController extends BaseController {
   @Log(title = LOG_TITLE, businessType = BusinessType.UPDATE)
   @RequiresPermissions("system:user:edit")
   @ResponseBody
-  @PutMapping
-  public Result update(@Validated SysUser user) {
+  @PutMapping("/{userId}")
+  public Result update(@PathVariable("userId") Long userId, @Validated SysUser user) {
     userService.checkAllowed(user);
     if (userService.checkPhoneUnique(user)) {
       return error("修改用户'" + user.getLoginName() + "'失败，手机号码已存在");

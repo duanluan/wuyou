@@ -40,7 +40,10 @@ $(function () {
   // 气泡弹出框特效（移到元素时）
   $(document).on("mouseenter", '.table [data-toggle="popover"]', function () {
     var _this = this;
-    $(this).popover("show");
+    $(this).popover({
+      // Bootstrap 升级到 3.4.1 后，由于安全策略，在 html 属性值中禁用了一些标签（https://blog.getbootstrap.com/2019/02/13/bootstrap-4-3-1-and-3-4-1/）
+      sanitize: false
+    }).popover("show");
     $(document).on("mouseleave", ".popover", function () {
       $(_this).popover('hide');
     });
