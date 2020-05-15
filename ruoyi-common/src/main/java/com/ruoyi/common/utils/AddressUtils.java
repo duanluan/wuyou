@@ -1,8 +1,7 @@
 package com.ruoyi.common.utils;
 
+import com.alibaba.fastjson.JSONObject;
 import com.ruoyi.common.config.Global;
-import com.ruoyi.common.json.JSON;
-import com.ruoyi.common.json.JSONObject;
 import com.ruoyi.common.utils.http.HttpUtils;
 import lombok.extern.slf4j.Slf4j;
 
@@ -14,28 +13,30 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class AddressUtils {
 
-  public static final String IP_URL = "http://ip.taobao.com/service/getIpInfo.php";
+  // IP 地址查询
+  public static final String IP_URL = "http://whois.pconline.com.cn/ipJson.jsp";
+  // 未知地址
+  public static final String UNKNOWN = "XX XX";
 
   public static String getRealAddressByIp(String ip) {
-    String address = "XX XX";
+    String address = UNKNOWN;
 
     // 内网不查询
     if (IpUtils.internalIp(ip)) {
-      return "内网IP";
+      return "内网 IP";
     }
     if (Global.isAddressEnabled()) {
-      String rspStr = HttpUtils.sendPost(IP_URL, "ip=" + ip);
-      if (StringUtils.isEmpty(rspStr)) {
-        log.error("获取地理位置异常 {}", ip);
-        return address;
-      }
-      JSONObject obj;
       try {
-        obj = JSON.unmarshal(rspStr, JSONObject.class);
-        JSONObject data = obj.getObj("data");
-        String region = data.getStr("region");
-        String city = data.getStr("city");
-        address = region + " " + city;
+        String rspStr = HttpUtils.sendGet(IP_URL, "ip=" + ip + "&json=true");
+        if (StringUtils.isEmpty(rspStr))
+        {
+          log.error("获取地理位置异常 {}", ip);
+          return UNKNOWN;
+        }
+        JSONObject obj = JSONObject.parseObject(rspStr);
+        String region = obj.getString("pro");
+        String city = obj.getString("city");
+        return String.format("%s %s", region, city);
       } catch (Exception e) {
         log.error("获取地理位置异常 {}", ip);
       }
