@@ -15,7 +15,7 @@ public class CharsetKit {
   /**
    * GBK
    */
-  public static final String GBK_STRING = "GBK";
+  private static final String GBK_STRING = "GBK";
   /**
    * GBK
    */

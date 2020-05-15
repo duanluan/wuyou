@@ -2,6 +2,7 @@ package com.ruoyi.common.utils;
 
 import com.alibaba.fastjson.JSONObject;
 import com.ruoyi.common.config.Global;
+import com.ruoyi.common.core.text.CharsetKit;
 import com.ruoyi.common.utils.http.HttpUtils;
 import lombok.extern.slf4j.Slf4j;
 
@@ -27,7 +28,7 @@ public class AddressUtils {
     }
     if (Global.isAddressEnabled()) {
       try {
-        String rspStr = HttpUtils.sendGet(IP_URL, "ip=" + ip + "&json=true");
+        String rspStr = HttpUtils.sendGet(IP_URL, "ip=" + ip + "&json=true", CharsetKit.GBK.name());
         if (StringUtils.isEmpty(rspStr))
         {
           log.error("获取地理位置异常 {}", ip);
@@ -38,7 +39,7 @@ public class AddressUtils {
         String city = obj.getString("city");
         return String.format("%s %s", region, city);
       } catch (Exception e) {
-        log.error("获取地理位置异常 {}", ip);
+        log.error("获取地理位置异常 {}", e);
       }
     }
     return address;
