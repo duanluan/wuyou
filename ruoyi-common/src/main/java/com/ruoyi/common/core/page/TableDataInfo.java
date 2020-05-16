@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * 表格分页数据对象
+ * 表格分页数据对象 TODO 待删除
  *
  * @author ruoyi
  */
