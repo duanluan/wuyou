@@ -12,11 +12,14 @@ import com.ruoyi.system.domain.SysRole;
 import com.ruoyi.system.enums.SysDeptStatus;
 import com.ruoyi.system.mapper.SysDeptMapper;
 import com.ruoyi.system.service.ISysDeptService;
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -58,6 +61,29 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
   @DataScope
   public List<Ztree> listTree(SysDept dept) {
     return initZtree(list(dept));
+  }
+
+  /**
+   * 查询部门管理树（排除下级）
+   *
+   * @param dept 部门
+   * @return 所有部门信息
+   */
+  @Override
+  @DataScope(deptAlias = "d")
+  public List<Ztree> listTreeExcludeChild(SysDept dept) {
+    Long deptId = dept.getDeptId();
+    List<SysDept> deptList = list(dept);
+    Iterator<SysDept> it = deptList.iterator();
+    while (it.hasNext()) {
+      SysDept d = (SysDept) it.next();
+      if (d.getDeptId().intValue() == deptId
+        || ArrayUtils.contains(StringUtils.split(d.getAncestors(), ","), deptId + "")) {
+        it.remove();
+      }
+    }
+    List<Ztree> ztrees = initZtree(deptList);
+    return ztrees;
   }
 
   /**
