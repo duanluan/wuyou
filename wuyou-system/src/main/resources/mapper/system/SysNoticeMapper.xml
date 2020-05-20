@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wuyou.system.mapper.SysNoticeMapper">
+
+  <select id="page" resultType="com.wuyou.system.domain.SysNotice">
+    select sn.* from sys_notice sn
+    <where>
+      <if test="notice.noticeTitle != null and notice.noticeTitle != ''">
+        and sn.notice_title like concat('%', #{notice.noticeTitle}, '%')
+      </if>
+      <if test="notice.noticeType != null and notice.noticeType != ''">
+        and sn.notice_type = #{notice.noticeType}
+      </if>
+      <if test="notice.createBy != null and notice.createBy != ''">
+        and sn.create_by like concat('%', #{notice.createBy}, '%')
+      </if>
+    </where>
+  </select>
+</mapper>

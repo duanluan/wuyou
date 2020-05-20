@@ -443,7 +443,7 @@ CREATE TABLE `sys_oper_log`  (
 -- ----------------------------
 -- Records of sys_oper_log
 -- ----------------------------
-INSERT INTO `sys_oper_log` VALUES (1, '操作日志', 9, 'com.ruoyi.web.controller.monitor.SysOperlogController.clean()', 'POST', 1, 'admin', '研发部门', '/monitor/operlog/clean', '127.0.0.1', '内网IP', '{ }', '{\r\n  \"msg\" : \"成功\",\r\n  \"code\" : 0\r\n}', 0, '', NULL);
+INSERT INTO `sys_oper_log` VALUES (1, '操作日志', 9, 'com.wuyou.web.controller.monitor.SysOperlogController.clean()', 'POST', 1, 'admin', '研发部门', '/monitor/operlog/clean', '127.0.0.1', '内网IP', '{ }', '{\r\n  \"msg\" : \"成功\",\r\n  \"code\" : 0\r\n}', 0, '', NULL);
 
 -- ----------------------------
 -- Table structure for sys_post

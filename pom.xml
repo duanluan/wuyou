@@ -4,16 +4,16 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.ruoyi</groupId>
-  <artifactId>ruoyi</artifactId>
-  <version>4.2.0</version>
+  <groupId>com.wuyou</groupId>
+  <artifactId>wuyou</artifactId>
+  <version>1.0.0</version>
 
-  <name>ruoyi</name>
-  <url>https://github.com/duanluan/ruoyi</url>
+  <name>wuyou</name>
+  <url>https://github.com/duanluan/wuyou</url>
   <description>无尤管理系统</description>
 
   <properties>
-    <ruoyi.version>4.2.0</ruoyi.version>
+    <wuyou.version>1.0.0</wuyou.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <java.version>1.8</java.version>
@@ -188,48 +188,48 @@
 
       <!-- 定时任务-->
       <dependency>
-        <groupId>com.ruoyi</groupId>
-        <artifactId>ruoyi-quartz</artifactId>
-        <version>${ruoyi.version}</version>
+        <groupId>com.wuyou</groupId>
+        <artifactId>wuyou-quartz</artifactId>
+        <version>${wuyou.version}</version>
       </dependency>
 
       <!-- 代码生成-->
       <dependency>
-        <groupId>com.ruoyi</groupId>
-        <artifactId>ruoyi-generator</artifactId>
-        <version>${ruoyi.version}</version>
+        <groupId>com.wuyou</groupId>
+        <artifactId>wuyou-generator</artifactId>
+        <version>${wuyou.version}</version>
       </dependency>
 
       <!-- 核心模块-->
       <dependency>
-        <groupId>com.ruoyi</groupId>
-        <artifactId>ruoyi-framework</artifactId>
-        <version>${ruoyi.version}</version>
+        <groupId>com.wuyou</groupId>
+        <artifactId>wuyou-framework</artifactId>
+        <version>${wuyou.version}</version>
       </dependency>
 
       <!-- 系统模块-->
       <dependency>
-        <groupId>com.ruoyi</groupId>
-        <artifactId>ruoyi-system</artifactId>
-        <version>${ruoyi.version}</version>
+        <groupId>com.wuyou</groupId>
+        <artifactId>wuyou-system</artifactId>
+        <version>${wuyou.version}</version>
       </dependency>
 
       <!-- 通用工具-->
       <dependency>
-        <groupId>com.ruoyi</groupId>
-        <artifactId>ruoyi-common</artifactId>
-        <version>${ruoyi.version}</version>
+        <groupId>com.wuyou</groupId>
+        <artifactId>wuyou-common</artifactId>
+        <version>${wuyou.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
 
   <modules>
-    <module>ruoyi-admin</module>
-    <module>ruoyi-framework</module>
-    <module>ruoyi-system</module>
-    <module>ruoyi-quartz</module>
-    <module>ruoyi-generator</module>
-    <module>ruoyi-common</module>
+    <module>wuyou-admin</module>
+    <module>wuyou-framework</module>
+    <module>wuyou-system</module>
+    <module>wuyou-quartz</module>
+    <module>wuyou-generator</module>
+    <module>wuyou-common</module>
   </modules>
   <packaging>pom</packaging>
 

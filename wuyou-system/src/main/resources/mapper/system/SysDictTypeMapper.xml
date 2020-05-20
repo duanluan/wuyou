@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wuyou.system.mapper.SysDictTypeMapper">
+
+  <select id="page" resultType="com.wuyou.system.domain.SysDictType">
+    select sdt.* from sys_dict_type sdt
+    <where>
+      <if test="dictType.dictName != null and dictType.dictName != ''">
+        and dict_name like concat('%', #{dictType.dictName}, '%')
+      </if>
+      <if test="dictType.status != null">
+        and status = #{dictType.status}
+      </if>
+      <if test="dictType.dictType != null and dictType.dictType != ''">
+        and dict_type like concat('%', #{dictType.dictType}, '%')
+      </if>
+      <if test="dictType.params.beginTime != null and dictType.params.beginTime != ''"><!-- 开始时间检索 -->
+        and date_format(create_time,'%y%m%d') &gt;= date_format(#{dictType.params.beginTime},'%y%m%d')
+      </if>
+      <if test="dictType.params.endTime != null and dictType.params.endTime != ''"><!-- 结束时间检索 -->
+        and date_format(create_time,'%y%m%d') &lt;= date_format(#{dictType.params.endTime},'%y%m%d')
+      </if>
+    </where>
+  </select>
+</mapper> 

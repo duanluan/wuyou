@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wuyou.system.mapper.SysUserOnlineMapper">
+
+  <select id="page" resultType="com.wuyou.system.domain.SysUserOnline">
+    select suo.* from sys_user_online suo
+    <where>
+      <if test="userOnline.ipaddr != null and userOnline.ipaddr != ''">
+        and suo.ipaddr like concat('%', #{userOnline.ipaddr}, '%')
+      </if>
+      <if test="userOnline.loginName != null and userOnline.loginName != ''">
+        and suo.login_name like concat('%', #{userOnline.loginName}, '%')
+      </if>
+    </where>
+  </select>
+
+  <select id="selectOnlineByExpired" resultType="com.wuyou.system.domain.SysUserOnline">
+    select *
+    from sys_user_online
+    where #{lastAccessTime} >= last_access_time
+    order by last_access_time
+  </select>
+
+  <insert id="saveOnline" parameterType="com.wuyou.system.domain.SysUserOnline">
+    replace into sys_user_online(session_id, login_name, dept_name, ipaddr, login_location, browser, os, status, start_timestamp, last_access_time, expire_time)
+    values (#{sessionId}, #{loginName}, #{deptName}, #{ipaddr}, #{loginLocation}, #{browser}, #{os}, #{status}, #{startTimestamp}, #{lastAccessTime}, #{expireTime})
+  </insert>
+</mapper> 

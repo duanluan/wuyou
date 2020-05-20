@@ -1,10 +1,12 @@
 ## 简介
 
-[若依](http://doc.ruoyi.vip)在 Gitee 上的 Star 比较多，但是许多地方的代码不是很复合我的规范，于是对其进行优化，以供自己和感兴趣的你使用。
+[若依](http://doc.wuyou.vip)在 Gitee 上的 Star 比较多，但是许多地方的代码不是很复合我的规范，于是对其进行优化，以供自己和感兴趣的你使用。
 
 做了哪些修改，为什么这样修改，会详尽的记录，如果有任何问题欢迎提出，但我不一定会改。
 
-会同步更新 Gitee 上 RuoYi 的 Commits，提交格式默认为 “fork: 2020-04-23 cb32d5c ……”。
+会同步更新 Gitee 上 wuyou 的 Commits，提交格式默认为 “fork: 2020-04-23 cb32d5c ……”。
+
+**现求一个好看的 Logo**
 
 ## 开发设计规范
 
@@ -36,7 +38,7 @@
 
     a. 含义：地址表（假设指的是楼栋当中的地址，比如某个卫生间）有多个翻译，region 指区域范围，area 指一片地方，position 多指地位，也指具体在某物和某物对比的位置，address 指某栋楼的地址，而不是楼栋内部，location 指地方的定位，综合下来，建议使用 location。又比如实际 XXX 这些字段，有 real 和 actual 两种翻译，前者指真实存在而不是虚幻的，后者指行为或事实上已经发生的事，所以应该用后者。
 
-    b. 词性：“佛性”一点，单词要有过去、现在、未来，下面举一些例子🌰。
+    b. 词性：“佛性”一点，单词要有过去、现在、未来，下面举一些例子 🌰。
 
       * 创建时间：created_time | create_time
       * 是否删除：deleted | delete_flag、is_delete
@@ -60,7 +62,7 @@
 
 | 名称 | 内容 | 进度 | 备注 |
 | --- | --- | --- | --- |
-| 代码格式 | IDEA 默认的代码格式化。缩进修改为两个空格。HTMl 中的 style 标签和 script 标签中的内容顶头开始。修改 Service 和 Mapper 的方法名。 | 100% | [我的 Intellij IDEA code style XML 文件](https://github.com/csaarg/csaarg-ruoyi/blob/master/docs/%5BIntellij%20IDEA%20code%20style%5D%20nowrap.xml) |
+| 代码格式 | IDEA 默认的代码格式化。缩进修改为两个空格。HTMl 中的 style 标签和 script 标签中的内容顶头开始。修改 Service 和 Mapper 的方法名。 | 100% | [我的 Intellij IDEA code style XML 文件](./docs/%5BIntellij%20IDEA%20code%20style%5D%20nowrap.xml) |
 | MyBatis Mapper XML | 类使用全路径免除配置 typeAliasesPackage，避免 IDEA 报错，方便提示。删除 parameterType 属性。 | 100% |  |
 | Java 代码结构 | 添加 Lombok，修改所有实体类，LoggerFactory.getLogger 替换为 @Slf4j。调整注解顺序：@RequestMapping < @ResponseBody < @Tranactional < @RequiresPermissions < @Log，@NotNull/NotBlank < @Size < …… < @Excel 等等。 | 100% |  |
 | static 目录结构 | 所有第三方依赖全部放到 lib 目录下 | 100% |  |
