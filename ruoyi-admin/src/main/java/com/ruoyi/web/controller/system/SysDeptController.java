@@ -103,8 +103,7 @@ public class SysDeptController extends BaseController {
       return error("修改部门'" + dept.getDeptName() + "'失败，部门名称已存在");
     } else if (dept.getParentId().equals(dept.getDeptId())) {
       return error("修改部门'" + dept.getDeptName() + "'失败，上级部门不能是自己");
-    } else if (SysDeptStatus.DISABLE.getValue().equals(dept.getStatus())
-      && deptService.countNormalChildrenById(dept.getDeptId()) > 0) {
+    } else if (SysDeptStatus.DISABLE.getValue().equals(dept.getStatus()) && deptService.countNormalChildrenById(dept.getDeptId()) > 0) {
       return error("该部门包含未停用的子部门！");
     }
     dept.setUpdateBy(ShiroUtils.getLoginName());
@@ -162,8 +161,7 @@ public class SysDeptController extends BaseController {
   public List<Ztree> treeDataExcludeChild(@PathVariable(value = "excludeId", required = false) Long excludeId) {
     SysDept dept = new SysDept();
     dept.setDeptId(excludeId);
-    List<Ztree> ztrees = deptService.listTreeExcludeChild(dept);
-    return ztrees;
+    return deptService.listTreeExcludeChild(dept);
   }
 
   /**
