@@ -125,8 +125,8 @@ shiro:
     indexUrl: /index
     # 验证码开关
     captchaEnabled: true
-    # 验证码类型 math 数组计算 char 字符
-    captchaType: math
+    # 验证码类型（1: png, 2: gif, 3: 中文, 4: 中文 gif, 5: 算术）
+    captchaType: 5
   cookie:
     # 设置Cookie的域名 默认空，即当前访问的域名
     domain:

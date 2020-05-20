@@ -74,7 +74,7 @@ public class ShiroConfig {
    * 验证码类型
    */
   @Value("${shiro.user.captchaType}")
-  private String captchaType;
+  private int captchaType;
   /**
    * 设置Cookie的域名
    */
@@ -241,7 +241,7 @@ public class ShiroConfig {
     filterChainDefinitionMap.put("/img/**", "anon");
     filterChainDefinitionMap.put("/js/**", "anon");
     filterChainDefinitionMap.put("/lib/**", "anon");
-    filterChainDefinitionMap.put("/captcha/captchaImage**", "anon");
+    filterChainDefinitionMap.put("/captcha/**", "anon");
     // 退出 logout地址，shiro去清除session
     filterChainDefinitionMap.put("/logout", "logout");
     // 不需要拦截的访问

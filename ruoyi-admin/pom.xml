@@ -78,6 +78,12 @@
       <artifactId>lombok</artifactId>
     </dependency>
 
+    <!-- 验证码 -->
+    <dependency>
+      <groupId>com.github.whvcse</groupId>
+      <artifactId>easy-captcha</artifactId>
+    </dependency>
+
     <!-- 核心模块-->
     <dependency>
       <groupId>com.ruoyi</groupId>

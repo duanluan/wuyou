@@ -28,7 +28,7 @@
 | 阿里编码规约及代码优化 | 使用 [Alibaba Java Coding Guidelines](https://plugins.jetbrains.com/plugin/10046-alibaba-java-coding-guidelines) 扫描并解决。 | 剩余 59 - 13 |  |
 | 前端枚举 | 前端状态、类型等字段使用枚举。 | 0% |  |
 | 前端新增页面和编辑页面合一 | 前端的新增页面合并到编辑页面中，避免重复修改。 | 10% |  |
-| 接口修改为 RESTful 规范 | …… | 10% |  |
+| 接口修改为 RESTful 规范 | 因为是模板引擎，而且为了避免麻烦（比如页面不复数，接口复数），所以列出数据的接口是 \[GET\] XXX/list | 10% |  |
 | 修改代码生成模板 | …… | 0% |  |
 | Swagger 替换为 [knife4j](https://gitee.com/xiaoym/knife4j) | …… | 0% |  |
-| 验证码替换为 [EasyCaptcha](https://github.com/whvcse/EasyCaptcha) | …… | 0% |  |
+| 验证码替换为 [EasyCaptcha](https://github.com/whvcse/EasyCaptcha) | …… | 100% |  |

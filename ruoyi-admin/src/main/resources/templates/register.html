@@ -42,7 +42,7 @@
     <div class="col-sm-5">
       <form id="registerForm" autocomplete="off">
         <h4 class="no-margins">注册：</h4>
-        <p class="m-t-md">你若不离不弃，我必生死相依</p>
+        <p class="m-t-md">故君子敬始而慎终，终始如一，是君子之道，礼义之文也</p>
         <input type="text" name="username" class="form-control uname" placeholder="用户名" maxlength="20"/>
         <input type="password" name="password" class="form-control pword" placeholder="密码" maxlength="20"/>
         <input type="password" name="confirmPassword" class="form-control pword" placeholder="确认密码" maxlength="20"/>
@@ -52,7 +52,7 @@
           </div>
           <div class="col-xs-6">
             <a href="javascript:void(0);" title="点击更换验证码">
-              <img th:src="@{captcha/captchaImage(type=${captchaType})}" class="imgcode" width="85%"/>
+              <img th:src="@{captcha(type=${captchaType})}" class="imgcode" width="85%"/>
             </a>
           </div>
         </div>
@@ -85,7 +85,7 @@
 $(function () {
   validateRule();
   $('.imgcode').click(function () {
-    var url = ctx + "captcha/captchaImage?type=" + captchaType + "&s=" + Math.random();
+    var url = ctx + "captcha?type=" + captchaType + "&s=" + Math.random();
     $(".imgcode").attr("src", url);
   });
 });
