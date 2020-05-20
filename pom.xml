@@ -10,7 +10,7 @@
 
   <name>ruoyi</name>
   <url>https://github.com/duanluan/ruoyi</url>
-  <description>若一管理系统</description>
+  <description>无尤管理系统</description>
 
   <properties>
     <ruoyi.version>4.2.0</ruoyi.version>
