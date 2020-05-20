@@ -17,21 +17,21 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <java.version>1.8</java.version>
-    <shiro.version>1.4.2</shiro.version>
+    <shiro.version>1.5.3</shiro.version>
     <thymeleaf.extras.shiro.version>2.0.0</thymeleaf.extras.shiro.version>
     <mybatis.plus.version>3.3.1</mybatis.plus.version>
     <dynamic.datasource.version>3.1.0</dynamic.datasource.version>
-    <druid.version>1.1.14</druid.version>
-    <bitwalker.version>1.19</bitwalker.version>
+    <druid.version>1.1.22</druid.version>
+    <bitwalker.version>1.21</bitwalker.version>
     <easy.captcha.version>1.6.2</easy.captcha.version>
     <swagger.version>2.9.2</swagger.version>
     <fastjson.version>1.2.68</fastjson.version>
     <lombok.version>1.18.12</lombok.version>
 
-    <oshi.version>3.9.1</oshi.version>
-    <commons.io.version>2.5</commons.io.version>
-    <commons.fileupload.version>1.3.3</commons.fileupload.version>
-    <poi.version>3.17</poi.version>
+    <oshi.version>5.0.2</oshi.version>
+    <commons.io.version>2.6</commons.io.version>
+    <commons.fileupload.version>1.4</commons.fileupload.version>
+    <poi.version>4.1.2</poi.version>
     <velocity.version>1.7</velocity.version>
   </properties>
 
@@ -39,16 +39,16 @@
   <dependencyManagement>
     <dependencies>
 
-      <!-- SpringBoot的依赖配置-->
+      <!-- SpringBoot 的依赖配置-->
       <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-dependencies</artifactId>
-        <version>2.1.1.RELEASE</version>
+        <version>2.3.0.RELEASE</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
 
-      <!--阿里数据库连接池 -->
+      <!-- 阿里数据库连接池 -->
       <dependency>
         <groupId>com.alibaba</groupId>
         <artifactId>druid-spring-boot-starter</artifactId>
@@ -62,28 +62,28 @@
         <version>${easy.captcha.version}</version>
       </dependency>
 
-      <!--Shiro核心框架 -->
+      <!--Shiro 核心框架 -->
       <dependency>
         <groupId>org.apache.shiro</groupId>
         <artifactId>shiro-core</artifactId>
         <version>${shiro.version}</version>
       </dependency>
 
-      <!-- Shiro使用Srping框架 -->
+      <!-- Shiro 使用 Srping 框架 -->
       <dependency>
         <groupId>org.apache.shiro</groupId>
         <artifactId>shiro-spring</artifactId>
         <version>${shiro.version}</version>
       </dependency>
 
-      <!-- Shiro使用EhCache缓存框架 -->
+      <!-- Shiro 使用 EhCache 缓存框架 -->
       <dependency>
         <groupId>org.apache.shiro</groupId>
         <artifactId>shiro-ehcache</artifactId>
         <version>${shiro.version}</version>
       </dependency>
 
-      <!-- thymeleaf模板引擎和shiro框架的整合 -->
+      <!-- Thymeleaf 模板引擎和 Shiro 框架的整合 -->
       <dependency>
         <groupId>com.github.theborakompanioni</groupId>
         <artifactId>thymeleaf-extras-shiro</artifactId>

@@ -207,9 +207,11 @@ public class GenTableServiceImpl extends ServiceImpl<GenTableMapper, GenTable> i
   @Override
   public byte[] generatorCode(String tableName) {
     ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-    ZipOutputStream zip = new ZipOutputStream(outputStream);
-    generatorCode(tableName, zip);
-    IOUtils.closeQuietly(zip);
+    try (ZipOutputStream zip = new ZipOutputStream(outputStream)) {
+      generatorCode(tableName, zip);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
     return outputStream.toByteArray();
   }
 
@@ -222,11 +224,13 @@ public class GenTableServiceImpl extends ServiceImpl<GenTableMapper, GenTable> i
   @Override
   public byte[] generatorCode(String[] tableNames) {
     ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-    ZipOutputStream zip = new ZipOutputStream(outputStream);
-    for (String tableName : tableNames) {
-      generatorCode(tableName, zip);
+    try (ZipOutputStream zip = new ZipOutputStream(outputStream)) {
+      for (String tableName : tableNames) {
+        generatorCode(tableName, zip);
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
     }
-    IOUtils.closeQuietly(zip);
     return outputStream.toByteArray();
   }
 
@@ -255,7 +259,7 @@ public class GenTableServiceImpl extends ServiceImpl<GenTableMapper, GenTable> i
         // 添加到zip
         zip.putNextEntry(new ZipEntry(VelocityUtils.getFileName(template, table)));
         IOUtils.write(sw.toString(), zip, ENCODING);
-        IOUtils.closeQuietly(sw);
+        sw.close();
         zip.flush();
         zip.closeEntry();
       } catch (IOException e) {

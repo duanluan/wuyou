@@ -12,11 +12,11 @@
   <artifactId>ruoyi-framework</artifactId>
 
   <description>
-    framework框架核心
+    framework 框架核心
   </description>
 
   <dependencies>
-    <!-- SpringBoot Web容器 -->
+    <!-- SpringBoot Web 容器 -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
@@ -40,19 +40,19 @@
       <artifactId>druid-spring-boot-starter</artifactId>
     </dependency>
 
-    <!-- Shiro使用Spring框架 -->
+    <!-- Shiro 使用 Spring 框架 -->
     <dependency>
       <groupId>org.apache.shiro</groupId>
       <artifactId>shiro-spring</artifactId>
     </dependency>
 
-    <!-- Shiro使用EhCache缓存框架 -->
+    <!-- Shiro 使用 EhCache 缓存框架 -->
     <dependency>
       <groupId>org.apache.shiro</groupId>
       <artifactId>shiro-ehcache</artifactId>
     </dependency>
 
-    <!-- thymeleaf模板引擎和shiro框架的整合 -->
+    <!-- Thymeleaf 模板引擎和 Shiro 框架的整合 -->
     <dependency>
       <groupId>com.github.theborakompanioni</groupId>
       <artifactId>thymeleaf-extras-shiro</artifactId>
@@ -70,15 +70,15 @@
       <artifactId>oshi-core</artifactId>
     </dependency>
 
-    <dependency>
-      <groupId>net.java.dev.jna</groupId>
-      <artifactId>jna</artifactId>
-    </dependency>
+    <!--<dependency>-->
+    <!--  <groupId>net.java.dev.jna</groupId>-->
+    <!--  <artifactId>jna</artifactId>-->
+    <!--</dependency>-->
 
-    <dependency>
-      <groupId>net.java.dev.jna</groupId>
-      <artifactId>jna-platform</artifactId>
-    </dependency>
+    <!--<dependency>-->
+    <!--  <groupId>net.java.dev.jna</groupId>-->
+    <!--  <artifactId>jna-platform</artifactId>-->
+    <!--</dependency>-->
 
     <dependency>
       <groupId>org.projectlombok</groupId>
