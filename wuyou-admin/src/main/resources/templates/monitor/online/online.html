@@ -115,9 +115,7 @@ $(function () {
         align: 'center',
         formatter: (value, row, index) => {
           // 传值改成 array 类型
-          var ids = [row.sessionId]
-          var msg = '<a class="btn btn-danger btn-xs ' + forceFlag + '" href="javascript:void(0)" onclick="forceLogout(\'' + ids + '\')"><i class="fa fa-sign-out"></i > 强退 </a> ';
-          return msg;
+          return `<a class="btn btn-danger btn-xs ${forceFlag}" href="javascript:void(0)" onclick="forceLogout('${row.sessionId}')"><i class="fa fa-sign-out"></i > 强退 </a> `;
         }
       }]
   };
@@ -142,7 +140,7 @@ function batchForceLogout() {
   }
   $.modal.confirm("确认要强退选中的" + rows.length + "条数据吗?", function () {
     var url = prefix + "/batchForceLogout";
-    var data = { "ids": rows };
+    var data = { "ids": rows.join() };
     $.operate.post(url, data);
   });
 }

@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wuyou.common.annotation.Log;
 import com.wuyou.common.core.controller.BaseController;
 import com.wuyou.common.core.domain.Result;
+import com.wuyou.common.core.text.Convert;
 import com.wuyou.common.enums.BusinessType;
 import com.wuyou.common.enums.OnlineStatus;
 import com.wuyou.framework.shiro.session.OnlineSession;
@@ -54,15 +55,16 @@ public class SysUserOnlineController extends BaseController {
    * 2、将 batchForceLogout 和 forceLogout 的权限逻辑 改成了 OR【按需要设定】
    * 3、@RequestParam("ids[]") ==> @RequestParam("ids")
    * 4、开源拥有者 可以斟酌一下
+   *
    * @param ids
    * @return
    */
-  @RequiresPermissions(value = {"monitor:online:batchForceLogout","monitor:online:forceLogout"},logical = Logical.OR)
+  @RequiresPermissions(value = {"monitor:online:batchForceLogout", "monitor:online:forceLogout"}, logical = Logical.OR)
   @Log(title = "在线用户", businessType = BusinessType.FORCE)
   @ResponseBody
   @PostMapping("/batchForceLogout")
-  public Result batchForceLogout(@RequestParam("ids") String[] ids) {
-    for (String sessionId : ids) {
+  public Result batchForceLogout(@RequestParam("ids") String ids) {
+    for (String sessionId : Convert.toStrArray(ids)) {
       SysUserOnline online = userOnlineService.getById(sessionId);
       if (online == null) {
         return error("用户已下线");
