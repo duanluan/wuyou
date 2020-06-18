@@ -7,7 +7,7 @@ package com.wuyou.common.enums;
  */
 public enum OperatorType {
   /**
-   * 其它
+   * 其他
    */
   OTHER,
 

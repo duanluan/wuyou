@@ -7,7 +7,7 @@ package com.wuyou.common.enums;
  */
 public enum BusinessType {
   /**
-   * 其它
+   * 其他
    */
   OTHER,
 

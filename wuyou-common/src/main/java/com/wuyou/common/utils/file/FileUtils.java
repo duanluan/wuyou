@@ -104,7 +104,7 @@ public class FileUtils {
       // google浏览器
       filename = URLEncoder.encode(filename, ENC);
     } else {
-      // 其它浏览器
+      // 其他浏览器
       filename = URLEncoder.encode(filename, ENC);
     }
     return filename;

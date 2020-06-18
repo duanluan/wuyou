@@ -205,6 +205,14 @@ public class DemoTableController extends BaseController {
   }
 
   /**
+   * 主子表提交
+   */
+  @GetMapping("/subdata")
+  public String subdata() {
+    return PREFIX + "/subdata";
+  }
+
+  /**
    * 表格其他操作
    */
   @GetMapping("/other")

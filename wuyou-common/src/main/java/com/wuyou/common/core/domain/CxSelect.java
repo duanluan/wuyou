@@ -4,6 +4,11 @@ import lombok.Data;
 
 import java.util.List;
 
+/**
+ * CxSelect树结构实体类
+ *
+ * @author wuyou
+ */
 @Data
 public class CxSelect {
 

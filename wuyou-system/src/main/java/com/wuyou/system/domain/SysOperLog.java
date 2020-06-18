@@ -32,9 +32,9 @@ public class SysOperLog {
   @Excel(name = "操作模块")
   private String title;
   /**
-   * 业务类型（0其它 1新增 2修改 3删除）
+   * 业务类型（0其他 1新增 2修改 3删除）
    */
-  @Excel(name = "业务类型", readConverterExp = "0=其它,1=新增,2=修改,3=删除,4=授权,5=导出,6=导入,7=强退,8=生成代码,9=清空数据")
+  @Excel(name = "业务类型", readConverterExp = "0=其他,1=新增,2=修改,3=删除,4=授权,5=导出,6=导入,7=强退,8=生成代码,9=清空数据")
   private Integer businessType;
   /**
    * 业务类型数组
@@ -52,9 +52,9 @@ public class SysOperLog {
   @Excel(name = "请求方式")
   private String requestMethod;
   /**
-   * 操作类别（0其它 1后台用户 2手机端用户）
+   * 操作类别（0其他 1后台用户 2手机端用户）
    */
-  @Excel(name = "操作类别", readConverterExp = "0=其它,1=后台用户,2=手机端用户")
+  @Excel(name = "操作类别", readConverterExp = "0=其他,1=后台用户,2=手机端用户")
   private Integer operatorType;
   /**
    * 操作人员

@@ -1,6 +1,7 @@
 package com.wuyou.web.controller.demo.controller;
 
 import com.wuyou.common.core.controller.BaseController;
+import com.wuyou.common.core.domain.AjaxResult;
 import com.wuyou.common.core.domain.Result;
 import com.wuyou.common.core.page.PageDomain;
 import com.wuyou.common.core.page.TableDataInfo;
@@ -8,6 +9,7 @@ import com.wuyou.common.core.page.TableSupport;
 import com.wuyou.common.core.text.Convert;
 import com.wuyou.common.exception.BusinessException;
 import com.wuyou.common.utils.poi.ExcelUtil;
+import com.wuyou.web.controller.demo.domain.CustomerModel;
 import com.wuyou.web.controller.demo.domain.UserOperateModel;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
@@ -137,6 +139,17 @@ public class DemoOperateController extends BaseController {
     int userId = USERS.size() + 1;
     user.setUserId(userId);
     return success(USERS.put(userId, user));
+  }
+
+  /**
+   * 新增保存主子表信息
+   */
+  @PostMapping("/customer/add")
+  @ResponseBody
+  public AjaxResult addSave(CustomerModel customerModel)
+  {
+    System.out.println(customerModel.toString());
+    return AjaxResult.success();
   }
 
   /**

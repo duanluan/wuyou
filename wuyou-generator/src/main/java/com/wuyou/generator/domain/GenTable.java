@@ -85,7 +85,7 @@ public class GenTable extends BaseEntity {
   @TableField(exist = false)
   private List<GenTableColumn> columns;
   /**
-   * 其它生成选项
+   * 其他生成选项
    */
   private String options;
   /**
