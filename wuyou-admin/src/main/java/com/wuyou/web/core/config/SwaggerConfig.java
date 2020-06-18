@@ -2,6 +2,7 @@ package com.wuyou.web.core.config;
 
 import com.wuyou.common.config.Global;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -22,11 +23,19 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Configuration
 public class SwaggerConfig {
   /**
+   * 是否开启swagger
+   */
+  @Value("${swagger.enabled}")
+  private boolean enabled;
+
+  /**
    * 创建API
    */
   @Bean
   public Docket createRestApi() {
     return new Docket(DocumentationType.SWAGGER_2)
+      // 是否启用Swagger
+      .enable(enabled)
       // 用来创建该API的基本信息，展示在文档的页面中（自定义展示的信息）
       .apiInfo(apiInfo())
       // 设置哪些接口暴露给Swagger展示
