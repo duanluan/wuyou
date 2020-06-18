@@ -203,7 +203,7 @@ public final class HtmlFilter {
 
     s = processRemoveBlanks(s);
 
-    s = validateEntities(s);
+    // s = validateEntities(s);
 
     return s;
   }
