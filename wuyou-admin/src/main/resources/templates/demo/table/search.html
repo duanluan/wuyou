@@ -63,7 +63,7 @@
     </div>
 
     <div class="col-sm-12 search-collapse">
-      <p class="select-title"> 多级联动下拉查询 </p>
+      <p class="select-title">多级联动下拉查询</p>
       <form>
         <div class="select-list">
           <ul id="element">
@@ -190,7 +190,7 @@
 <th:block th:include="include :: jquery-cxSelect-js"/>
 <script th:inline="javascript">
 // 直接返回获取
-var data = [{ "v": "taobao", "n": " 淘宝 ", "s": [{ "v": "tm", "n": " 天猫 " }, { "v": "jhs", "n": " 聚划算 " }] }, { "v": "jd", "n": " 京东 ", "s": [{ "v": "jdcs", "n": " 京东超市 " }, { "v": "jdsx", "n": " 京东生鲜 " }] }];
+const data = [{"v":"taobao","n":"淘宝","s":[{"v":"tm","n":"天猫"},{"v":"jhs","n":"聚划算"}]},{"v":"jd","n":"京东","s":[{"v":"jdcs","n":"京东超市"},{"v":"jdsx","n":"京东生鲜"}]}];
 $('#element').cxSelect({
   selects: ['type', 'router'],
   jsonValue: 'v',
