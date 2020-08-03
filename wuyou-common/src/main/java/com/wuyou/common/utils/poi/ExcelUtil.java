@@ -199,7 +199,7 @@ public class ExcelUtil<T> {
             } else if (StringUtils.isNotEmpty(attr.readConverterExp())) {
               val = reverseByExp(Convert.toStr(val), attr.readConverterExp(), attr.separator());
             } else if (StringUtils.isNotEmpty(attr.dictType())) {
-              val = reverseDictByExp(attr.dictType(), Convert.toStr(val));
+              val = reverseDictByExp(Convert.toStr(val), attr.dictType(), attr.separator());
             }
             ReflectUtils.invokeSetter(entity, propertyName, val);
           }
@@ -428,7 +428,7 @@ public class ExcelUtil<T> {
         } else if (StringUtils.isNotEmpty(readConverterExp) && value != null) {
           cell.setCellValue(convertByExp(Convert.toStr(value), readConverterExp, separator));
         } else if (StringUtils.isNotEmpty(dictType)) {
-          cell.setCellValue(convertDictByExp(dictType, Convert.toStr(value)));
+          cell.setCellValue(convertDictByExp(Convert.toStr(value), dictType, separator));
         } else {
           // 设置列类型
           setCellVo(value, attr, cell);
@@ -561,27 +561,30 @@ public class ExcelUtil<T> {
    *
    * @param dictType  字典类型
    * @param dictValue 字典值
+   * @param dictType  字典类型
+   * @param separator 分隔符
    * @return 字典标签
    */
-  public static String convertDictByExp(String dictType, String dictValue) throws Exception {
+  public static String convertDictByExp(String dictValue, String dictType, String separator) throws Exception {
     Object bean = SpringUtils.getBean("dictUtils");
     String methodName = "getDictLabel";
-    Method method = bean.getClass().getDeclaredMethod(methodName, String.class, String.class);
-    return Convert.toStr(method.invoke(bean, dictType, dictValue));
+    Method method = bean.getClass().getDeclaredMethod(methodName, String.class, String.class, String.class);
+    return Convert.toStr(method.invoke(bean, dictType, dictValue, separator));
   }
 
   /**
    * 反向解析值字典值
    *
-   * @param dictType  字典类型
    * @param dictLabel 字典标签
+   * @param dictType  字典类型
+   * @param separator 分隔符
    * @return 字典值
    */
-  public static String reverseDictByExp(String dictType, String dictLabel) throws Exception {
+  public static String reverseDictByExp(String dictLabel, String dictType, String separator) throws Exception {
     Object bean = SpringUtils.getBean("dictUtils");
     String methodName = "getDictValue";
-    Method method = bean.getClass().getDeclaredMethod(methodName, String.class, String.class);
-    return Convert.toStr(method.invoke(bean, dictType, dictLabel));
+    Method method = bean.getClass().getDeclaredMethod(methodName, String.class, String.class, String.class);
+    return Convert.toStr(method.invoke(bean, dictType, dictLabel, separator));
   }
 
   /**
