@@ -3,7 +3,6 @@ package com.wuyou.quartz.util;
 import com.wuyou.common.constant.Constants;
 import com.wuyou.common.constant.ScheduleConstants;
 import com.wuyou.common.utils.ExceptionUtil;
-
 import com.wuyou.common.utils.bean.BeanUtils;
 import com.wuyou.common.utils.spring.SpringUtils;
 import com.wuyou.quartz.domain.SysJob;
