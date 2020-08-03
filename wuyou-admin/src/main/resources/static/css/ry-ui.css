@@ -350,7 +350,7 @@
 label.error {
   position: absolute;
   right: 18px;
-  top: 10px;
+  top: 6px;
   color: #ef392b;
   font-size: 12px;
   z-index: 99;
@@ -671,10 +671,10 @@ label {
   margin: 5px 15px 5px 0;
 }
 
-.select-list li p, .select-list li label:not(.radio-box):not(.select-time) {
+.select-list li p, .select-list li label:not(.radio-box) {
   float: left;
   width: 65px;
-  margin: 5px 5px 5px 0;
+  margin-top: 5px;
   text-align: right;
 }
 
@@ -708,11 +708,11 @@ label {
 
 .bootstrap-select.form-control .btn-default {
   color: inherit;
-  padding: 6px 12px;
-  border-radius: 1px;
+  padding: 4px 6px 4px;
+  border-radius: 4px;
   border: 1px solid #e5e6e7;
   outline: none;
-  height: 34px;
+  height: 31px;
   background: #FFFFFF none
 }
 
@@ -1180,6 +1180,7 @@ label {
   visibility: visible;
 }
 
+/* 设置滚动条样式 */
 ::-webkit-scrollbar {
   width: 6px;
   height: 10px;
@@ -1189,6 +1190,23 @@ label {
 ::-webkit-scrollbar-thumb {
   border-radius: 6px;
   background-color: #999;
+}
+
+/* 设置placeholder样式 */
+::-webkit-input-placeholder {
+  color: #b3b3b3!important;
+}
+
+:-moz-placeholder {
+  color: #b3b3b3!important;
+}
+
+::-moz-placeholder {
+  color: #b3b3b3!important;
+}
+
+:-ms-input-placeholder {
+  color: #b3b3b3!important;
 }
 
 
