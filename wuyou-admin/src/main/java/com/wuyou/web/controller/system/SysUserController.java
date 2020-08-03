@@ -9,6 +9,7 @@ import com.wuyou.common.utils.ObjectUtils;
 import com.wuyou.common.utils.poi.ExcelUtil;
 import com.wuyou.framework.shiro.service.SysPasswordService;
 import com.wuyou.framework.util.ShiroUtils;
+import com.wuyou.system.domain.SysRole;
 import com.wuyou.system.domain.SysUser;
 import com.wuyou.system.domain.SysUserRole;
 import com.wuyou.system.service.ISysPostService;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.wuyou.common.core.domain.Result.*;
 
@@ -130,7 +132,8 @@ public class SysUserController extends BaseController {
    */
   @GetMapping("/{userId}")
   public String edit(@PathVariable("userId") Long userId, ModelMap mmap) {
-    mmap.put("roles", roleService.listByUserId(userId));
+    List<SysRole> roles = roleService.listByUserId(userId);
+    mmap.put("roles", SysUser.isAdmin(userId) ? roles : roles.stream().filter(r -> !r.isAdmin()).collect(Collectors.toList()));
     mmap.put("posts", postService.listByUser(userId));
     if (ObjectUtils.greaterThanZero(userId)) {
       mmap.put("user", userService.getById(userId));

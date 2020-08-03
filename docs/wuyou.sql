@@ -11,7 +11,7 @@
  Target Server Version : 50728
  File Encoding         : 65001
 
- Date: 03/08/2020 15:21:03
+ Date: 03/08/2020 16:20:43
 */
 
 SET NAMES utf8mb4;
@@ -431,8 +431,8 @@ CREATE TABLE `sys_notice`  (
 -- ----------------------------
 -- Records of sys_notice
 -- ----------------------------
-INSERT INTO `sys_notice` VALUES (1, '温馨提醒：2018-07-01 若依新版本发布啦', 2, '新版本内容', 0, 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '管理员');
-INSERT INTO `sys_notice` VALUES (2, '维护通知：2018-07-01 若依系统凌晨维护', 1, '维护内容', 0, 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '管理员');
+INSERT INTO `sys_notice` VALUES (1, '温馨提醒：2018-07-01 新版本发布啦', 2, '新版本内容', 0, 'admin', '2018-03-16 11:33:00', 'ry', '2020-08-03 16:17:58', '系统管理员');
+INSERT INTO `sys_notice` VALUES (2, '维护通知：2018-07-01 系统凌晨维护', 1, '维护内容', 0, 'admin', '2018-03-16 11:33:00', 'ry', '2020-08-03 16:18:00', '系统管理员');
 
 -- ----------------------------
 -- Table structure for sys_oper_log
@@ -512,11 +512,8 @@ CREATE TABLE `sys_role`  (
 -- ----------------------------
 -- Records of sys_role
 -- ----------------------------
-INSERT INTO `sys_role` VALUES (1, '管理员', 'admin', 1, 1, 0, 0, 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '管理员');
+INSERT INTO `sys_role` VALUES (1, '系统管理员', 'admin', 1, 1, 0, 0, 'admin', '2018-03-16 11:33:00', 'ry', '2020-08-03 16:17:14', '系统管理员');
 INSERT INTO `sys_role` VALUES (2, '普通角色', 'common', 3, 2, 0, 0, 'admin', '2018-03-16 11:33:00', 'admin', '2020-07-01 12:13:24', '普通角色');
-INSERT INTO `sys_role` VALUES (4, 'test', 'test', 4, 1, 0, 0, '', '2020-07-01 11:59:08', 'admin', NULL, 'test1');
-INSERT INTO `sys_role` VALUES (8, 'test1', 'test1', 5, 1, 0, 1, 'admin', '2020-07-01 14:43:12', '', '2020-07-01 15:39:14', 'test1');
-INSERT INTO `sys_role` VALUES (9, 'test1', 'test2', 4, 1, 0, 0, 'admin', '2020-07-01 15:56:24', 'admin', '2020-07-01 16:30:12', '');
 
 -- ----------------------------
 -- Table structure for sys_role_dept
@@ -719,7 +716,6 @@ CREATE TABLE `sys_user`  (
 -- ----------------------------
 INSERT INTO `sys_user` VALUES (1, 103, 'admin', '无尤', '00', 'ry@qq.com', '15888888888', 0, '', 'b89f0f06d57a122ec1acabdacfcab9e6', '350483', 0, 0, '127.0.0.1', '2020-08-03 15:18:20', 'admin', '2020-04-22 10:21:00', 'ry', '2020-08-03 15:18:20', '管理员');
 INSERT INTO `sys_user` VALUES (2, 105, 'ry', '无尤', '00', 'ry@qq.com', '15666666666', 1, '', '3654ce1cb528fd6c160eed068c4f1709', '4bdcb6', 0, 0, '127.0.0.1', '2020-05-03 16:21:48', 'admin', '2020-04-22 10:21:00', 'admin', '2020-06-19 10:14:14', '测试员');
-INSERT INTO `sys_user` VALUES (3, 105, 'test1', 'test1', '00', 'test1@qq.com', '17625242928', 0, '', 'c34862bf852bf3dac8b760d4b288084b', '6d8abb', 0, 0, '', NULL, 'admin', '2020-08-02 22:54:51', '', NULL, '');
 
 -- ----------------------------
 -- Table structure for sys_user_online
