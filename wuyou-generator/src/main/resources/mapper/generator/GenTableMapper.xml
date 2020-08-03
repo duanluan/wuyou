@@ -8,6 +8,8 @@
     <id property="tableId" column="table_id"/>
     <result property="tableName" column="table_name"/>
     <result property="tableComment" column="table_comment"/>
+    <result property="subTableName" column="sub_table_name"/>
+    <result property="subTableFkName" column="sub_table_fk_name"/>
     <result property="className" column="class_name"/>
     <result property="tplCategory" column="tpl_category"/>
     <result property="packageName" column="package_name"/>
@@ -49,26 +51,6 @@
     <result property="updateTime" column="update_time"/>
   </resultMap>
 
-  <sql id="selectGenTableVo">
-    select table_id,
-           table_name,
-           table_comment,
-           class_name,
-           tpl_category,
-           package_name,
-           module_name,
-           business_name,
-           function_name,
-           function_author,
-           options,
-           create_by,
-           create_time,
-           update_by,
-           update_time,
-           remark
-    from gen_table
-  </sql>
-
   <select id="page" resultMap="GenTableResult">
     select gt.*
     from gen_table gt
@@ -104,74 +86,25 @@
     </foreach>
   </select>
 
+  <select id="selectGenTableAll" parameterType="String" resultMap="GenTableResult">
+	  select t.table_id, t.table_name, t.table_comment, t.sub_table_name, t.sub_table_fk_name, t.class_name, t.tpl_category, t.package_name, t.module_name, t.business_name, t.function_name, t.function_author, t.options, t.remark, c.column_id, c.column_name, c.column_comment, c.column_type, c.java_type, c.java_field, c.is_pk, c.is_increment, c.is_required, c.is_insert, c.is_edit, c.is_list, c.is_query, c.query_type, c.html_type, c.dict_type, c.sort
+		from gen_table t
+	  left join gen_table_column c on t.table_id = c.table_id
+		order by c.sort
+	</select>
+
   <select id="getById" resultMap="GenTableResult">
-    select t.table_id,
-           t.table_name,
-           t.table_comment,
-           t.class_name,
-           t.tpl_category,
-           t.package_name,
-           t.module_name,
-           t.business_name,
-           t.function_name,
-           t.function_author,
-           t.options,
-           t.remark,
-           c.column_id,
-           c.column_name,
-           c.column_comment,
-           c.column_type,
-           c.java_type,
-           c.java_field,
-           c.is_pk,
-           c.is_increment,
-           c.is_required,
-           c.is_insert,
-           c.is_edit,
-           c.is_list,
-           c.is_query,
-           c.query_type,
-           c.html_type,
-           c.dict_type,
-           c.sort
+    select t.table_id, t.table_name, t.table_comment, t.sub_table_name, t.sub_table_fk_name, t.class_name, t.tpl_category, t.package_name, t.module_name, t.business_name, t.function_name, t.function_author, t.options, t.remark, c.column_id, c.column_name, c.column_comment, c.column_type, c.java_type, c.java_field, c.is_pk, c.is_increment, c.is_required, c.is_insert, c.is_edit, c.is_list, c.is_query, c.query_type, c.html_type, c.dict_type, c.sort
     from gen_table t
-           LEFT JOIN gen_table_column c ON t.table_id = c.table_id
+    left join gen_table_column c on t.table_id = c.table_id
     where t.table_id = #{tableId}
     order by c.sort
   </select>
 
   <select id="getByName" resultMap="GenTableResult">
-    select t.table_id,
-           t.table_name,
-           t.table_comment,
-           t.class_name,
-           t.tpl_category,
-           t.package_name,
-           t.module_name,
-           t.business_name,
-           t.function_name,
-           t.function_author,
-           t.options,
-           t.remark,
-           c.column_id,
-           c.column_name,
-           c.column_comment,
-           c.column_type,
-           c.java_type,
-           c.java_field,
-           c.is_pk,
-           c.is_increment,
-           c.is_required,
-           c.is_insert,
-           c.is_edit,
-           c.is_list,
-           c.is_query,
-           c.query_type,
-           c.html_type,
-           c.dict_type,
-           c.sort
+    select t.table_id, t.table_name, t.table_comment, t.sub_table_name, t.sub_table_fk_name, t.class_name, t.tpl_category, t.package_name, t.module_name, t.business_name, t.function_name, t.function_author, t.options, t.remark, c.column_id, c.column_name, c.column_comment, c.column_type, c.java_type, c.java_field, c.is_pk, c.is_increment, c.is_required, c.is_insert, c.is_edit, c.is_list, c.is_query, c.query_type, c.html_type, c.dict_type, c.sort
     from gen_table t
-           LEFT JOIN gen_table_column c ON t.table_id = c.table_id
+    left join gen_table_column c on t.table_id = c.table_id
     where t.table_name = #{tableName}
     order by c.sort
   </select>

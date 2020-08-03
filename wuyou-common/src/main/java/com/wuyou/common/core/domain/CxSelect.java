@@ -28,4 +28,12 @@ public class CxSelect {
    * 子集数据字段名称
    */
   private List<CxSelect> s;
+
+  public CxSelect() {
+  }
+
+  public CxSelect(String v, String n) {
+    this.v = v;
+    this.n = n;
+  }
 }

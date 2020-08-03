@@ -58,6 +58,13 @@ public interface IGenTableService extends IService<GenTable> {
   List<GenTable> listDbTableByNames(String[] tableNames);
 
   /**
+   * 查询所有表信息
+   *
+   * @return 表信息集合
+   */
+  List<GenTable> selectGenTableAll();
+
+  /**
    * 查询业务信息
    *
    * @param id 业务ID

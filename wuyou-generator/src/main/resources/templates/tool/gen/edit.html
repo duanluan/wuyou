@@ -127,6 +127,7 @@
                           <select class='form-control' id="tplCategory" name='tplCategory' style="width: 100%">
                             <option value="crud" th:field="*{tplCategory}">单表（增删改查）</option>
                             <option value="tree" th:field="*{tplCategory}">树表（增删改查）</option>
+                            <option value="sub" th:field="*{tplCategory}">主子表（增删改查）</option>
                           </select>
                         </div>
                       </div>
@@ -164,6 +165,31 @@
                         <label class="col-sm-4 control-label is-required" title="用作类描述，例如 用户">生成功能名：<i class="fa fa-question-circle-o"></i></label>
                         <div class="col-sm-8">
                           <input name="functionName" class="form-control" type="text" placeholder="请输入生成功能名" maxlength="50" th:field="*{functionName}" required>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="hidden" id="subInfo">
+                    <h4 class="form-header h4">关联信息</h4>
+                    <div class="row">
+                      <div class="col-sm-6">
+                        <div class="form-group">
+                          <label class="col-sm-4 control-label is-required" title="关联子表的表名， 如：sys_user">关联子表的表名：<i class="fa fa-question-circle-o"></i></label>
+                          <div class="col-sm-8">
+                            <select class='type form-control' id="subTableName" name='subTableName' th:attr='data-value=*{subTableName}' style="width: 100%">
+                              <option value="">---请选择---</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="form-group">
+                          <label class="col-sm-4 control-label is-required" title="子表关联的外键名， 如：user_id">子表关联的外键名：<i class="fa fa-question-circle-o"></i></label>
+                          <div class="col-sm-8">
+                            <select class='router form-control' id="subTableFkName" name='subTableFkName' th:attr='data-value=*{subTableFkName}' style="width: 100%">
+                              <option value="">---请选择---</option>
+                            </select>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -227,7 +253,8 @@
 <th:block th:include="include :: select2-js"/>
 <th:block th:include="include :: bootstrap-table-reorder-js"/>
 <script th:src="@{/lib/jquery-tmpl/jquery.tmpl.min.js}"></script>
-<script type="text/javascript">
+<th:block th:include="include :: jquery-cxselect-js"/>
+<script th:inline="javascript">
 /*用户信息-修改*/
 $("#form-table-edit").validate({
   rules: {
@@ -236,6 +263,14 @@ $("#form-table-edit").validate({
     },
   },
   focusCleanup: true
+});
+
+/* 表级联信息 */
+var data = [[${data}]];
+$('#subInfo').cxSelect({
+  selects: ['type', 'router'],
+  jsonValue: 'v',
+  data: data
 });
 
 function submitHandler() {
@@ -286,8 +321,7 @@ $(function () {
         title: '字段描述',
         width: "10%",
         formatter: (value, row, index) => {
-          var html = $.common.sprintf("<input class='form-control' type='text' name='columns[%s].columnComment' value='%s'>", index, value);
-          return html;
+          return $.common.sprintf("<input class='form-control' type='text' name='columns[%s].columnComment' value='%s'>", index, value);
         }
       },
       {
@@ -313,8 +347,7 @@ $(function () {
         title: 'Java属性',
         width: "10%",
         formatter: (value, row, index) => {
-          var html = $.common.sprintf("<input class='form-control' type='text' name='columns[%s].javaField' value='%s' required>", index, value);
-          return html;
+          return $.common.sprintf("<input class='form-control' type='text' name='columns[%s].javaField' value='%s' required>", index, value);
         }
       },
       {
@@ -323,8 +356,7 @@ $(function () {
         width: "5%",
         formatter: (value, row, index) => {
           var isCheck = value == 1 ? 'checked' : '';
-          var html = $.common.sprintf("<label class='check-box'><input type='checkbox' name='columns[%s].isInsert' value='1' %s></label>", index, isCheck);
-          return html;
+          return $.common.sprintf("<label class='check-box'><input type='checkbox' name='columns[%s].isInsert' value='1' %s></label>", index, isCheck);
         }
       },
       {
@@ -333,8 +365,7 @@ $(function () {
         width: "5%",
         formatter: (value, row, index) => {
           var isCheck = value == 1 ? 'checked' : '';
-          var html = $.common.sprintf("<label class='check-box'><input type='checkbox' name='columns[%s].isEdit' value='1' %s></label>", index, isCheck);
-          return html;
+          return $.common.sprintf("<label class='check-box'><input type='checkbox' name='columns[%s].isEdit' value='1' %s></label>", index, isCheck);
         }
       },
       {
@@ -343,8 +374,7 @@ $(function () {
         width: "5%",
         formatter: (value, row, index) => {
           var isCheck = value == 1 ? 'checked' : '';
-          var html = $.common.sprintf("<label class='check-box'><input type='checkbox' name='columns[%s].isList' value='1' %s></label>", index, isCheck);
-          return html;
+          return $.common.sprintf("<label class='check-box'><input type='checkbox' name='columns[%s].isList' value='1' %s></label>", index, isCheck);
         }
       },
       {
@@ -353,8 +383,7 @@ $(function () {
         width: "5%",
         formatter: (value, row, index) => {
           var isCheck = value == 1 ? 'checked' : '';
-          var html = $.common.sprintf("<label class='check-box'><input type='checkbox' name='columns[%s].isQuery' value='1' %s></label>", index, isCheck);
-          return html;
+          return $.common.sprintf("<label class='check-box'><input type='checkbox' name='columns[%s].isQuery' value='1' %s></label>", index, isCheck);
         }
       },
       {
@@ -439,12 +468,19 @@ function tplCategoryVisible(tplCategory) {
     $("#treeParentCode").select2("val", [""]);
     $("#treeName").select2("val", [""]);
     $("#otherInfo").addClass("hidden");
-
+    $("#subInfo").addClass("hidden");
   } else if ("tree" == tplCategory) {
     $("#otherInfo").removeClass("hidden");
     $("#treeCode").attr("required", "true");
     $("#treeParentCode").attr("required", "true");
     $("#treeName").attr("required", "true");
+    $("#subInfo").addClass("hidden");
+  } else if ("sub" == tplCategory) {
+    $("#subInfo").removeClass("hidden");
+    $("#treeCode").select2("val", [""]);
+    $("#treeParentCode").select2("val", [""]);
+    $("#treeName").select2("val", [""]);
+    $("#otherInfo").addClass("hidden");
   }
 }
 
@@ -486,6 +522,10 @@ function doSubmit(index, layero) {
 </select>
 </div>
 
+
+
+
+
 </script>
 
 <!-- 查询方式 -->
@@ -503,6 +543,10 @@ function doSubmit(index, layero) {
 </select>
 </div>
 
+
+
+
+
 </script>
 
 <!-- 显示类型 -->
@@ -517,5 +561,9 @@ function doSubmit(index, layero) {
     <option value="datetime" {{if htmlType==="datetime"}}selected{{/if}}>日期控件</option>
 </select>
 </div>
+
+
+
+
 
 </script>

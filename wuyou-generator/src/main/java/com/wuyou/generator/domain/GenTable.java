@@ -40,12 +40,20 @@ public class GenTable extends BaseEntity {
   @NotBlank(message = "表描述不能为空")
   private String tableComment;
   /**
+   * 关联父表的表名
+   */
+  private String subTableName;
+  /**
+   * 本表关联父表的外键名
+   */
+  private String subTableFkName;
+  /**
    * 实体类名称(首字母大写)
    */
   @NotBlank(message = "实体类名称不能为空")
   private String className;
   /**
-   * 使用的模板（crud单表操作 tree树表操作）
+   * 使用的模板（crud: 单表操作, tree: 树表操作, sub: 主子表操作）
    */
   private String tplCategory;
   /**
@@ -79,6 +87,10 @@ public class GenTable extends BaseEntity {
   @TableField(exist = false)
   private GenTableColumn pkColumn;
   /**
+   * 子表信息
+   */
+  private GenTable subTable;
+  /**
    * 表列信息
    */
   @Valid
@@ -103,6 +115,14 @@ public class GenTable extends BaseEntity {
    */
   @TableField(exist = false)
   private String treeName;
+
+  public boolean isSub() {
+    return isSub(this.tplCategory);
+  }
+
+  public static boolean isSub(String tplCategory) {
+    return tplCategory != null && StringUtils.equals(GenConstants.TPL_SUB, tplCategory);
+  }
 
   public boolean isTree() {
     return isTree(this.tplCategory);

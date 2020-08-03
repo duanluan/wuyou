@@ -17,7 +17,7 @@ public interface GenTableMapper extends BaseMapper<GenTable> {
   /**
    * 分页查询业务列表
    *
-   * @param page 分页对象
+   * @param page     分页对象
    * @param genTable 业务信息
    * @return
    */
@@ -26,7 +26,7 @@ public interface GenTableMapper extends BaseMapper<GenTable> {
   /**
    * 分页查询据库列表
    *
-   * @param page 分页对象
+   * @param page     分页对象
    * @param genTable 数据库表集合
    * @return
    */
@@ -39,6 +39,13 @@ public interface GenTableMapper extends BaseMapper<GenTable> {
    * @return 数据库表集合
    */
   List<GenTable> listByNames(String[] tableNames);
+
+  /**
+   * 查询所有表信息
+   *
+   * @return 表信息集合
+   */
+  List<GenTable> selectGenTableAll();
 
   /**
    * 查询表ID业务信息
