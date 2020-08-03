@@ -59,18 +59,20 @@ public class CaptchaValidateFilter extends AccessControlFilter {
    * @return 是否允许访问
    */
   @Override
-  protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
+  protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) throws Exception {
     HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-    // 验证码禁用或不是表单提交时允许访问
+    // 验证码禁用 或不是表单提交 允许访问
     if (!captchaEnabled || !"post".equals(httpServletRequest.getMethod().toLowerCase())) {
       return true;
     }
+    return validateResponse(httpServletRequest, httpServletRequest.getParameter(ShiroConstants.CURRENT_VALIDATECODE));
+  }
 
-    // 获取验证码
-    String validateCode = httpServletRequest.getParameter(ShiroConstants.CURRENT_VALIDATECODE);
-    // 验证码是否正确
+  public boolean validateResponse(HttpServletRequest request, String validateCode) {
     Object obj = ShiroUtils.getSession().getAttribute(CaptchaConstants.SESSION_KEY);
     String code = String.valueOf(obj != null ? obj : "");
+    //无论验证码是否正确，凡验证过一次后都应将原值不可用,直到页面重新请求验证码,以防恶意用户持有该验证码进行针对后台发包的暴力破解
+    request.getSession().setAttribute(CaptchaConstants.SESSION_KEY, ShiroConstants.CAPTCHA_ERROR);
     return !StringUtils.isEmpty(validateCode) && validateCode.equalsIgnoreCase(code);
   }
 
