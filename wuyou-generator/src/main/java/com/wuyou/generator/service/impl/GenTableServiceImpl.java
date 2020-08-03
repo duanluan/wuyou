@@ -160,8 +160,8 @@ public class GenTableServiceImpl extends ServiceImpl<GenTableMapper, GenTable> i
   @Transactional
   @Override
   public void importGenTable(List<GenTable> tableList, String operName) {
-    for (GenTable table : tableList) {
-      try {
+    try {
+      for (GenTable table : tableList) {
         String tableName = table.getTableName();
         GenUtils.initTable(table, operName);
         if (super.save(table)) {
@@ -172,9 +172,9 @@ public class GenTableServiceImpl extends ServiceImpl<GenTableMapper, GenTable> i
             genTableColumnMapper.insert(column);
           }
         }
-      } catch (Exception e) {
-        log.error("表名 " + table.getTableName() + " 导入失败：", e);
       }
+    } catch (Exception e) {
+      throw new BusinessException("导入失败：" + e.getMessage());
     }
   }
 
