@@ -4,6 +4,8 @@ import com.wuyou.common.constant.CacheConstants;
 import com.wuyou.common.utils.CacheUtils;
 import com.wuyou.common.utils.StringUtils;
 import com.wuyou.system.domain.SysDictData;
+import org.apache.commons.collections4.CollectionUtils;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
@@ -12,6 +14,7 @@ import java.util.List;
  *
  * @author wuyou
  */
+@Component
 public class DictUtils {
   /**
    * 设置字典缓存
@@ -35,6 +38,48 @@ public class DictUtils {
       return StringUtils.cast(cacheObj);
     }
     return null;
+  }
+
+  /**
+   * 根据字典类型和字典值获取字典标签
+   *
+   * @param dictType  字典类型
+   * @param dictValue 字典值
+   * @return 字典标签
+   */
+  public static String getDictLabel(String dictType, String dictValue) {
+    if (StringUtils.isNotEmpty(dictType) && StringUtils.isNotEmpty(dictValue)) {
+      List<SysDictData> datas = getDictCache(dictType);
+      if (!CollectionUtils.sizeIsEmpty(datas)) {
+        for (SysDictData dict : datas) {
+          if (dictValue.equals(dict.getDictValue())) {
+            return dict.getDictLabel();
+          }
+        }
+      }
+    }
+    return dictValue;
+  }
+
+  /**
+   * 根据字典类型和字典标签获取字典值
+   *
+   * @param dictType  字典类型
+   * @param dictLabel 字典标签
+   * @return 字典值
+   */
+  public static String getDictValue(String dictType, String dictLabel) {
+    if (StringUtils.isNotEmpty(dictType) && StringUtils.isNotEmpty(dictLabel)) {
+      List<SysDictData> datas = getDictCache(dictType);
+      if (!CollectionUtils.sizeIsEmpty(datas)) {
+        for (SysDictData dict : datas) {
+          if (dictLabel.equals(dict.getDictLabel())) {
+            return dict.getDictValue();
+          }
+        }
+      }
+    }
+    return dictLabel;
   }
 
   /**

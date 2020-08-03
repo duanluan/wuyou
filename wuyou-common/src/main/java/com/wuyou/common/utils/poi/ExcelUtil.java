@@ -10,6 +10,7 @@ import com.wuyou.common.core.text.Convert;
 import com.wuyou.common.exception.BusinessException;
 import com.wuyou.common.utils.DateUtils;
 import com.wuyou.common.utils.reflect.ReflectUtils;
+import com.wuyou.common.utils.spring.SpringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
@@ -196,7 +197,9 @@ public class ExcelUtil<T> {
             if (StringUtils.isNotEmpty(attr.targetAttr())) {
               propertyName = field.getName() + "." + attr.targetAttr();
             } else if (StringUtils.isNotEmpty(attr.readConverterExp())) {
-              val = reverseByExp(String.valueOf(val), attr.readConverterExp(), attr.separator());
+              val = reverseByExp(Convert.toStr(val), attr.readConverterExp(), attr.separator());
+            } else if (StringUtils.isNotEmpty(attr.dictType())) {
+              val = reverseDictByExp(attr.dictType(), Convert.toStr(val));
             }
             ReflectUtils.invokeSetter(entity, propertyName, val);
           }
@@ -419,10 +422,13 @@ public class ExcelUtil<T> {
         String dateFormat = attr.dateFormat();
         String readConverterExp = attr.readConverterExp();
         String separator = attr.separator();
+        String dictType = attr.dictType();
         if (StringUtils.isNotEmpty(dateFormat) && value != null) {
           cell.setCellValue(DateUtils.parseDateToStr(dateFormat, (Date) value));
         } else if (StringUtils.isNotEmpty(readConverterExp) && value != null) {
-          cell.setCellValue(convertByExp(String.valueOf(value), readConverterExp, separator));
+          cell.setCellValue(convertByExp(Convert.toStr(value), readConverterExp, separator));
+        } else if (StringUtils.isNotEmpty(dictType)) {
+          cell.setCellValue(convertDictByExp(dictType, Convert.toStr(value)));
         } else {
           // 设置列类型
           setCellVo(value, attr, cell);
@@ -531,27 +537,51 @@ public class ExcelUtil<T> {
    */
   public static String reverseByExp(String propertyValue, String converterExp, String separator) throws Exception {
     StringBuilder propertyString = new StringBuilder();
-    try {
-      String[] convertSource = converterExp.split(",");
-      for (String item : convertSource) {
-        String[] itemArray = item.split("=");
-        if (StringUtils.containsAny(separator, propertyValue)) {
-          for (String value : propertyValue.split(separator)) {
-            if (itemArray[1].equals(value)) {
-              propertyString.append(itemArray[0] + separator);
-              break;
-            }
-          }
-        } else {
-          if (itemArray[1].equals(propertyValue)) {
-            return itemArray[0];
+    String[] convertSource = converterExp.split(",");
+    for (String item : convertSource) {
+      String[] itemArray = item.split("=");
+      if (StringUtils.containsAny(separator, propertyValue)) {
+        for (String value : propertyValue.split(separator)) {
+          if (itemArray[1].equals(value)) {
+            propertyString.append(itemArray[0] + separator);
+            break;
           }
         }
+      } else {
+        if (itemArray[1].equals(propertyValue)) {
+          return itemArray[0];
+        }
       }
-    } catch (Exception e) {
-      throw e;
     }
     return StringUtils.stripEnd(propertyString.toString(), separator);
+  }
+
+  /**
+   * 解析字典值
+   *
+   * @param dictType  字典类型
+   * @param dictValue 字典值
+   * @return 字典标签
+   */
+  public static String convertDictByExp(String dictType, String dictValue) throws Exception {
+    Object bean = SpringUtils.getBean("dictUtils");
+    String methodName = "getDictLabel";
+    Method method = bean.getClass().getDeclaredMethod(methodName, String.class, String.class);
+    return Convert.toStr(method.invoke(bean, dictType, dictValue));
+  }
+
+  /**
+   * 反向解析值字典值
+   *
+   * @param dictType  字典类型
+   * @param dictLabel 字典标签
+   * @return 字典值
+   */
+  public static String reverseDictByExp(String dictType, String dictLabel) throws Exception {
+    Object bean = SpringUtils.getBean("dictUtils");
+    String methodName = "getDictValue";
+    Method method = bean.getClass().getDeclaredMethod(methodName, String.class, String.class);
+    return Convert.toStr(method.invoke(bean, dictType, dictLabel));
   }
 
   /**

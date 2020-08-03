@@ -24,6 +24,11 @@ public @interface Excel {
   String dateFormat() default "";
 
   /**
+   * 如果是字典类型，请设置字典的type值
+   */
+  public String dictType() default "";
+
+  /**
    * 读取内容转表达式 (如: 0=男,1=女,2=未知)
    */
   String readConverterExp() default "";
