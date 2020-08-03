@@ -33,7 +33,7 @@
       <ul class="nav" id="side-menu">
         <li>
           <div class="user-panel">
-            <a class="menuItem noactive" title="个人中心" th:href="@{/system/user/profile}">
+            <a class="menuItem noactive" title="个人中心" th:href="@{/system/users/profile}">
               <div class="hide" th:text="个人中心"></div>
               <div class="pull-left image">
                 <img th:src="(${user.avatar} == '') ? @{/img/profile.jpg} : @{${user.avatar}}" class="img-circle" alt="User Image">
@@ -191,7 +191,7 @@
             </a>
             <ul class="dropdown-menu">
               <li class="mt5">
-                <a th:href="@{/system/user/profile}" class="menuItem">
+                <a th:href="@{/system/users/profile}" class="menuItem">
                   <i class="fa fa-user"></i> 个人中心</a>
               </li>
               <li>
@@ -260,19 +260,20 @@ var mode = "history";
 // 历史访问路径缓存
 var historyPath = storage.get("historyPath");
 
+const $body = $("body");
+
 // 本地主题优先，未设置取系统配置
 if ($.common.isNotEmpty(skin)) {
-  $("body").addClass(skin.split('|')[0]);
-  $("body").addClass(skin.split('|')[1]);
+  $body.addClass(skin.split('|')[0]);
+  $body.addClass(skin.split('|')[1]);
 } else {
-  $("body").addClass([[${sideTheme}]]);
-  $("body").addClass([[${skinName}]]);
+  $body.addClass([[${sideTheme}]]);
+  $body.addClass([[${skinName}]]);
 }
 
 /* 用户管理-重置密码 */
 function resetPwd() {
-  var url = ctx + 'system/user/profile/resetPwd';
-  $.modal.open("重置密码", url, '770', '380');
+  $.modal.open("重置密码", ctx + 'system/users/resetPwd', '770', '380');
 }
 
 /* 切换主题 */
@@ -296,15 +297,13 @@ function applyPath(url) {
 
 $(function () {
   if ($.common.equals("history", mode) && window.performance.navigation.type == 1) {
-    var url = storage.get('publicPath');
     if ($.common.isNotEmpty(url)) {
-      applyPath(url);
+      applyPath(storage.get('publicPath'));
     }
   } else {
     var hash = location.hash;
     if ($.common.isNotEmpty(hash)) {
-      var url = hash.substring(1, hash.length);
-      applyPath(url);
+      applyPath(hash.substring(1, hash.length));
     }
   }
 });

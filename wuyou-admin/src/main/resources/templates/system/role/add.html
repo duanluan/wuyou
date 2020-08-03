@@ -68,7 +68,7 @@ $("#form-role-add").validate({
     onkeyup: false,
     roleName: {
       remote: {
-        url: ctx + "system/role/checkRoleNameUnique",
+        url: ctx + "system/roles/checkRoleNameUnique",
         type: "post",
         dataType: "json",
         data: {
@@ -83,7 +83,7 @@ $("#form-role-add").validate({
     },
     roleKey: {
       remote: {
-        url: ctx + "system/role/checkRoleKeyUnique",
+        url: ctx + "system/roles/checkRoleKeyUnique",
         type: "post",
         dataType: "json",
         data: {
@@ -127,7 +127,7 @@ function add() {
   $.ajax({
     cache: true,
     type: "POST",
-    url: ctx + "system/role/add",
+    url: ctx + "system/roles/add",
     data: {
       "roleName": roleName,
       "roleKey": roleKey,

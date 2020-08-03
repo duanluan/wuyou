@@ -8,6 +8,7 @@
 <div class="wrapper wrapper-content animated fadeInRight ibox-content">
   <form class="form-horizontal m" id="form-role-edit" th:object="${role}">
     <input id="roleId" name="roleId" type="hidden" th:field="*{roleId}"/>
+
     <div class="form-group">
       <label class="col-sm-3 control-label">角色名称：</label>
       <div class="col-sm-8">
@@ -33,7 +34,7 @@
         <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 特殊情况下，设置为“自定数据权限”</span>
       </div>
     </div>
-    <div class="form-group" id="authDataScope" th:style="'display:' + @{(*{dataScope=='2'} ? 'block' : 'none')} + ''">
+    <div class="form-group" id="authDataScope" th:style="'display:' + @{*{dataScope}=='2' ? 'block' : 'none'} + ''">
       <label class="col-sm-3 control-label">数据权限</label>
       <div class="col-sm-8">
         <div id="deptTrees" class="ztree"></div>
@@ -44,6 +45,7 @@
 <th:block th:include="include :: footer"/>
 <th:block th:include="include :: ztree-js"/>
 <script type="text/javascript">
+const id = $('input[name="roleId"]').val();
 
 $(() => {
   var url = ctx + "system/dept/roleDeptTreeData?roleId=" + $("#roleId").val();
@@ -70,18 +72,18 @@ function edit() {
   var deptIds = $.tree.getCheckedNodes();
   $.ajax({
     cache: true,
-    type: "POST",
-    url: ctx + "system/role/authDataScope",
+    type: 'PUT',
+    url: ctx + 'system/roles/' + id + '/authDataScope',
     data: {
-      "roleId": roleId,
-      "roleName": roleName,
-      "roleKey": roleKey,
-      "dataScope": dataScope,
-      "deptIds": deptIds
+      'roleId': roleId,
+      'roleName': roleName,
+      'roleKey': roleKey,
+      'dataScope': dataScope,
+      'deptIds': deptIds
     },
     async: false,
     error: function (request) {
-      $.modal.alertError("系统错误");
+      $.modal.alertError('系统错误');
     },
     success: function (data) {
       $.operate.successCallback(data);

@@ -14,6 +14,7 @@ import com.wuyou.system.domain.SysUserRole;
 import com.wuyou.system.service.ISysPostService;
 import com.wuyou.system.service.ISysRoleService;
 import com.wuyou.system.service.ISysUserService;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -125,7 +126,7 @@ public class SysUserController extends BaseController {
    * 编辑页面
    *
    * @param userId 用户 ID
-   * @return 修改页面路径
+   * @return 编辑页面路径
    */
   @GetMapping("/{userId}")
   public String edit(@PathVariable("userId") Long userId, ModelMap mmap) {
@@ -264,45 +265,40 @@ public class SysUserController extends BaseController {
   @RequiresPermissions("system:user:add")
   @ResponseBody
   @PutMapping("/{userId}/authRole")
-  public Result insertAuthRole(Long userId, Long[] roleIds) {
+  public Result insertAuthRole(@PathVariable("userId") Long userId, Long[] roleIds) {
     userService.insertUserAuth(userId, roleIds);
     return success();
   }
 
   /**
-   * 校验用户名
+   * 检查是否唯一
    *
-   * @param user 用户
-   * @return 是否存在
+   * @param userId      用户 ID
+   * @param loginName   用户名
+   * @param phonenumber 手机号码
+   * @param email       邮箱
+   * @return 对应的属性是否唯一
    */
   @ResponseBody
-  @GetMapping("/checkLoginNameUnique")
-  public boolean checkLoginNameUnique(SysUser user) {
-    return userService.checkLoginNameUnique(user.getLoginName());
-  }
+  @GetMapping("/{userId}/checkUnique")
+  public boolean checkUnique(@PathVariable("userId") Long userId, @RequestParam(required = false) String loginName, @RequestParam(required = false) String phonenumber, @RequestParam(required = false) String email) {
+    if (StringUtils.isNotBlank(loginName)) {
+      return userService.checkLoginNameUnique(loginName);
+    }
+    if (StringUtils.isNotBlank(phonenumber)) {
+      SysUser sysUser = new SysUser();
+      sysUser.setUserId(userId);
+      sysUser.setPhonenumber(phonenumber);
+      return userService.checkPhoneUnique(sysUser);
+    }
+    if (StringUtils.isNotBlank(email)) {
+      SysUser sysUser = new SysUser();
+      sysUser.setUserId(userId);
+      sysUser.setEmail(email);
+      return userService.checkEmailUnique(sysUser);
+    }
 
-  /**
-   * 校验手机号码
-   *
-   * @param user 用户
-   * @return 是否存在
-   */
-  @ResponseBody
-  @GetMapping("/checkPhoneUnique")
-  public boolean checkPhoneUnique(SysUser user) {
-    return userService.checkPhoneUnique(user);
-  }
-
-  /**
-   * 校验邮箱
-   *
-   * @param user 用户
-   * @return 是否存在
-   */
-  @ResponseBody
-  @GetMapping("/checkEmailUnique")
-  public boolean checkEmailUnique(SysUser user) {
-    return userService.checkEmailUnique(user);
+    return false;
   }
 
   /**

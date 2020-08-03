@@ -7111,3 +7111,9 @@ nav .logo {
   z-index: 9998;
   margin: 0;
 }
+
+/* Bootstrap Table */
+/* 表格加载数据提示 */
+.bootstrap-table .loading-text {
+  font-size: initial !important;
+}

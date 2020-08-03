@@ -136,13 +136,22 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     String[] roleIds = StringUtils.split(ids, ",");
     for (String roleId : roleIds) {
       checkAllowed(new SysRole(Long.valueOf(roleId)));
-      SysRole role = getById(roleId);
-      SysRole sysRoleQuerier = new SysRole();
-      sysRoleQuerier.setRoleId(Long.valueOf(roleId));
-      if (super.count(new QueryWrapper<>(sysRoleQuerier)) > 0) {
+      SysRole role = super.getById(roleId);
+      // 是否关联用户
+      SysUserRole sysUserRoleQuerier = new SysUserRole();
+      sysUserRoleQuerier.setRoleId(role.getRoleId());
+      if (userRoleService.count(new QueryWrapper<>(sysUserRoleQuerier)) > 0) {
         throw new BusinessException(String.format("%1$s已分配,不能删除", role.getRoleName()));
       }
     }
+
+    for (String roleId : roleIds) {
+      // 删除关联菜单
+      SysRoleMenu sysRoleMenuQuerier = new SysRoleMenu();
+      sysRoleMenuQuerier.setRoleId(Long.valueOf(roleId));
+      roleMenuService.remove(new QueryWrapper<>(sysRoleMenuQuerier));
+    }
+    // 删除角色
     return super.removeByIds(Arrays.asList(StringUtils.split(ids, ",")));
   }
 
@@ -174,7 +183,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     SysRoleMenu sysRoleMenuQuerier = new SysRoleMenu();
     sysRoleMenuQuerier.setRoleId(role.getRoleId());
     roleMenuService.remove(new QueryWrapper<>(sysRoleMenuQuerier));
-    return super.save(role);
+    return insertRoleMenu(role);
   }
 
   /**
@@ -235,7 +244,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     if (list.size() > 0) {
       return roleDeptService.saveBatch(list);
     }
-    return false;
+    return true;
   }
 
   /**

@@ -27,7 +27,7 @@ import static com.wuyou.common.core.domain.Result.success;
  * @author wuyou
  */
 @Slf4j
-@RequestMapping("/system/user/profile")
+@RequestMapping("/system/users")
 @Controller
 public class SysProfileController extends BaseController {
 
@@ -39,9 +39,12 @@ public class SysProfileController extends BaseController {
   private SysPasswordService passwordService;
 
   /**
-   * 个人信息
+   * 个人信息页面
+   *
+   * @param mmap
+   * @return 个人信息页面路径
    */
-  @GetMapping
+  @GetMapping("/profile")
   public String profile(ModelMap mmap) {
     SysUser user = ShiroUtils.getSysUser();
     mmap.put("user", user);
@@ -50,16 +53,25 @@ public class SysProfileController extends BaseController {
     return PREFIX + "/profile";
   }
 
+  /**
+   * 检查新密码是否和旧密码一致
+   *
+   * @param password 新密码
+   * @return 是否一致
+   */
   @ResponseBody
   @GetMapping("/checkPassword")
   public boolean checkPassword(String password) {
     SysUser user = ShiroUtils.getSysUser();
-    if (passwordService.matches(user, password)) {
-      return true;
-    }
-    return false;
+    return passwordService.matches(user, password);
   }
 
+  /**
+   * 重置密码页面
+   *
+   * @param mmap
+   * @return 重置密码页面路径
+   */
   @GetMapping("/resetPwd")
   public String resetPwd(ModelMap mmap) {
     SysUser user = ShiroUtils.getSysUser();
@@ -67,9 +79,16 @@ public class SysProfileController extends BaseController {
     return PREFIX + "/resetPwd";
   }
 
+  /**
+   * 重置密码
+   *
+   * @param oldPassword 旧密码
+   * @param newPassword 新密码
+   * @return 是否成功
+   */
   @Log(title = "重置密码", businessType = BusinessType.UPDATE)
   @ResponseBody
-  @PostMapping("/resetPwd")
+  @PutMapping("/resetPwd")
   public Result resetPwd(String oldPassword, String newPassword) {
     SysUser user = ShiroUtils.getSysUser();
     if (StringUtils.isNotEmpty(newPassword) && passwordService.matches(user, oldPassword)) {
@@ -110,7 +129,7 @@ public class SysProfileController extends BaseController {
    */
   @Log(title = "个人信息", businessType = BusinessType.UPDATE)
   @ResponseBody
-  @PostMapping("/update")
+  @PutMapping
   public Result update(SysUser user) {
     SysUser currentUser = ShiroUtils.getSysUser();
     currentUser.setUserName(user.getUserName());

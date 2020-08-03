@@ -6,6 +6,7 @@ import com.wuyou.common.annotation.Log;
 import com.wuyou.common.core.controller.BaseController;
 import com.wuyou.common.core.domain.Result;
 import com.wuyou.common.enums.BusinessType;
+import com.wuyou.common.utils.ObjectUtils;
 import com.wuyou.common.utils.poi.ExcelUtil;
 import com.wuyou.framework.util.ShiroUtils;
 import com.wuyou.system.domain.SysRole;
@@ -14,6 +15,7 @@ import com.wuyou.system.domain.SysUserRole;
 import com.wuyou.system.service.ISysRoleService;
 import com.wuyou.system.service.ISysUserRoleService;
 import com.wuyou.system.service.ISysUserService;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,7 +32,7 @@ import static com.wuyou.common.core.domain.Result.*;
  *
  * @author wuyou
  */
-@RequestMapping("/system/role")
+@RequestMapping("/system/roles")
 @Controller
 public class SysRoleController extends BaseController {
 
@@ -46,12 +48,12 @@ public class SysRoleController extends BaseController {
   @RequiresPermissions("system:role:view")
   @GetMapping
   public String role() {
-    return PREFIX + "/role";
+    return PREFIX + "/list";
   }
 
   @RequiresPermissions("system:role:list")
   @ResponseBody
-  @PostMapping("/list")
+  @GetMapping("/list")
   public Result list(Page<SysRole> page, SysRole role) {
     return Result.success(roleService.page(page, role));
   }
@@ -67,20 +69,30 @@ public class SysRoleController extends BaseController {
   }
 
   /**
-   * 新增角色
+   * 编辑页面
+   *
+   * @param roleId 角色 ID
+   * @param mmap
+   * @return 编辑页面路径
    */
-  @GetMapping("/add")
-  public String add() {
-    return PREFIX + "/add";
+  @GetMapping("/{roleId}")
+  public String edit(@PathVariable("roleId") Long roleId, ModelMap mmap) {
+    if (ObjectUtils.greaterThanZero(roleId)) {
+      mmap.put("role", roleService.getById(roleId));
+    }
+    return PREFIX + "/edit";
   }
 
   /**
-   * 新增保存角色
+   * 保存
+   *
+   * @param role 角色
+   * @return 是否成功
    */
   @Log(title = "角色管理", businessType = BusinessType.INSERT)
   @RequiresPermissions("system:role:add")
   @ResponseBody
-  @PostMapping("/add")
+  @PostMapping
   public Result addSave(@Validated SysRole role) {
     if (roleService.checkNameUnique(role)) {
       return error("新增角色'" + role.getRoleName() + "'失败，角色名称已存在");
@@ -90,25 +102,18 @@ public class SysRoleController extends BaseController {
     role.setCreateBy(ShiroUtils.getLoginName());
     ShiroUtils.clearCachedAuthorizationInfo();
     return custom(roleService.insert(role));
-
   }
 
   /**
-   * 修改角色
-   */
-  @GetMapping("/edit/{roleId}")
-  public String edit(@PathVariable("roleId") Long roleId, ModelMap mmap) {
-    mmap.put("role", roleService.getById(roleId));
-    return PREFIX + "/edit";
-  }
-
-  /**
-   * 修改保存角色
+   * 修改
+   *
+   * @param role 角色
+   * @return 是否成功
    */
   @Log(title = "角色管理", businessType = BusinessType.UPDATE)
   @RequiresPermissions("system:role:edit")
   @ResponseBody
-  @PostMapping("/edit")
+  @PutMapping("/{roleId}")
   public Result editSave(@Validated SysRole role) {
     roleService.checkAllowed(role);
     if (roleService.checkNameUnique(role)) {
@@ -122,9 +127,13 @@ public class SysRoleController extends BaseController {
   }
 
   /**
-   * 角色分配数据权限
+   * 分配数据权限页面
+   *
+   * @param roleId 角色 ID
+   * @param mmap
+   * @return 分配数据权限页面路径
    */
-  @GetMapping("/authDataScope/{roleId}")
+  @GetMapping("/{roleId}/authDataScope")
   public String authDataScope(@PathVariable("roleId") Long roleId, ModelMap mmap) {
     mmap.put("role", roleService.getById(roleId));
     return PREFIX + "/dataScope";
@@ -136,7 +145,7 @@ public class SysRoleController extends BaseController {
   @Log(title = "角色管理", businessType = BusinessType.UPDATE)
   @RequiresPermissions("system:role:edit")
   @ResponseBody
-  @PostMapping("/authDataScope")
+  @PutMapping("/{roleId}/authDataScope")
   public Result authDataScopeSave(SysRole role) {
     roleService.checkAllowed(role);
     role.setUpdateBy(ShiroUtils.getLoginName());
@@ -147,6 +156,12 @@ public class SysRoleController extends BaseController {
     return error();
   }
 
+  /**
+   * 删除
+   *
+   * @param ids 角色 ID 集合
+   * @return 是否成功
+   */
   @Log(title = "角色管理", businessType = BusinessType.DELETE)
   @RequiresPermissions("system:role:remove")
   @ResponseBody
@@ -160,25 +175,30 @@ public class SysRoleController extends BaseController {
   }
 
   /**
-   * 校验角色名称
+   * 校验是否唯一
    *
-   * @return
+   * @param roleId   角色 ID
+   * @param roleName 角色名
+   * @param roleKey  角色权限
+   * @return 对应的属性是否唯一
    */
   @ResponseBody
-  @PostMapping("/checkRoleNameUnique")
-  public boolean checkRoleNameUnique(SysRole role) {
-    return roleService.checkNameUnique(role);
-  }
+  @PostMapping("/{roleId}/checkUnique")
+  public boolean checkRoleNameUnique(@PathVariable("roleId") Long roleId, @RequestParam(required = false) String roleName, @RequestParam(required = false) String roleKey) {
+    if (StringUtils.isNotBlank(roleName)) {
+      SysRole sysRole = new SysRole();
+      sysRole.setRoleId(roleId);
+      sysRole.setRoleName(roleName);
+      return roleService.checkNameUnique(sysRole);
+    }
+    if (StringUtils.isNotBlank(roleKey)) {
+      SysRole sysRole = new SysRole();
+      sysRole.setRoleId(roleId);
+      sysRole.setRoleKey(roleKey);
+      return roleService.checkKeyUnique(sysRole);
+    }
 
-  /**
-   * 校验角色权限
-   *
-   * @return
-   */
-  @ResponseBody
-  @PostMapping("/checkRoleKeyUnique")
-  public boolean checkRoleKeyUnique(SysRole role) {
-    return roleService.checkKeyUnique(role);
+    return false;
   }
 
   /**
@@ -195,7 +215,7 @@ public class SysRoleController extends BaseController {
   @Log(title = "角色管理", businessType = BusinessType.UPDATE)
   @RequiresPermissions("system:role:edit")
   @ResponseBody
-  @PostMapping("/changeStatus")
+  @PutMapping("/changeStatus")
   public Result changeStatus(SysRole role) {
     roleService.checkAllowed(role);
     return custom(roleService.changeStatus(role));
@@ -205,7 +225,7 @@ public class SysRoleController extends BaseController {
    * 分配用户
    */
   @RequiresPermissions("system:role:edit")
-  @GetMapping("/authUser/{roleId}")
+  @GetMapping("/{roleId}/authUser")
   public String authUser(@PathVariable("roleId") Long roleId, ModelMap mmap) {
     mmap.put("role", roleService.getById(roleId));
     return PREFIX + "/authUser";
@@ -216,7 +236,7 @@ public class SysRoleController extends BaseController {
    */
   @RequiresPermissions("system:role:list")
   @ResponseBody
-  @PostMapping("/authUser/allocatedList")
+  @GetMapping("/{roleId}/authUser/allocatedList")
   public Result allocatedList(Page<SysUser> page, SysUser user) {
     return Result.success(userService.pageByAllocated(page, user));
   }
@@ -226,7 +246,7 @@ public class SysRoleController extends BaseController {
    */
   @Log(title = "角色管理", businessType = BusinessType.GRANT)
   @ResponseBody
-  @PostMapping("/authUser/cancel")
+  @PutMapping("/{roleId}/authUser/cancel")
   public Result cancelAuthUser(SysUserRole userRole) {
     return custom(userRoleService.remove(new QueryWrapper<>(userRole)));
   }
@@ -236,15 +256,15 @@ public class SysRoleController extends BaseController {
    */
   @Log(title = "角色管理", businessType = BusinessType.GRANT)
   @ResponseBody
-  @PostMapping("/authUser/cancelAll")
-  public Result cancelAuthUserAll(Long roleId, String userIds) {
+  @PutMapping("/{roleId}/authUser/cancelAll")
+  public Result cancelAuthUserAll(@PathVariable("roleId") Long roleId, String userIds) {
     return custom(roleService.deleteAuthUsers(roleId, userIds));
   }
 
   /**
    * 选择用户
    */
-  @GetMapping("/authUser/selectUser/{roleId}")
+  @GetMapping("/{roleId}/authUser/selectUser")
   public String selectUser(@PathVariable("roleId") Long roleId, ModelMap mmap) {
     mmap.put("role", roleService.getById(roleId));
     return PREFIX + "/selectUser";
@@ -255,7 +275,7 @@ public class SysRoleController extends BaseController {
    */
   @RequiresPermissions("system:role:list")
   @ResponseBody
-  @PostMapping("/authUser/unallocatedList")
+  @GetMapping("/{roleId}/authUser/unallocatedList")
   public Result unallocatedList(Page<SysUser> page, SysUser user) {
     return Result.success(userService.page(page, user));
   }
@@ -265,8 +285,8 @@ public class SysRoleController extends BaseController {
    */
   @Log(title = "角色管理", businessType = BusinessType.GRANT)
   @ResponseBody
-  @PostMapping("/authUser/selectAll")
-  public Result selectAuthUserAll(Long roleId, String userIds) {
+  @PutMapping("/{roleId}/authUser/batchSelect")
+  public Result selectAuthUserAll(@PathVariable("roleId") Long roleId, String userIds) {
     return custom(roleService.insertAuthUsers(roleId, userIds));
   }
 }

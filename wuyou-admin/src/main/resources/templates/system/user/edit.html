@@ -118,7 +118,7 @@
 <th:block th:include="include :: footer"/>
 <th:block th:include="include :: select2-js"/>
 <script type="text/javascript">
-let prefix = ctx + "system/users",
+const prefix = ctx + "system/users",
   id = '[[${user?.userId}]]';
 
 $("#form-user-edit").validate({
@@ -131,15 +131,12 @@ $("#form-user-edit").validate({
     email: {
       email: true,
       remote: {
-        url: prefix + "/checkEmailUnique",
-        type: "GET",
-        dataType: "json",
+        url: prefix + '/' + id + '/checkUnique',
+        type: 'GET',
+        dataType: 'json',
         data: {
-          "userId": function () {
-            return $("#userId").val();
-          },
-          "email": function () {
-            return $.common.trim($("#email").val());
+          'email': function () {
+            return $.common.trim($('#email').val());
           }
         },
         dataFilter: function (data, type) {
@@ -150,15 +147,12 @@ $("#form-user-edit").validate({
     phonenumber: {
       isPhone: true,
       remote: {
-        url: prefix + "/checkPhoneUnique",
-        type: "GET",
-        dataType: "json",
+        url: prefix + '/' + id + '/checkUnique',
+        type: 'GET',
+        dataType: 'json',
         data: {
-          "userId": function () {
-            return $("#userId").val();
-          },
-          "phonenumber": function () {
-            return $.common.trim($("#phonenumber").val());
+          'phonenumber': function () {
+            return $.common.trim($('#phonenumber').val());
           }
         },
         dataFilter: function (data, type) {
@@ -168,11 +162,11 @@ $("#form-user-edit").validate({
     },
   },
   messages: {
-    "email": {
-      remote: "邮箱已经存在"
+    'email': {
+      remote: '邮箱已经存在'
     },
-    "phonenumber": {
-      remote: "手机号码已经存在"
+    'phonenumber': {
+      remote: '手机号码已经存在'
     }
   },
   focusCleanup: true

@@ -316,7 +316,7 @@
 
 @media ( min-width: 768px) {
   .section-content .about {
-    padding-left: 0px
+    padding-left: 0
   }
 }
 
@@ -628,7 +628,7 @@ label {
 }
 
 .container-div {
-  padding: 0px 28px;
+  padding: 0 28px;
   height: 100%;
 }
 
@@ -668,13 +668,13 @@ label {
 
 .select-list li {
   color: #333;
-  margin: 5px 15px 5px 0px;
+  margin: 5px 15px 5px 0;
 }
 
 .select-list li p, .select-list li label:not(.radio-box):not(.select-time) {
   float: left;
   width: 65px;
-  margin: 5px 5px 5px 0px;
+  margin: 5px 5px 5px 0;
   text-align: right;
 }
 
@@ -689,7 +689,7 @@ label {
 }
 
 .select-list li .submit-btn {
-  border: 0px;
+  border: 0;
   border-radius: 4px;
   background: transparent;
   outline: none;
@@ -832,7 +832,7 @@ label {
 .select-title {
   color: #3d5266;
   font-size: 15px;
-  padding: 10px 0px;
+  padding: 10px 0;
   font-weight: normal;
 }
 
@@ -842,13 +842,13 @@ label {
 }
 
 .table-striped .bootstrap-table {
-  border: 0px !important;
+  border: 0 !important;
 }
 
 .table-striped table > thead > tr > th, .table-striped table > tbody > tr > th, .table-striped table > tfoot > tr > th, .table-striped table > thead > tr > td, .table-striped table > tbody > tr > td, .table-striped table > tfoot > tr > td {
   border-bottom: 1px solid #e7eaec !important;
   background-color: transparent;
-  border: 0px;
+  border: 0;
 }
 
 
@@ -866,16 +866,16 @@ label {
 }
 
 .fixed-table-footer {
-  border-top: 0px solid #ddd;
+  border-top: 0 solid #ddd;
 }
 
 .fixed-table-container {
-  border: 0px solid #ddd;
+  border: 0 solid #ddd;
 }
 
 .table-striped .table > thead > tr > th, .table-striped .table > tbody > tr > th {
   border-bottom: 1px solid #ccc !important;
-  border-top: 0px !important;
+  border-top: 0 !important;
 }
 
 .table-striped .table > thead:first-child > tr:first-child > th {
@@ -980,7 +980,7 @@ label {
   line-height: 24px;
   border: 0 !important;
   border-radius: 4px;
-  border-left: 0px solid #e7eaec !important;
+  border-left: 0 solid #e7eaec !important;
   border-bottom: 1px solid #ccc !important;
   text-align: left;
 }
@@ -991,7 +991,7 @@ label {
 
 .bootstrap-tree-table .treetable-tbody td {
   border: 0 !important;
-  border-left: 0px solid #e7eaec !important;
+  border-left: 0 solid #e7eaec !important;
   border-bottom: 1px solid #e7eaec !important;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -1026,7 +1026,7 @@ label {
 }
 
 .bootstrap-tree-table .table {
-  border-bottom: 0px solid #e7eaec !important;
+  border-bottom: 0 solid #e7eaec !important;
 }
 
 /** 首页样式 **/
@@ -1097,7 +1097,7 @@ label {
   -webkit-border-image: none;
   -o-border-image: none;
   border-image: none;
-  border-width: 1px 0px;
+  border-width: 1px 0;
 }
 
 /** 表格跳转样式 **/
@@ -1190,3 +1190,160 @@ label {
   border-radius: 6px;
   background-color: #999;
 }
+
+
+/* region 列表查询区域新写法，采用 BootStrap Form 的方式：.select-list 替换为 .search-collapse form，li 替换为 .form-group，region 中注释的地方为自定义*/
+.search-collapse form /*, .layui-layer-content ul*/
+{
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.search-collapse form .form-group, .layui-layer-content .form-group {
+  list-style: none;
+}
+
+@media ( min-width: 768px) {
+  .search-collapse form .form-group {
+    float: left;
+  }
+}
+
+.search-collapse form .form-group {
+  color: #333;
+  margin: 5px 15px 5px 0;
+}
+
+.search-collapse form .form-group p, .search-collapse form .form-group label:not(.radio-box):not(.select-time) {
+  float: left;
+  width: 65px;
+  margin: 5px 5px 5px 0;
+  text-align: right;
+}
+
+.search-collapse form .form-group input {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: transparent;
+  outline: none;
+  height: 30px;
+  width: 200px;
+  padding-left: 5px;
+}
+
+.search-collapse form .form-group .submit-btn {
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  outline: none;
+  width: 40px;
+  height: 23px;
+}
+
+.search-collapse form .form-group select {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: transparent;
+  outline: none;
+  height: 30px;
+  width: 200px;
+  /* 覆盖 BootStrap 的样式 */
+  padding: initial;
+  padding-left: 5px;
+}
+
+.search-collapse form .btn-default {
+  color: #555;
+  padding: 5px 5px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: transparent;
+  outline: none;
+  height: 30px;
+  width: 200px;
+}
+
+.search-collapse form .btn-default:hover, .search-collapse form .btn-default:focus, .search-collapse form .btn-default:active, .search-collapse form .btn-default.active, .open .dropdown-toggle.btn-default {
+  color: #555;
+  background-color: #e4e4e4;
+  border-color: #b2b2b2
+}
+
+.search-collapse form .bootstrap-select:not([class*="col-"]):not([class*="form-control"]):not(.input-group-btn) {
+  height: 30px;
+  width: 200px;
+}
+
+.search-collapse form .bootstrap-select > .dropdown-toggle.bs-placeholder,
+.search-collapse form .bootstrap-select > .dropdown-toggle.bs-placeholder:hover,
+.search-collapse form .bootstrap-select > .dropdown-toggle.bs-placeholder:focus,
+.search-collapse form .bootstrap-select > .dropdown-toggle.bs-placeholder:active {
+  color: inherit;
+  font-size: 13px;
+}
+
+.search-collapse form .bootstrap-select .dropdown-toggle .caret {
+  position: inherit;
+}
+
+.search-collapse form .select-selectpicker li {
+  float: none;
+}
+
+.search-collapse form .dropdown-menu > li > a, .bootstrap-select.form-control .dropdown-menu > li > a {
+  line-height: inherit;
+}
+
+.search-collapse form .dropdown-menu li > a:hover, .dropdown-menu li > a:focus, .dropdown-submenu:hover > a, .bootstrap-select.form-control .dropdown-menu li > a:hover, .dropdown-menu li > a:focus, .dropdown-submenu:hover > a {
+  color: #fff;
+  text-decoration: none;
+  background-color: #12889a
+}
+
+.search-collapse form .select2-container--bootstrap {
+  width: 200px !important;
+  display: inline-block;
+}
+
+.search-collapse form .select2-container--bootstrap .select2-selection {
+  border-radius: 6px;
+}
+
+.search-collapse form .select2-container--bootstrap .select2-selection--single {
+  height: 30px !important;
+  padding: 5px 10px;
+}
+
+.search-collapse form .select-time input {
+  width: 93px;
+}
+
+@media (max-width: 767px) {
+  .select-time label, .select-time span, .select-time input {
+    float: none;
+  }
+
+  .search-collapse form .select-time input {
+    width: 200px;
+  }
+}
+
+/* 覆盖 style.css 中的一些样式 */
+.search-collapse .form .form-control {
+  font-size: 13px;
+}
+
+/* select2 排版问题 */
+.search-collapse form .form-group .select2 {
+  width: initial !important;
+  min-width: 184px;
+  max-width: 368px;
+}
+
+/* select2 多选时使用 */
+.form-group-select2 {
+  display: flex;
+  align-items: center;
+}
+/* endregion */

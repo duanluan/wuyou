@@ -6,6 +6,7 @@
 
 <body class="gray-bg" style="font: 14px Helvetica Neue, Helvetica, PingFang SC, 微软雅黑, Tahoma, Arial, sans-serif !important;">
 <input id="userId" name="userId" type="hidden" th:value="${user.userId}"/>
+
 <section class="section-content">
   <div class="row">
     <div class="col-sm-3 pr5">
@@ -61,6 +62,7 @@
                 <form class="form-horizontal" id="form-user-edit">
                   <!--隐藏ID-->
                   <input name="id" id="id" type="hidden">
+
                   <div class="form-group">
                     <label class="col-sm-2 control-label">用户名称：</label>
                     <div class="col-sm-10">
@@ -94,8 +96,8 @@
                   </div>
                   <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                      <button type="button" class="btn btn-sm btn-primary" onclick="submitUserInfo()"><i class="fa fa-check"></i>保 存</button>&nbsp;
-                      <button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i class="fa fa-reply-all"></i>关 闭</button>
+                      <button type="button" class="btn btn-sm btn-primary" onclick="submitUserInfo()"><i class="fa fa-check"></i> 保存</button>&nbsp;
+                      <button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i class="fa fa-reply-all"></i> 关闭</button>
                     </div>
                   </div>
                 </form>
@@ -124,8 +126,8 @@
                   </div>
                   <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                      <button type="button" class="btn btn-sm btn-primary" onclick="submitChangPassword()"><i class="fa fa-check"></i>保 存</button>&nbsp;
-                      <button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i class="fa fa-reply-all"></i>关 闭</button>
+                      <button type="button" class="btn btn-sm btn-primary" onclick="submitChangPassword()"><i class="fa fa-check"></i> 保存</button>&nbsp;
+                      <button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i class="fa fa-reply-all"></i> 关闭</button>
                     </div>
                   </div>
                 </form>
@@ -140,14 +142,16 @@
 
 <th:block th:include="include :: footer"/>
 <script>
+const prefix = ctx + 'system/users',
+  id = $('#userId').val();
+
 /*用户管理-头像*/
 function avatar() {
-  var url = ctx + 'system/user/profile/avatar';
-  $.modal.open("修改头像", url);
+  $.modal.open('修改头像', prefix + '/avatar');
 }
 
 /*用户信息-修改*/
-$("#form-user-edit").validate({
+$('#form-user-edit').validate({
   onkeyup: false,
   rules: {
     userName: {
@@ -157,18 +161,15 @@ $("#form-user-edit").validate({
       required: true,
       email: true,
       remote: {
-        url: ctx + "system/user/checkEmailUnique",
-        type: "post",
-        dataType: "json",
+        url: prefix + '/' + id + '/checkUnique',
+        type: 'GET',
+        dataType: 'json',
         data: {
-          "userId": function () {
-            return $("#userId").val();
-          },
-          "email": function () {
-            return $.common.trim($("#email").val());
+          'email': () => {
+            return $.common.trim($('#email').val());
           }
         },
-        dataFilter: function (data, type) {
+        dataFilter: (data, type) => {
           return $.validate.unique(data);
         }
       }
@@ -177,34 +178,31 @@ $("#form-user-edit").validate({
       required: true,
       isPhone: true,
       remote: {
-        url: ctx + "system/user/checkPhoneUnique",
-        type: "post",
-        dataType: "json",
+        url: prefix + '/' + id + '/checkUnique',
+        type: 'GET',
+        dataType: 'json',
         data: {
-          "userId": function () {
-            return $("#userId").val();
-          },
-          "phonenumber": function () {
-            return $.common.trim($("#phonenumber").val());
+          'phonenumber': () => {
+            return $.common.trim($('#phonenumber').val());
           }
         },
-        dataFilter: function (data, type) {
+        dataFilter: (data, type) => {
           return $.validate.unique(data);
         }
       }
     },
   },
   messages: {
-    "userName": {
-      required: "请输入用户名称",
+    'userName': {
+      required: '请输入用户名称',
     },
-    "email": {
-      required: "请输入邮箱",
-      remote: "Email已经存在"
+    'email': {
+      required: '请输入邮箱',
+      remote: '邮箱已经存在'
     },
-    "phonenumber": {
-      required: "请输入手机号码",
-      remote: "手机号码已经存在"
+    'phonenumber': {
+      required: '请输入手机号码',
+      remote: '手机号码已经存在'
     }
   },
   focusCleanup: true
@@ -212,23 +210,23 @@ $("#form-user-edit").validate({
 
 function submitUserInfo() {
   if ($.validate.form()) {
-    $.operate.saveModal(ctx + "system/user/profile/update", $('#form-user-edit').serialize());
+    $.operate.saveModal1(prefix, 'PUT', $('#form-user-edit').serialize());
   }
 }
 
 /*用户管理-修改密码*/
-$("#form-user-resetPwd").validate({
+$('#form-user-resetPwd').validate({
   onkeyup: false,
   rules: {
     oldPassword: {
       required: true,
       remote: {
-        url: ctx + "system/user/profile/checkPassword",
-        type: "get",
-        dataType: "json",
+        url: prefix + '/checkPassword',
+        type: 'get',
+        dataType: 'json',
         data: {
-          password: function () {
-            return $("input[name='oldPassword']").val();
+          password: () => {
+            return $('input[name="oldPassword"]').val();
           }
         }
       }
@@ -240,22 +238,22 @@ $("#form-user-resetPwd").validate({
     },
     confirmPassword: {
       required: true,
-      equalTo: "#newPassword"
+      equalTo: '#newPassword'
     }
   },
   messages: {
     oldPassword: {
-      required: "请输入原密码",
-      remote: "原密码错误"
+      required: '请输入原密码',
+      remote: '原密码错误'
     },
     newPassword: {
-      required: "请输入新密码",
-      minlength: "密码不能小于6个字符",
-      maxlength: "密码不能大于20个字符"
+      required: '请输入新密码',
+      minlength: '密码不能小于6个字符',
+      maxlength: '密码不能大于20个字符'
     },
     confirmPassword: {
-      required: "请再次输入新密码",
-      equalTo: "两次密码输入不一致"
+      required: '请再次输入新密码',
+      equalTo: '两次密码输入不一致'
     }
 
   },
@@ -263,8 +261,8 @@ $("#form-user-resetPwd").validate({
 });
 
 function submitChangPassword() {
-  if ($.validate.form("form-user-resetPwd")) {
-    $.operate.saveModal(ctx + "system/user/profile/resetPwd", $('#form-user-resetPwd').serialize());
+  if ($.validate.form('form-user-resetPwd')) {
+    $.operate.saveModal1(prefix + '/resetPwd', 'PUT', $('#form-user-resetPwd').serialize());
   }
 }
 </script>

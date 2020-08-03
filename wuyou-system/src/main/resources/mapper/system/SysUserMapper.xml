@@ -115,7 +115,7 @@
     left join sys_dept sd on su.dept_id = sd.dept_id
     left join sys_user_role sur on su.user_id = sur.user_id
     left join sys_role sr on sr.role_id = sur.role_id
-    where su.del_flag = 0 and sr.role_id = #{roleId}
+    where su.del_flag = 0 and sr.role_id = #{user.roleId}
     <if test="user.loginName != null and user.loginName != ''">
       and su.login_name like concat('%', #{user.loginName}, '%')
     </if>

@@ -35,7 +35,7 @@ var table = {
     table: {
       // 初始化表格参数
       init: function (options) {
-        var defaults = {
+        var options = $.extend({
           id: "bootstrap-table",
           type: 0, // 0 代表bootstrapTable 1代表bootstrapTreeTable
           height: undefined,
@@ -68,8 +68,7 @@ var table = {
           rightFixedNumber: 0,
           queryParams: $.table.queryParams,
           rowStyle: {},
-        };
-        var options = $.extend(defaults, options);
+        }, options);
         table.options = options;
         table.config[options.id] = options;
         $.table.initEvent();
@@ -371,7 +370,7 @@ var table = {
           $.modal.loading("正在导出数据，请稍后...");
           $.post(table.options.exportUrl, dataParam, function (result) {
             if (result.code == web_status.SUCCESS) {
-              window.location.href = ctx + "common/download?fileName=" + encodeURI(result.msg) + "&delete=" + true;
+              window.location.href = ctx + "common/download?fileName=" + encodeURI(result.data) + "&delete=" + true;
             } else if (result.code == web_status.WARNING) {
               $.modal.alertWarning(result.msg)
             } else {
@@ -532,7 +531,7 @@ var table = {
     treeTable: {
       // 初始化表格
       init: function (options) {
-        var defaults = {
+        options = $.extend({
           id: "bootstrap-tree-table",
           type: 1, // 0 代表bootstrapTable 1代表bootstrapTreeTable
           height: 0,
@@ -546,8 +545,7 @@ var table = {
           showColumns: true,
           expandAll: true,
           expandFirst: true
-        };
-        var options = $.extend(defaults, options);
+        }, options);
         table.options = options;
         table.config[options.id] = options;
         $.table.initEvent();
@@ -783,32 +781,50 @@ var table = {
       },
       // 弹出层指定参数选项
       openOptions: function (options) {
-        var _url = $.common.isEmpty(options.url) ? "/404.html" : options.url;
-        var _title = $.common.isEmpty(options.title) ? "系统窗口" : options.title;
-        var _width = $.common.isEmpty(options.width) ? "800" : options.width;
-        var _height = $.common.isEmpty(options.height) ? ($(window).height() - 50) : options.height;
-        var _btn = ['<i class="fa fa-check"></i> 确认', '<i class="fa fa-close"></i> 关闭'];
-        if ($.common.isEmpty(options.yes)) {
-          options.yes = function (index, layero) {
-            options.callBack(index, layero);
-          }
-        }
-        layer.open({
+        // var _url = $.common.isEmpty(options.url) ? "/404.html" : options.url;
+        // var _title = $.common.isEmpty(options.title) ? "系统窗口" : options.title;
+        // var _width = $.common.isEmpty(options.width) ? "800" : options.width;
+        // var _height = $.common.isEmpty(options.height) ? ($(window).height() - 50) : options.height;
+        // var _btn = ['<i class="fa fa-check"></i> 确认', '<i class="fa fa-close"></i> 关闭'];
+        // if ($.common.isEmpty(options.yes)) {
+        //   options.yes = function (index, layero) {
+        //     options.callBack(index, layero);
+        //   }
+        // }
+
+        layer.open($.extend({
           type: 2,
           maxmin: true,
           shade: 0.3,
-          title: _title,
           fix: false,
-          area: [_width + 'px', _height + 'px'],
-          content: _url,
-          shadeClose: $.common.isEmpty(options.shadeClose) ? true : options.shadeClose,
-          skin: options.skin,
-          btn: $.common.isEmpty(options.btn) ? _btn : options.btn,
-          yes: options.yes,
-          cancel: function () {
+          content: '/404.html',
+          shadeClose: true,
+          title: '系统窗口',
+          area: (() => {
+            const result = ['800px', ($(window).height() - 50) + 'px'];
+            if (options.width) {
+              result[0] = options.width + 'px';
+            }
+            if (options.height) {
+              result[1] = options.height + 'px';
+            }
+            return result;
+          })(),
+          btn: (() => {
+            const result = ['<i class="fa fa-close"></i> 关闭'];
+            if (options.yes) {
+              result.unshift('<i class="fa fa-check"></i> 确认')
+            }
+            return result;
+          })(),
+          // TODO
+          // yes: (index, layero) => {
+          //   options.callBack(index, layero);
+          // },
+          cancel: () => {
             return true;
           }
-        });
+        }, options));
       },
       // 弹出层全屏
       openFull: function (title, url, width, height) {
@@ -877,7 +893,7 @@ var table = {
       },
       // 打开遮罩层
       loading: function (message) {
-        $.blockUI({ message: '<div class="loaderbox"><div class="loading-activity"></div> ' + message + '</div>' });
+        $.blockUI({ message: '<div class="loaderbox"><div class="loading-activity"></div>&nbsp;' + message + '</div>' });
       },
       // 关闭遮罩层
       closeLoading: function () {
@@ -894,7 +910,7 @@ var table = {
     operate: {
       // 提交数据
       submit: function (url, type, dataType, data, callback) {
-        var config = {
+        $.ajax({
           url: url,
           type: type,
           dataType: dataType,
@@ -908,8 +924,7 @@ var table = {
             }
             $.operate.ajaxSuccess(result);
           }
-        };
-        $.ajax(config)
+        })
       },
       // post 请求传输
       post: function (url, data, callback) {
@@ -938,7 +953,7 @@ var table = {
           _width = 'auto';
           _height = 'auto';
         }
-        var options = {
+        $.modal.openOptions({
           title: table.options.modalName + "详细",
           width: _width,
           height: _height,
@@ -948,8 +963,7 @@ var table = {
           yes: function (index, layero) {
             layer.close(index);
           }
-        };
-        $.modal.openOptions(options);
+        });
       },
       // 详细访问地址
       detailUrl: function (id) {
@@ -974,8 +988,7 @@ var table = {
           if (table.options.type == table_type.bootstrapTreeTable) {
             $.operate.get(url);
           } else {
-            var data = { "ids": id };
-            $.operate.submit(url, "DELETE", "json", data);
+            $.operate.submit(url, "DELETE", "json", { "ids": id });
           }
         });
 
@@ -989,17 +1002,14 @@ var table = {
           return;
         }
         $.modal.confirm("确认要删除选中的" + rows.length + "条数据吗?", function () {
-          var url = table.options.removeUrl;
-          var data = { "ids": rows.join() };
-          $.operate.submit(url, "DELETE", "json", data);
+          $.operate.submit(table.options.removeUrl, "DELETE", "json", { "ids": rows.join() });
         });
       },
       // 清空信息
       clean: function () {
         table.set();
         $.modal.confirm("确定清空所有" + table.options.modalName + "吗？", function () {
-          var url = table.options.cleanUrl;
-          $.operate.submit(url, "post", "json", "");
+          $.operate.submit(table.options.cleanUrl, "post", "json", "");
         });
       },
       // 添加信息
@@ -1020,8 +1030,7 @@ var table = {
       },
       // 添加访问地址
       addUrl: function (id) {
-        var url = $.common.isEmpty(id) ? table.options.createUrl.replace("{id}", "") : table.options.createUrl.replace("{id}", id);
-        return url;
+        return $.common.isEmpty(id) ? table.options.createUrl.replace("{id}", "") : table.options.createUrl.replace("{id}", id);
       },
       // 修改信息
       edit: function (id) {
@@ -1032,8 +1041,7 @@ var table = {
             $.modal.alertWarning("请至少选择一条记录");
             return;
           }
-          var url = table.options.updateUrl.replace("{id}", row[table.options.uniqueId]);
-          $.modal.open("修改" + table.options.modalName, url);
+          $.modal.open("修改" + table.options.modalName, table.options.updateUrl.replace("{id}", row[table.options.uniqueId]));
         } else {
           $.modal.open("修改" + table.options.modalName, $.operate.editUrl(id));
         }
@@ -1046,19 +1054,19 @@ var table = {
       // 修改信息 全屏
       editFull: function (id) {
         table.set();
-        var url = "/404.html";
+        let url = "/404.html";
         if ($.common.isNotEmpty(id)) {
           url = table.options.updateUrl.replace("{id}", id);
         } else {
           if (table.options.type == table_type.bootstrapTreeTable) {
-            var row = $("#" + table.options.id).bootstrapTreeTable('getSelections')[0];
+            let row = $("#" + table.options.id).bootstrapTreeTable('getSelections')[0];
             if ($.common.isEmpty(row)) {
               $.modal.alertWarning("请至少选择一条记录");
               return;
             }
             url = table.options.updateUrl.replace("{id}", row[table.options.uniqueId]);
           } else {
-            var row = $.common.isEmpty(table.options.uniqueId) ? $.table.selectFirstColumns() : $.table.selectColumns(table.options.uniqueId);
+            let row = $.common.isEmpty(table.options.uniqueId) ? $.table.selectFirstColumns() : $.table.selectColumns(table.options.uniqueId);
             url = table.options.updateUrl.replace("{id}", row);
           }
         }
@@ -1081,7 +1089,7 @@ var table = {
       },
       // 保存信息 刷新表格
       save: function (url, data, callback) {
-        var config = {
+        $.ajax({
           url: url,
           type: "post",
           dataType: "json",
@@ -1096,12 +1104,11 @@ var table = {
             }
             $.operate.successCallback(result);
           }
-        };
-        $.ajax(config)
+        })
       },
       // 符合 RESTful 规范的保存信息 刷新表格
       save1: function (url, type, data, callback) {
-        var config = {
+        $.ajax({
           url: url,
           type: type,
           dataType: "json",
@@ -1116,12 +1123,11 @@ var table = {
             }
             $.operate.successCallback(result);
           }
-        };
-        $.ajax(config)
+        })
       },
       // 保存信息 弹出提示框
       saveModal: function (url, data, callback) {
-        var config = {
+        $.ajax({
           url: url,
           type: "post",
           dataType: "json",
@@ -1142,12 +1148,36 @@ var table = {
             }
             $.modal.closeLoading();
           }
-        };
-        $.ajax(config)
+        })
+      },
+      // 符合 RESTful 规范的保存信息 弹出提示框
+      saveModal1: function (url, type, data, callback) {
+        $.ajax({
+          url: url,
+          type: type,
+          dataType: "json",
+          data: data,
+          beforeSend: function () {
+            $.modal.loading("正在处理中，请稍后...");
+          },
+          success: function (result) {
+            if (typeof callback == "function") {
+              callback(result);
+            }
+            if (result.code == web_status.SUCCESS) {
+              $.modal.alertSuccess(result.msg)
+            } else if (result.code == web_status.WARNING) {
+              $.modal.alertWarning(result.msg)
+            } else {
+              $.modal.alertError(result.msg);
+            }
+            $.modal.closeLoading();
+          }
+        })
       },
       // 保存选项卡信息
       saveTab: function (url, data, callback) {
-        var config = {
+        $.ajax({
           url: url,
           type: "post",
           dataType: "json",
@@ -1161,8 +1191,7 @@ var table = {
             }
             $.operate.successTabCallback(result);
           }
-        };
-        $.ajax(config)
+        })
       },
       // 保存结果弹出msg刷新table表格
       ajaxSuccess: function (result) {
@@ -1264,7 +1293,7 @@ var table = {
       _lastValue: {},
       // 初始化树结构
       init: function (options) {
-        var defaults = {
+        options = $.extend({
           id: "tree",                    // 属性ID
           expandLevel: 0,                // 展开等级节点
           view: {
@@ -1283,23 +1312,20 @@ var table = {
               enable: true           // true / false 分别表示 使用 / 不使用 简单数据模式
             }
           },
-        };
-        var options = $.extend(defaults, options);
+        }, options);
         $.tree._option = options;
-        // 树结构初始化加载
-        var setting = {
-          callback: {
-            onClick: options.onClick,                      // 用于捕获节点被点击的事件回调函数
-            onCheck: options.onCheck,                      // 用于捕获 checkbox / radio 被勾选 或 取消勾选的事件回调函数
-            onDblClick: options.onDblClick                 // 用于捕获鼠标双击之后的事件回调函数
-          },
-          check: options.check,
-          view: options.view,
-          data: options.data
-        };
         $.get(options.url, function (data) {
           var treeId = $("#treeId").val();
-          tree = $.fn.zTree.init($("#" + options.id), setting, data);
+          tree = $.fn.zTree.init($("#" + options.id), {
+            callback: {
+              onClick: options.onClick,                      // 用于捕获节点被点击的事件回调函数
+              onCheck: options.onCheck,                      // 用于捕获 checkbox / radio 被勾选 或 取消勾选的事件回调函数
+              onDblClick: options.onDblClick                 // 用于捕获鼠标双击之后的事件回调函数
+            },
+            check: options.check,
+            view: options.view,
+            data: options.data
+          }, data);
           $._tree = tree;
           for (var i = 0; i < options.expandLevel; i++) {
             var nodes = tree.getNodesByParam("level", i);
@@ -1314,7 +1340,7 @@ var table = {
       // 搜索节点
       searchNode: function () {
         // 取得输入的关键字的值
-        var value = $.common.trim($("#keyword").val());
+        const value = $.common.trim($("#keyword").val());
         if ($.tree._lastValue == value) {
           return;
         }
