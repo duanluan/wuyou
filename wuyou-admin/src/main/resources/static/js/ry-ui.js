@@ -797,17 +797,15 @@ var table = {
       },
       // 弹出层指定参数选项
       openOptions: function (options) {
-        // var _url = $.common.isEmpty(options.url) ? "/404.html" : options.url;
-        // var _title = $.common.isEmpty(options.title) ? "系统窗口" : options.title;
-        // var _width = $.common.isEmpty(options.width) ? "800" : options.width;
-        // var _height = $.common.isEmpty(options.height) ? ($(window).height() - 50) : options.height;
-        // var _btn = ['<i class="fa fa-check"></i> 确认', '<i class="fa fa-close"></i> 关闭'];
-        // if ($.common.isEmpty(options.yes)) {
-        //   options.yes = function (index, layero) {
-        //     options.callBack(index, layero);
-        //   }
-        // }
-
+        var btnCallback = {};
+        if (options.btn instanceof Array) {
+          for (var i = 1, len = options.btn.length; i < len; i++) {
+            var btn = options["btn" + (i + 1)];
+            if (btn) {
+              btnCallback["btn" + (i + 1)] = btn;
+            }
+          }
+        }
         layer.open($.extend({
           type: 2,
           maxmin: true,
@@ -833,14 +831,19 @@ var table = {
             }
             return result;
           })(),
-          // TODO
-          // yes: (index, layero) => {
-          //   options.callBack(index, layero);
-          // },
+          yes: (() => {
+            let result;
+            if ($.common.isEmpty(options.yes)) {
+              result = function (index, layero) {
+                options.callBack(index, layero);
+              }
+            }
+            return result;
+          })(),
           cancel: () => {
             return true;
           }
-        }, options));
+        }, btnCallback, options));
       },
       // 弹出层全屏
       openFull: function (title, url, width, height) {
