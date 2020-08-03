@@ -117,7 +117,8 @@ public class GenTableServiceImpl extends ServiceImpl<GenTableMapper, GenTable> i
    *
    * @return 表信息集合
    */
-  public List<GenTable> selectGenTableAll() {
+  @Override
+  public List<GenTable> listAll() {
     return genTableMapper.selectGenTableAll();
   }
 

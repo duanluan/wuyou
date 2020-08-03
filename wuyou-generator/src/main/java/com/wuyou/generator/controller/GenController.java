@@ -119,7 +119,7 @@ public class GenController extends BaseController {
   @GetMapping("/edit/{tableId}")
   public String edit(@PathVariable("tableId") Long tableId, ModelMap mmap) {
     GenTable table = genTableService.getById(tableId);
-    List<GenTable> genTables = genTableService.selectGenTableAll();
+    List<GenTable> genTables = genTableService.listAll();
     List<CxSelect> cxSelect = new ArrayList<CxSelect>();
     for (GenTable genTable : genTables)
     {

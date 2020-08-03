@@ -62,7 +62,7 @@ public interface IGenTableService extends IService<GenTable> {
    *
    * @return 表信息集合
    */
-  List<GenTable> selectGenTableAll();
+  List<GenTable> listAll();
 
   /**
    * 查询业务信息
