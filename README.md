@@ -1,14 +1,10 @@
-## 加入讨论
-
-Microsoft Teams（全平台支持 50W 人加入的团队协作软件）：https://teams.microsoft.com/l/team/19%3a7e51c51538f94346bbcf81c27680fb24%40thread.tacv2/conversations?groupId=f5857b43-85e3-4e5f-9383-b8dad16e947c&tenantId=4e2b5c12-4bc2-48c5-85f3-fbcceb3a3088
-
 ## 简介
 
 [若依](http://doc.wuyou.vip)在 Gitee 上的 Star 比较多，但是许多地方的代码不是很复合我的规范，于是对其进行优化，以供自己和感兴趣的你使用。
 
 做了哪些修改，为什么这样修改，会详尽的记录，如果有任何问题欢迎提出，但我不一定会改。
 
-会同步更新 Gitee 上 wuyou 的 Commits，提交格式默认为 “fork: 2020-04-23 cb32d5c ……”。
+会同步更新 Gitee 上 ruoyi 的 Commits，提交格式默认为 “fork: 2020-04-23 cb32d5c ……”。
 
 **现求一个好看的 Logo**
 
