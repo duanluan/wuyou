@@ -2,6 +2,7 @@ package com.wuyou.generator.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -17,6 +18,7 @@ import com.wuyou.generator.util.GenUtils;
 import com.wuyou.generator.util.VelocityInitializer;
 import com.wuyou.generator.util.VelocityUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.velocity.Template;
@@ -27,6 +29,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
@@ -210,13 +213,13 @@ public class GenTableServiceImpl extends ServiceImpl<GenTableMapper, GenTable> i
   }
 
   /**
-   * 生成代码
+   * 生成代码（下载方式）
    *
    * @param tableName 表名称
    * @return 数据
    */
   @Override
-  public byte[] generatorCode(String tableName) {
+  public byte[] downloadCode(String tableName) {
     ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
     try (ZipOutputStream zip = new ZipOutputStream(outputStream)) {
       generatorCode(tableName, zip);
@@ -227,13 +230,52 @@ public class GenTableServiceImpl extends ServiceImpl<GenTableMapper, GenTable> i
   }
 
   /**
-   * 批量生成代码
+   * 生成代码（自定义路径）
+   *
+   * @param tableName 表名称
+   * @return 数据
+   */
+  @Override
+  public void generatorCode(String tableName) {
+    // 查询表信息
+    GenTable queryGenTable = new GenTable();
+    queryGenTable.setTableName(tableName);
+    GenTable table = this.getOne(new QueryWrapper<>(queryGenTable));
+    // 设置主子表信息
+    setSubTable(table);
+    // 设置主键列信息
+    setPkColumn(table);
+
+    VelocityInitializer.initVelocity();
+
+    VelocityContext context = VelocityUtils.prepareContext(table);
+
+    // 获取模板列表
+    List<String> templates = VelocityUtils.getTemplateList(table.getTplCategory());
+    for (String template : templates) {
+      if (!StringUtils.contains(template, "sql.vm")) {
+        // 渲染模板
+        StringWriter sw = new StringWriter();
+        Template tpl = Velocity.getTemplate(template, StandardCharsets.UTF_8.name());
+        tpl.merge(context, sw);
+        try {
+          String path = getGenPath(table, template);
+          FileUtils.writeStringToFile(new File(path), sw.toString(), StandardCharsets.UTF_8);
+        } catch (IOException e) {
+          throw new BusinessException("渲染模板失败，表名：" + table.getTableName());
+        }
+      }
+    }
+  }
+
+  /**
+   * 批量生成代码（下载方式）
    *
    * @param tableNames 表数组
    * @return 数据
    */
   @Override
-  public byte[] generatorCode(String[] tableNames) {
+  public byte[] downloadCode(String[] tableNames) {
     ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
     try (ZipOutputStream zip = new ZipOutputStream(outputStream)) {
       for (String tableName : tableNames) {
@@ -365,5 +407,20 @@ public class GenTableServiceImpl extends ServiceImpl<GenTableMapper, GenTable> i
       genTable.setParentMenuId(parentMenuId);
       genTable.setParentMenuName(parentMenuName);
     }
+  }
+
+  /**
+   * 获取代码生成地址
+   *
+   * @param table    业务表信息
+   * @param template 模板文件路径
+   * @return 生成地址
+   */
+  public static String getGenPath(GenTable table, String template) {
+    String genPath = table.getGenPath();
+    if (StringUtils.equals(genPath, "/")) {
+      return System.getProperty("user.dir") + File.separator + "src" + File.separator + VelocityUtils.getFileName(template, table);
+    }
+    return genPath + File.separator + VelocityUtils.getFileName(template, table);
   }
 }

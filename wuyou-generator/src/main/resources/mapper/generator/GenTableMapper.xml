@@ -17,6 +17,8 @@
     <result property="businessName" column="business_name"/>
     <result property="functionName" column="function_name"/>
     <result property="functionAuthor" column="function_author"/>
+    <result property="genType" column="gen_type"/>
+    <result property="genPath" column="gen_path"/>
     <result property="options" column="options"/>
     <result property="createBy" column="create_by"/>
     <result property="createTime" column="create_time"/>

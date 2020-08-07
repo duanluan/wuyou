@@ -105,20 +105,28 @@ public interface IGenTableService extends IService<GenTable> {
   Map<String, String> previewCode(Long tableId);
 
   /**
-   * 生成代码
+   * 生成代码（下载方式）
    *
    * @param tableName 表名称
    * @return 数据
    */
-  byte[] generatorCode(String tableName);
+  byte[] downloadCode(String tableName);
 
   /**
-   * 批量生成代码
+   * 生成代码（自定义路径）
+   *
+   * @param tableName 表名称
+   * @return 数据
+   */
+  void generatorCode(String tableName);
+
+  /**
+   * 批量生成代码（下载方式）
    *
    * @param tableNames 表数组
    * @return 数据
    */
-  byte[] generatorCode(String[] tableNames);
+  byte[] downloadCode(String[] tableNames);
 
   /**
    * 修改保存参数校验

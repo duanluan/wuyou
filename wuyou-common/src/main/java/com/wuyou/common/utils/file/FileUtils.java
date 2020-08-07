@@ -10,7 +10,7 @@ import java.nio.charset.StandardCharsets;
  *
  * @author wuyou
  */
-public class FileUtils {
+public class FileUtils extends org.apache.commons.io.FileUtils {
 
   public static final String FILENAME_PATTERN = "[a-zA-Z0-9_\\-\\|\\.\\u4e00-\\u9fa5]+";
   private static final String ENC = StandardCharsets.UTF_8.name();

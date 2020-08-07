@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wuyou.common.annotation.Log;
 import com.wuyou.common.core.controller.BaseController;
+import com.wuyou.common.core.domain.AjaxResult;
 import com.wuyou.common.core.domain.CxSelect;
 import com.wuyou.common.core.domain.Result;
 import com.wuyou.common.core.page.TableDataInfo;
@@ -121,14 +122,11 @@ public class GenController extends BaseController {
     GenTable table = genTableService.getById(tableId);
     List<GenTable> genTables = genTableService.listAll();
     List<CxSelect> cxSelect = new ArrayList<CxSelect>();
-    for (GenTable genTable : genTables)
-    {
-      if (!StringUtils.equals(table.getTableName(), genTable.getTableName()))
-      {
+    for (GenTable genTable : genTables) {
+      if (!StringUtils.equals(table.getTableName(), genTable.getTableName())) {
         CxSelect cxTable = new CxSelect(genTable.getTableName(), genTable.getTableName() + '：' + genTable.getTableComment());
         List<CxSelect> cxColumns = new ArrayList<CxSelect>();
-        for (GenTableColumn tableColumn : genTable.getColumns())
-        {
+        for (GenTableColumn tableColumn : genTable.getColumns()) {
           cxColumns.add(new CxSelect(tableColumn.getColumnName(), tableColumn.getColumnName() + '：' + tableColumn.getColumnComment()));
         }
         cxTable.setS(cxColumns);
@@ -174,18 +172,30 @@ public class GenController extends BaseController {
   }
 
   /**
-   * 生成代码
+   * 生成代码（下载方式）
    */
   @RequiresPermissions("tool:gen:code")
   @Log(title = "代码生成", businessType = BusinessType.GENCODE)
-  @GetMapping("/genCode/{tableName}")
-  public void genCode(HttpServletResponse response, @PathVariable("tableName") String tableName) throws IOException {
-    byte[] data = genTableService.generatorCode(tableName);
+  @GetMapping("/download/{tableName}")
+  public void download(HttpServletResponse response, @PathVariable("tableName") String tableName) throws IOException {
+    byte[] data = genTableService.downloadCode(tableName);
     genCode(response, data);
   }
 
   /**
-   * 批量生成代码
+   * 生成代码（自定义路径）
+   */
+  @RequiresPermissions("tool:gen:code")
+  @Log(title = "代码生成", businessType = BusinessType.GENCODE)
+  @GetMapping("/genCode/{tableName}")
+  @ResponseBody
+  public AjaxResult genCode(HttpServletResponse response, @PathVariable("tableName") String tableName) {
+    genTableService.generatorCode(tableName);
+    return AjaxResult.success();
+  }
+
+  /**
+   * 批量生成代码（下载方式）
    */
   @RequiresPermissions("tool:gen:code")
   @Log(title = "代码生成", businessType = BusinessType.GENCODE)
@@ -193,7 +203,7 @@ public class GenController extends BaseController {
   @ResponseBody
   public void batchGenCode(HttpServletResponse response, String tables) throws IOException {
     String[] tableNames = Convert.toStrArray(tables);
-    byte[] data = genTableService.generatorCode(tableNames);
+    byte[] data = genTableService.downloadCode(tableNames);
     genCode(response, data);
   }
 
