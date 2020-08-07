@@ -867,7 +867,7 @@ body.canvas-menu.mini-navbar nav.navbar-static-side {
   color: #cacaca;
 }
 
-.form-control, .has-error .form-control:focus,  .has-success .form-control:focus, .has-warning .form-control:focus,  .navbar-collapse, .navbar-form, .navbar-form-custom .form-control:focus,  .navbar-form-custom .form-control:hover, .open .btn.dropdown-toggle,  .panel, .popover, .progress, .progress-bar {
+.form-control, .has-error .form-control:focus, .has-success .form-control:focus, .has-warning .form-control:focus, .navbar-collapse, .navbar-form, .navbar-form-custom .form-control:focus, .navbar-form-custom .form-control:hover, .open .btn.dropdown-toggle, .panel, .popover, .progress, .progress-bar {
   box-shadow: none;
 }
 
@@ -4980,7 +4980,7 @@ dd.project-people {
 }
 
 .chat-avatar {
-  white: 36px;
+  width: 36px;
   height: 36px;
   float: left;
   margin-right: 10px;
@@ -5007,9 +5007,10 @@ dd.project-people {
   margin-left: -30px;
 }
 
-@media ( max-width: 992px) {
-  .chat-users, .chat-statistic {
-    margin-left: 0px;
+@media (max-width: 992px) {
+  .chat-users,
+  .chat-statistic {
+    margin-left: 0;
   }
 }
 
@@ -5029,12 +5030,12 @@ dd.project-people {
   margin-top: 1px;
 }
 
-.chat-discussion .chat-message:nth-child(2n+1) .message-avatar {
+.chat-discussion .chat-message.left .message-avatar {
   float: left;
   margin-right: 10px;
 }
 
-.chat-discussion .chat-message:nth-child(2n) .message-avatar {
+.chat-discussion .chat-message.right .message-avatar {
   float: right;
   margin-left: 10px;
 }
@@ -5049,20 +5050,20 @@ dd.project-people {
   border-radius: 4px;
 }
 
-.chat-discussion .chat-message:nth-child(2n+1) .message-date {
+.chat-discussion .chat-message.left .message-date {
   float: right;
 }
 
-.chat-discussion .chat-message:nth-child(2n) .message-date {
+.chat-discussion .chat-message.right .message-date {
   float: left;
 }
 
-.chat-discussion .chat-message:nth-child(2n+1) .message {
+.chat-discussion .chat-message.left .message {
   text-align: left;
   margin-left: 55px;
 }
 
-.chat-discussion .chat-message:nth-child(2n) .message {
+.chat-discussion .chat-message.right .message {
   text-align: right;
   margin-right: 55px;
 }
