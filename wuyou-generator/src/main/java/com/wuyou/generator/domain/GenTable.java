@@ -115,6 +115,16 @@ public class GenTable extends BaseEntity {
    */
   @TableField(exist = false)
   private String treeName;
+  /**
+   * 上级菜单ID字段
+   */
+  @TableField(exist = false)
+  private String parentMenuId;
+  /**
+   * 上级菜单名称字段
+   */
+  @TableField(exist = false)
+  private String parentMenuName;
 
   public boolean isSub() {
     return isSub(this.tplCategory);
