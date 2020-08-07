@@ -103,7 +103,7 @@ public class VelocityUtils {
    * @return 上级菜单ID字段
    */
   public static String getParentMenuId(JSONObject paramsObj) {
-    if (paramsObj.containsKey(GenConstants.PARENT_MENU_ID)) {
+    if (paramsObj != null && StringUtils.isNotBlank(paramsObj.toString()) && paramsObj.containsKey(GenConstants.PARENT_MENU_ID)) {
       return paramsObj.getString(GenConstants.PARENT_MENU_ID);
     }
     return DEFAULT_PARENT_MENU_ID;
