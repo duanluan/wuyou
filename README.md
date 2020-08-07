@@ -4,7 +4,7 @@
 
 做了哪些修改，为什么这样修改，会详尽的记录，如果有任何问题欢迎提出，但我不一定会改。
 
-会同步更新 Gitee 上 ruoyi 的 Commits，提交格式默认为 “fork: 2020-04-23 cb32d5c ……”。
+会同步更新 Gitee 上 [RuoYi 的 Commits](https://gitee.com/y_project/RuoYi/commits/master)，提交格式默认为 “fork: 2020-04-23 cb32d5c ……”。
 
 **现求一个好看的 Logo**
 
