@@ -87,6 +87,10 @@ public class GenConstants {
    */
   public static final String HTML_DATETIME = "datetime";
   /**
+   * 上传控件
+   */
+  public static final String HTML_UPLOAD = "upload";
+  /**
    * 字符串类型
    */
   public static final String TYPE_STRING = "String";
