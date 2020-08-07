@@ -46,12 +46,12 @@ public class ShiroConfig {
   public static final String PREMISSION_STRING = "perms[\"{0}\"]";
 
   /**
-   * Session超时时间，单位为毫秒（默认30分钟）
+   * Session 超时时间，单位为毫秒（默认 30 分钟）
    */
   @Value("${shiro.session.expireTime}")
   private int expireTime;
   /**
-   * 相隔多久检查一次session的有效性，单位毫秒，默认就是10分钟
+   * 相隔多久检查一次 Session 的有效性，单位毫秒，默认就是 10 分钟
    */
   @Value("${shiro.session.validationInterval}")
   private int validationInterval;
@@ -76,25 +76,30 @@ public class ShiroConfig {
   @Value("${shiro.user.captchaType}")
   private int captchaType;
   /**
-   * 设置Cookie的域名
+   * 设置 Cookie 的域名
    */
   @Value("${shiro.cookie.domain}")
   private String domain;
   /**
-   * 设置cookie的有效访问路径
+   * 设置 Cookie 的有效访问路径
    */
   @Value("${shiro.cookie.path}")
   private String path;
   /**
-   * 设置HttpOnly属性
+   * 设置 HttpOnly 属性
    */
   @Value("${shiro.cookie.httpOnly}")
   private boolean httpOnly;
   /**
-   * 设置Cookie的过期时间，秒为单位
+   * 设置 Cookie 的过期时间，秒为单位
    */
   @Value("${shiro.cookie.maxAge}")
   private int maxAge;
+  /**
+   * 设置 cipherKey 密钥
+   */
+  @Value("${shiro.cookie.cipherKey}")
+  private String cipherKey;
   /**
    * 登录地址
    */
@@ -107,7 +112,7 @@ public class ShiroConfig {
   private String unauthorizedUrl;
 
   /**
-   * 缓存管理器 使用Ehcache实现
+   * 缓存管理器，使用 Ehcache 实现
    */
   @Bean
   public EhCacheManager getEhCacheManager() {
@@ -310,7 +315,7 @@ public class ShiroConfig {
   public CookieRememberMeManager rememberMeManager() {
     CookieRememberMeManager cookieRememberMeManager = new CookieRememberMeManager();
     cookieRememberMeManager.setCookie(rememberMeCookie());
-    cookieRememberMeManager.setCipherKey(Base64.decode("fCq+/xW488hMTCD+cmJ3aQ=="));
+    cookieRememberMeManager.setCipherKey(Base64.decode(cipherKey));
     return cookieRememberMeManager;
   }
 
