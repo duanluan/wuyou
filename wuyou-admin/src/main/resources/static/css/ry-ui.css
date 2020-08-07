@@ -366,7 +366,7 @@ label.error {
   right: 3px
 }
 
-.Validform_error, input.error, select.error {
+.Validform_error, input.error, textarea.error, select.error {
   background-color: #fbe2e2;
   border-color: #c66161;
   color: #c00
@@ -1194,19 +1194,19 @@ label {
 
 /* 设置placeholder样式 */
 ::-webkit-input-placeholder {
-  color: #b3b3b3!important;
+  color: #b3b3b3 !important;
 }
 
 :-moz-placeholder {
-  color: #b3b3b3!important;
+  color: #b3b3b3 !important;
 }
 
 ::-moz-placeholder {
-  color: #b3b3b3!important;
+  color: #b3b3b3 !important;
 }
 
 :-ms-input-placeholder {
-  color: #b3b3b3!important;
+  color: #b3b3b3 !important;
 }
 
 
@@ -1364,4 +1364,5 @@ label {
   display: flex;
   align-items: center;
 }
+
 /* endregion */
