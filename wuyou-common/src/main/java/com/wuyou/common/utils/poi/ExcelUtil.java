@@ -25,6 +25,7 @@ import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Excel相关处理
@@ -675,6 +676,7 @@ public class ExcelUtil<T> {
         }
       }
     }
+    this.fields = this.fields.stream().sorted(Comparator.comparing(objects -> ((Excel) objects[1]).sort())).collect(Collectors.toList());
   }
 
   /**
