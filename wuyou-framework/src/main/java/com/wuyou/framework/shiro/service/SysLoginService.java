@@ -59,13 +59,15 @@ public class SysLoginService {
     // 查询用户信息
     SysUser user = userService.getByLoginName(username);
 
-    if (user == null && maybeMobilePhoneNumber(username)) {
-      user = userService.getByPhoneNumber(username);
-    }
+    /*
+     if (user == null && maybeMobilePhoneNumber(username)) {
+     user = userService.getByPhoneNumber(username);
+     }
 
-    if (user == null && maybeEmail(username)) {
-      user = userService.getByEmail(username);
-    }
+     if (user == null && maybeEmail(username)) {
+     user = userService.getByEmail(username);
+     }
+     */
 
     if (user == null) {
       AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_FAIL, MessageUtils.message("user.not.exists")));
@@ -89,13 +91,15 @@ public class SysLoginService {
     return user;
   }
 
-  private boolean maybeEmail(String username) {
-    return username.matches(UserConstants.EMAIL_PATTERN);
-  }
+  /*
+   private boolean maybeEmail(String username) {
+   return username.matches(UserConstants.EMAIL_PATTERN);
+   }
 
-  private boolean maybeMobilePhoneNumber(String username) {
-    return username.matches(UserConstants.MOBILE_PHONE_NUMBER_PATTERN);
-  }
+   private boolean maybeMobilePhoneNumber(String username) {
+   return username.matches(UserConstants.MOBILE_PHONE_NUMBER_PATTERN);
+   }
+   */
 
   /**
    * 记录登录信息
