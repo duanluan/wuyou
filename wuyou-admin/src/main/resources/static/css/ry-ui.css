@@ -841,8 +841,13 @@ label {
   min-height: 75%;
 }
 
-.table-striped .bootstrap-table {
+.table-striped .bootstrap-table, .table-striped .table-bordered {
   border: 0 !important;
+}
+
+.table-bordered .table > thead > tr > th, .table-bordered .table > tbody > tr > th {
+  font-weight: normal;
+  font-size: 13px
 }
 
 .table-striped table > thead > tr > th, .table-striped table > tbody > tr > th, .table-striped table > tfoot > tr > th, .table-striped table > thead > tr > td, .table-striped table > tbody > tr > td, .table-striped table > tfoot > tr > td {
@@ -876,9 +881,6 @@ label {
 .table-striped .table > thead > tr > th, .table-striped .table > tbody > tr > th {
   border-bottom: 1px solid #ccc !important;
   border-top: 0 !important;
-}
-
-.table-striped .table > thead:first-child > tr:first-child > th {
   font-weight: normal;
   font-size: 13px
 }
