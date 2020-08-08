@@ -552,6 +552,7 @@ var table = {
           rootIdValue: null,
           ajaxParams: {},
           toolbar: "toolbar",
+          loadingFontSize: 13,
           striped: false,
           expandColumn: 1,
           showSearch: true,
@@ -576,6 +577,7 @@ var table = {
           striped: options.striped,                           // 是否显示行间隔色
           bordered: false,                                    // 是否显示边框
           toolbar: '#' + options.toolbar,                     // 指定工作栏
+          loadingFontSize: options.loadingFontSize,           // 自定义加载文本的字体大小
           showSearch: options.showSearch,                     // 是否显示检索信息
           showRefresh: options.showRefresh,                   // 是否显示刷新按钮
           showColumns: options.showColumns,                   // 是否显示隐藏某列下拉框
