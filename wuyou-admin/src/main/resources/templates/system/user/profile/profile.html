@@ -2,7 +2,7 @@
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <head>
   <th:block th:include="include :: header('用户个人信息')"/>
-  <style>
+  <style type="text/css">
   .user-info-head {
     position: relative;
     display: inline-block;
@@ -42,7 +42,7 @@
         <div class="ibox-content">
           <div class="text-center">
             <p class="user-info-head" onclick="javascript:avatar()"><img class="img-circle img-lg" th:src="(${user.avatar} == '') ? @{/img/profile.jpg} : @{${user.avatar}}"></p>
-            <!--<p><a href="javascript:avatar()">修改头像</a></p>-->
+            <p><a href="javascript:avatar()">修改头像</a></p>
           </div>
           <ul class="list-group list-group-striped">
             <li class="list-group-item"><i class="fa fa-user"></i>

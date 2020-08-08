@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- * wuyou首创 html调用 thymeleaf 实现参数管理 —— 小朋友表示有很多问号
+ * html 调用 thymeleaf 实现参数管理
  *
  * @author wuyou
  */

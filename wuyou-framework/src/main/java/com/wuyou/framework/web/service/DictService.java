@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * wuyou首创 html调用 thymeleaf 实现字典读取 —— 小朋友表示有很多问号
+ * html 调用 thymeleaf 实现字典读取
  *
  * @author wuyou
  */

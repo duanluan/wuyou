@@ -12,7 +12,7 @@ import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 
 /**
- * wuyou首创 js调用 thymeleaf 实现按钮权限可见性 —— 小朋友表示有很多问号
+ * js 调用 thymeleaf 实现按钮权限可见性
  *
  * @author wuyou
  */
