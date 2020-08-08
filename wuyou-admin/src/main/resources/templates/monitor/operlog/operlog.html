@@ -75,6 +75,11 @@ $(function () {
     detailUrl: prefix + "/detail/{id}",
     removeUrl: prefix,
     exportUrl: prefix + "/export",
+    queryParams: function queryParams(params) {
+      var search = $.table.queryParams(params);
+      search.businessTypes = $.common.join($('#businessTypes').selectpicker('val'));
+      return search;
+    },
     sortName: "operTime",
     sortOrder: "desc",
     modalName: "操作日志",
@@ -149,9 +154,7 @@ $(function () {
 });
 
 function searchPre() {
-  var data = {};
-  data.businessTypes = $.common.join($('#businessTypes').selectpicker('val'));
-  $.table.search('operlog-form', 'bootstrap-table', data);
+  $.table.search('operlog-form', 'bootstrap-table');
 }
 
 function resetPre() {
