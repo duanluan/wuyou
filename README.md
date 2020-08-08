@@ -60,18 +60,93 @@
 
 ## 优化项部分内容
 
-| 名称 | 内容 | 进度 | 备注 |
-| --- | --- | --- | --- |
-| 代码格式 | IDEA 默认的代码格式化。缩进修改为两个空格。HTMl 中的 style 标签和 script 标签中的内容顶头开始。修改 Service 和 Mapper 的方法名。 | 100% | [我的 Intellij IDEA code style XML 文件](./docs/%5BIntellij%20IDEA%20code%20style%5D%20nowrap.xml) |
-| MyBatis Mapper XML | 类使用全路径免除配置 typeAliasesPackage，避免 IDEA 报错，方便提示。删除 parameterType 属性。 | 100% |  |
-| Java 代码结构 | 添加 Lombok，修改所有实体类，LoggerFactory.getLogger 替换为 @Slf4j。调整注解顺序：@RequestMapping < @ResponseBody < @Tranactional < @RequiresPermissions < @Log，@NotNull/NotBlank < @Size < …… < @Excel 等等。 | 100% |  |
-| static 目录结构 | 所有第三方依赖全部放到 lib 目录下 | 100% |  |
-| 集成 [MyBatis Plus](https://mp.baomidou.com/) | 替换 Mapper XML 中的单表操作方法。替换分页插件。替换多数据源。 | 100% |  |
-| 阿里编码规约及代码优化 | 使用 [Alibaba Java Coding Guidelines](https://plugins.jetbrains.com/plugin/10046-alibaba-java-coding-guidelines) 扫描并解决。 | 剩余 59 - 13 |  |
-| 前端枚举 | 前端状态、类型等字段使用枚举。 | 0% |  |
-| 前端新增页面和编辑页面合一 | 前端的新增页面合并到编辑页面中，避免重复修改。 | 10% |  |
-| 接口修改为 RESTful 规范 | 因为是模板引擎，而且为了避免麻烦（比如页面不复数，接口复数），所以列出数据的接口是 \[GET\] XXX/list | 10% |  |
-| 修改代码生成模板 | …… | 0% |  |
-| 修改数据库列名和实体类属性名 | …… | 0% |  |
-| Swagger 替换为 [knife4j](https://gitee.com/xiaoym/knife4j) | …… | 0% |  |
-| 验证码替换为 [EasyCaptcha](https://github.com/whvcse/EasyCaptcha) | 更美观，写法更简单 | 100% |  |
+<table>
+  <thead>
+    <tr>
+      <th width="180px">名称</th>
+      <th>内容</th>
+      <th>进度</th>
+      <th width="130px">备注</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>代码格式</td>
+      <td>IDEA 默认的代码格式化。缩进修改为两个空格。HTMl 中的 style 标签和 script 标签中的内容顶头开始。修改 Service 和 Mapper 的方法名。</td>
+      <td>100%</td>
+      <td><a href="./docs/%5BIntellij%20IDEA%20code%20style%5D%20nowrap.xml">我的 Intellij IDEA code style XML 文件</a></td>
+    </tr>
+    <tr>
+      <td>MyBatis Mapper XML</td>
+      <td>类使用全路径免除配置 typeAliasesPackage，避免 IDEA 报错，方便提示。删除 parameterType 属性。</td>
+      <td>100%</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Java 代码结构</td>
+      <td>添加 Lombok，修改所有实体类，LoggerFactory.getLogger 替换为 @Slf4j。调整注解顺序：@RequestMapping < @ResponseBody < @Tranactional < @RequiresPermissions < @Log，@NotNull/NotBlank < @Size < …… < @Excel 等等。</td>
+      <td>100%</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>static 目录结构</td>
+      <td>所有第三方依赖全部放到 lib 目录下</td>
+      <td>100%</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>集成 <a href="https://mp.baomidou.com/">MyBatis Plus</a></td>
+      <td>替换 Mapper XML 中的单表操作方法。替换分页插件。替换多数据源。</td>
+      <td>100%</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>阿里编码规约及代码优化</td>
+      <td>使用 <a href="https://plugins.jetbrains.com/plugin/10046-alibaba-java-coding-guidelines">Alibaba Java Coding Guidelines</a> 扫描并解决。</td>
+      <td>剩余 59 - 13</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>前端枚举</td>
+      <td>前端状态、类型等字段使用枚举。</td>
+      <td>0%</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>前端新增页面和编辑页面合一</td>
+      <td>前端的新增页面合并到编辑页面中，避免重复修改。</td>
+      <td>10%</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>接口修改为 RESTful 规范</td>
+      <td>因为是模板引擎，而且为了避免麻烦（比如页面不复数，接口复数），所以列出数据的接口是 \[GET\] XXX/list</td>
+      <td>10%</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>修改代码生成模板</td>
+      <td>……</td>
+      <td>0%</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>修改数据库列名和实体类属性名</td>
+      <td>……</td>
+      <td>0%</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Swagger 替换为 <a href="https://gitee.com/xiaoym/knife4j">knife4j</a></td>
+      <td>……</td>
+      <td>0%</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>验证码替换为 <a href="https://github.com/whvcse/EasyCaptcha">EasyCaptcha</a></td>
+      <td>更美观，写法更简单</td>
+      <td>100%</td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
