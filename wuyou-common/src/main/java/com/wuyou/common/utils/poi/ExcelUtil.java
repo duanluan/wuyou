@@ -373,7 +373,7 @@ public class ExcelUtil<T> {
    */
   public void setCellVo(Object value, Excel attr, Cell cell) {
     if (ColumnType.STRING == attr.cellType()) {
-      cell.setCellType(CellType.NUMERIC);
+      cell.setCellType(CellType.STRING);
       cell.setCellValue(value == null ? attr.defaultValue() : value + attr.suffix());
     } else if (ColumnType.NUMERIC == attr.cellType()) {
       cell.setCellType(CellType.NUMERIC);
