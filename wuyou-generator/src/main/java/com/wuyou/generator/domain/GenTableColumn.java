@@ -82,7 +82,7 @@ public class GenTableColumn extends BaseEntity {
    */
   private String queryType;
   /**
-   * 显示类型（input文本框、textarea文本域、select下拉框、checkbox复选框、radio单选框、datetime日期控件、upload上传控件）
+   * 显示类型（input文本框、textarea文本域、select下拉框、checkbox复选框、radio单选框、datetime日期控件、upload上传控件、summernote富文本控件）
    */
   private String htmlType;
   /**

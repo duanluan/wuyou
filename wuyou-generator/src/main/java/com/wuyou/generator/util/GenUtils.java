@@ -99,6 +99,10 @@ public class GenUtils {
     else if (StringUtils.endsWithIgnoreCase(columnName, "file")) {
       column.setHtmlType(GenConstants.HTML_UPLOAD);
     }
+    // 内容字段设置富文本控件
+    else if (StringUtils.endsWithIgnoreCase(columnName, "content")) {
+      column.setHtmlType(GenConstants.HTML_SUMMERNOTE);
+    }
   }
 
   /**

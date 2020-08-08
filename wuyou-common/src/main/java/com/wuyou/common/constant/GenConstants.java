@@ -99,6 +99,10 @@ public class GenConstants {
    */
   public static final String HTML_UPLOAD = "upload";
   /**
+   * 富文本控件
+   */
+  public static final String HTML_SUMMERNOTE = "summernote";
+  /**
    * 字符串类型
    */
   public static final String TYPE_STRING = "String";
