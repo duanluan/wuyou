@@ -9,6 +9,7 @@ import com.wuyou.common.exception.job.TaskException;
 import com.wuyou.common.utils.poi.ExcelUtil;
 import com.wuyou.quartz.domain.SysJob;
 import com.wuyou.quartz.service.ISysJobService;
+import com.wuyou.quartz.util.CronUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.wuyou.common.core.domain.Result.custom;
-import static com.wuyou.common.core.domain.Result.success;
+import static com.wuyou.common.core.domain.Result.*;
 
 /**
  * 调度任务信息操作处理
@@ -117,6 +117,9 @@ public class SysJobController extends BaseController {
   @PostMapping("/add")
   @ResponseBody
   public Result addSave(@Validated SysJob job) throws SchedulerException, TaskException {
+    if (!CronUtils.isValid(job.getCronExpression())) {
+      return error("cron表达式不正确");
+    }
     return custom(jobService.insertJob(job));
   }
 
@@ -137,6 +140,9 @@ public class SysJobController extends BaseController {
   @PostMapping("/edit")
   @ResponseBody
   public Result editSave(@Validated SysJob job) throws SchedulerException, TaskException {
+    if (!CronUtils.isValid(job.getCronExpression())) {
+      return error("cron表达式不正确");
+    }
     return custom(jobService.updateJob(job));
   }
 
