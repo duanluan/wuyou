@@ -305,7 +305,9 @@ $('#form-user-resetPwd').validate({
 });
 
 function submitChangPassword() {
-  if ($.validate.form('form-user-resetPwd')) {
+  var chrtype = [[${@config.getKey('sys.account.chrtype')}]];
+  var password = $("#newPassword").val();
+  if ($.validate.form("form-user-resetPwd") && checkpwd(chrtype, password)) {
     $.operate.saveModal1(prefix + '/resetPwd', 'PUT', $('#form-user-resetPwd').serialize());
   }
 }

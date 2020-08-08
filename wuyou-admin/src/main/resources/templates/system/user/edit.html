@@ -179,7 +179,9 @@ $("#form-user-edit").validate({
 });
 
 function submitHandler() {
-  if ($.validate.form()) {
+  var chrtype = [[${@config.getKey('sys.account.chrtype')}]];
+  var password = $("#password").val();
+  if ($.validate.form() && checkpwd(chrtype, password)) {
     var data = $("#form-user-edit").serializeArray();
     var status = $("input[id='status']").is(':checked') == true ? 0 : 1;
     var roleIds = $.form.selectCheckeds("role");
