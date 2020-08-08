@@ -1,10 +1,13 @@
 package com.wuyou.common.utils.spring;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.aop.framework.AopContext;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
 /**
@@ -13,15 +16,22 @@ import org.springframework.stereotype.Component;
  * @author wuyou
  */
 @Component
-public final class SpringUtils implements BeanFactoryPostProcessor {
+public final class SpringUtils implements BeanFactoryPostProcessor, ApplicationContextAware {
   /**
    * Spring应用上下文环境
    */
   private static ConfigurableListableBeanFactory beanFactory;
 
+  private static ApplicationContext applicationContext;
+
   @Override
   public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
     SpringUtils.beanFactory = beanFactory;
+  }
+
+  @Override
+  public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+    SpringUtils.applicationContext = applicationContext;
   }
 
   /**
@@ -98,5 +108,25 @@ public final class SpringUtils implements BeanFactoryPostProcessor {
   @SuppressWarnings("unchecked")
   public static <T> T getAopProxy(T invoker) {
     return (T) AopContext.currentProxy();
+  }
+
+
+  /**
+   * 获取当前的环境配置，无配置返回null
+   *
+   * @return 当前的环境配置
+   */
+  public static String[] getActiveProfiles() {
+    return applicationContext.getEnvironment().getActiveProfiles();
+  }
+
+  /**
+   * 获取当前的环境配置，当有多个环境配置时，只获取第一个
+   *
+   * @return 当前的环境配置
+   */
+  public static String getActiveProfile() {
+    final String[] activeProfiles = getActiveProfiles();
+    return !CollectionUtils.sizeIsEmpty(activeProfiles) ? activeProfiles[0] : null;
   }
 }
