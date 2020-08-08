@@ -221,6 +221,14 @@ public class DemoTableController extends BaseController {
   }
 
   /**
+   * 表格打印配置
+   */
+  @GetMapping("/print")
+  public String print() {
+    return PREFIX + "/print";
+  }
+
+  /**
    * 表格其他操作
    */
   @GetMapping("/other")
