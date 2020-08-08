@@ -65,7 +65,7 @@
     <tr>
       <th width="180px">名称</th>
       <th>内容</th>
-      <th>进度</th>
+      <th width="70px">进度</th>
       <th width="130px">备注</th>
     </tr>
   </thead>
