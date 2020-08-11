@@ -3,14 +3,20 @@ package com.wuyou.system.service.impl;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.wuyou.common.constant.ShiroConstants;
 import com.wuyou.common.utils.DateUtils;
 import com.wuyou.system.domain.SysUserOnline;
 import com.wuyou.system.mapper.SysUserOnlineMapper;
 import com.wuyou.system.service.ISysUserOnlineService;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.shiro.cache.Cache;
+import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.Serializable;
 import java.util.Date;
+import java.util.Deque;
 import java.util.List;
 
 /**
@@ -23,6 +29,8 @@ public class SysUserOnlineServiceImpl extends ServiceImpl<SysUserOnlineMapper, S
 
   @Autowired
   private SysUserOnlineMapper userOnlineMapper;
+  @Autowired
+  private EhCacheManager ehCacheManager;
 
   /**
    * 通过会话序号删除信息
@@ -77,6 +85,22 @@ public class SysUserOnlineServiceImpl extends ServiceImpl<SysUserOnlineMapper, S
   @Override
   public void forceLogout(String sessionId) {
     userOnlineMapper.deleteById(sessionId);
+  }
+
+  /**
+   * 清理用户缓存
+   *
+   * @param loginName 登录名称
+   * @param sessionId 会话ID
+   */
+  public void removeUserCache(String loginName, String sessionId) {
+    Cache<String, Deque<Serializable>> cache = ehCacheManager.getCache(ShiroConstants.SYS_USERCACHE);
+    if (cache != null) {
+      Deque<Serializable> deque = cache.get(loginName);
+      if (!CollectionUtils.sizeIsEmpty(deque)) {
+        deque.remove(sessionId);
+      }
+    }
   }
 
   /**

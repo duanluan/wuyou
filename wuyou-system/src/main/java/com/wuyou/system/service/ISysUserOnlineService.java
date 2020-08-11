@@ -55,6 +55,14 @@ public interface ISysUserOnlineService extends IService<SysUserOnline> {
   void forceLogout(String sessionId);
 
   /**
+   * 清理用户缓存
+   *
+   * @param loginName 登录名称
+   * @param sessionId 会话ID
+   */
+  void removeUserCache(String loginName, String sessionId);
+
+  /**
    * 查询会话集合
    *
    * @param expiredDate 有效期

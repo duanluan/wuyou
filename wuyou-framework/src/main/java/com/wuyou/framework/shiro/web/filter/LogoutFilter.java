@@ -3,21 +3,20 @@ package com.wuyou.framework.shiro.web.filter;
 import com.wuyou.common.constant.Constants;
 import com.wuyou.common.constant.ShiroConstants;
 import com.wuyou.common.utils.MessageUtils;
+import com.wuyou.common.utils.spring.SpringUtils;
 import com.wuyou.framework.manager.AsyncManager;
 import com.wuyou.framework.manager.factory.AsyncFactory;
 import com.wuyou.framework.util.ShiroUtils;
 import com.wuyou.system.domain.SysUser;
+import com.wuyou.system.service.ISysUserOnlineService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.shiro.cache.Cache;
 import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.session.SessionException;
 import org.apache.shiro.subject.Subject;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import java.io.Serializable;
-import java.util.Deque;
 
 /**
  * 退出过滤器
@@ -30,7 +29,6 @@ public class LogoutFilter extends org.apache.shiro.web.filter.authc.LogoutFilter
    * 退出后重定向的地址
    */
   private String loginUrl;
-  private Cache<String, Deque<Serializable>> cache;
 
   public String getLoginUrl() {
     return loginUrl;
@@ -52,7 +50,7 @@ public class LogoutFilter extends org.apache.shiro.web.filter.authc.LogoutFilter
           // 记录用户退出日志
           AsyncManager.me().execute(AsyncFactory.recordLogininfor(loginName, Constants.LOGOUT, MessageUtils.message("user.logout.success")));
           // 清理缓存
-          cache.remove(loginName);
+          SpringUtils.getBean(ISysUserOnlineService.class).removeUserCache(loginName, ShiroUtils.getSessionId());
         }
         // 退出登录
         subject.logout();
@@ -76,15 +74,5 @@ public class LogoutFilter extends org.apache.shiro.web.filter.authc.LogoutFilter
       return url;
     }
     return super.getRedirectUrl(request, response, subject);
-  }
-
-  /**
-   * 设置Cache的key的前缀
-   *
-   * @param cacheManager
-   */
-  public void setCacheManager(CacheManager cacheManager) {
-    // 必须和ehcache缓存配置中的缓存name一致
-    this.cache = cacheManager.getCache(ShiroConstants.SYS_USERCACHE);
   }
 }
