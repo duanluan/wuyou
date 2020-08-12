@@ -118,6 +118,14 @@ $(function () {
         return html;
       }
     }, {
+      field: 'date',
+      align: 'center',
+      title: '商品日期',
+      formatter: function (value, row, index) {
+        var html = $.common.sprintf("<input class='form-control' type='text' name='goods[%s].date' value='%s' placeholder='yyyy-MM-dd'>", index, value);
+        return html;
+      }
+    }, {
       field: 'price',
       align: 'center',
       title: '商品价格',
@@ -150,6 +158,15 @@ $("input[name='birthday']").datetimepicker({
   autoclose: true
 });
 
+function bindDatetimepicker() {
+  $("input[name$='date']").datetimepicker({
+    format: "yyyy-mm-dd",
+    minView: "month",
+    autoclose: true,
+    pickerPosition: 'top-right'
+  });
+}
+
 function addColumn() {
   var count = $("#" + table.options.id).bootstrapTable('getData').length;
   sub.editColumn();
@@ -164,6 +181,8 @@ function addColumn() {
       type: "",
     }
   });
+
+  bindDatetimepicker();
 }
 </script>
 </body>
@@ -178,6 +197,9 @@ function addColumn() {
     <option value="1" {{if type==="1"}}selected{{/if}}>热性</option>
 </select>
 </div>
+
+
+
 
 
 
