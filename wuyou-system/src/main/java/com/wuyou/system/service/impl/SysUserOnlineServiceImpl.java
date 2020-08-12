@@ -93,6 +93,7 @@ public class SysUserOnlineServiceImpl extends ServiceImpl<SysUserOnlineMapper, S
    * @param loginName 登录名称
    * @param sessionId 会话ID
    */
+  @Override
   public void removeUserCache(String loginName, String sessionId) {
     Cache<String, Deque<Serializable>> cache = ehCacheManager.getCache(ShiroConstants.SYS_USERCACHE);
     if (cache != null) {
