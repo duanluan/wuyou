@@ -5,6 +5,8 @@ import com.wuyou.common.annotation.Log;
 import com.wuyou.common.core.controller.BaseController;
 import com.wuyou.common.core.domain.Result;
 import com.wuyou.common.enums.BusinessType;
+import com.wuyou.common.utils.NumberUtils;
+import com.wuyou.common.utils.StringUtils;
 import com.wuyou.common.utils.poi.ExcelUtil;
 import com.wuyou.framework.util.ShiroUtils;
 import com.wuyou.system.domain.SysPost;
@@ -26,29 +28,48 @@ import static com.wuyou.common.core.domain.Result.error;
  *
  * @author wuyou
  */
-@RequestMapping("/system/post")
+@RequestMapping("/system/posts")
 @Controller
 public class SysPostController extends BaseController {
 
   private static final String PREFIX = "system/post";
+  private static final String LOG_TITLE = "岗位管理";
 
   @Autowired
   private ISysPostService postService;
 
+  /**
+   * 管理页面
+   *
+   * @return 管理页面路径
+   */
   @RequiresPermissions("system:post:view")
   @GetMapping
-  public String operlog() {
-    return PREFIX + "/post";
+  public String list() {
+    return PREFIX + "/list";
   }
 
+  /**
+   * 列出
+   *
+   * @param page 分页对象
+   * @param post 查询条件
+   * @return 岗位列表
+   */
   @RequiresPermissions("system:post:list")
   @ResponseBody
-  @PostMapping("/list")
+  @GetMapping("/list")
   public Result list(Page<SysPost> page, SysPost post) {
     return Result.success(postService.page(page, post));
   }
 
-  @Log(title = "岗位管理", businessType = BusinessType.EXPORT)
+  /**
+   * 导出 Excel
+   *
+   * @param post 查询条件
+   * @return Excel 文件
+   */
+  @Log(title = LOG_TITLE, businessType = BusinessType.EXPORT)
   @RequiresPermissions("system:post:export")
   @ResponseBody
   @PostMapping("/export")
@@ -58,7 +79,13 @@ public class SysPostController extends BaseController {
     return util.exportExcel(list, "岗位数据");
   }
 
-  @Log(title = "岗位管理", businessType = BusinessType.DELETE)
+  /**
+   * 删除
+   *
+   * @param ids 岗位 ID 集合
+   * @return 是否成功
+   */
+  @Log(title = LOG_TITLE, businessType = BusinessType.DELETE)
   @RequiresPermissions("system:post:remove")
   @ResponseBody
   @DeleteMapping
@@ -71,20 +98,30 @@ public class SysPostController extends BaseController {
   }
 
   /**
-   * 新增岗位
+   * 编辑页面
+   *
+   * @param postId 岗位 ID
+   * @param mmap
+   * @return 编辑页面路径 b
    */
-  @GetMapping("/add")
-  public String add() {
-    return PREFIX + "/add";
+  @GetMapping("/{postId}")
+  public String edit(@PathVariable("postId") Long postId, ModelMap mmap) {
+    if (NumberUtils.greaterThanZero(postId)) {
+      mmap.put("post", postService.getById(postId));
+    }
+    return PREFIX + "/edit";
   }
 
   /**
-   * 新增保存岗位
+   * 保存
+   *
+   * @param post 岗位
+   * @return 是否成功
    */
-  @Log(title = "岗位管理", businessType = BusinessType.INSERT)
+  @Log(title = LOG_TITLE, businessType = BusinessType.INSERT)
   @RequiresPermissions("system:post:add")
   @ResponseBody
-  @PostMapping("/add")
+  @PostMapping
   public Result addSave(@Validated SysPost post) {
     if (postService.checkNameUnique(post)) {
       return error("新增岗位'" + post.getPostName() + "'失败，岗位名称已存在");
@@ -96,22 +133,16 @@ public class SysPostController extends BaseController {
   }
 
   /**
-   * 修改岗位
+   * 修改
+   *
+   * @param post 岗位
+   * @return 是否成功
    */
-  @GetMapping("/edit/{postId}")
-  public String edit(@PathVariable("postId") Long postId, ModelMap mmap) {
-    mmap.put("post", postService.getById(postId));
-    return PREFIX + "/edit";
-  }
-
-  /**
-   * 修改保存岗位
-   */
-  @Log(title = "岗位管理", businessType = BusinessType.UPDATE)
+  @Log(title = LOG_TITLE, businessType = BusinessType.UPDATE)
   @RequiresPermissions("system:post:edit")
   @ResponseBody
-  @PostMapping("/edit")
-  public Result editSave(@Validated SysPost post) {
+  @PutMapping("/{postId}")
+  public Result editSave(@PathVariable("postId") Long postId, @Validated SysPost post) {
     if (postService.checkNameUnique(post)) {
       return error("修改岗位'" + post.getPostName() + "'失败，岗位名称已存在");
     } else if (postService.checkCodeUnique(post)) {
@@ -122,22 +153,24 @@ public class SysPostController extends BaseController {
   }
 
   /**
-   * 校验岗位名称
+   * 校验是否唯一
+   *
+   * @param postId 岗位 ID
+   * @param post   岗位数据：名称、编码
    * @return
    */
   @ResponseBody
-  @PostMapping("/checkPostNameUnique")
-  public boolean checkPostNameUnique(SysPost post) {
-    return postService.checkNameUnique(post);
-  }
-
-  /**
-   * 校验岗位编码
-   * @return
-   */
-  @ResponseBody
-  @PostMapping("/checkPostCodeUnique")
-  public boolean checkPostCodeUnique(SysPost post) {
-    return postService.checkCodeUnique(post);
+  @GetMapping("/{postId}/checkUnique")
+  public boolean checkUnique(@PathVariable("postId") Long postId, @RequestParam SysPost post) {
+    if (post == null || NumberUtils.lessThanZero(postId) || (StringUtils.isBlank(post.getPostName()) && StringUtils.isBlank(post.getPostCode()))) {
+      return false;
+    }
+    if (StringUtils.isNotBlank(post.getPostName())) {
+      return postService.checkNameUnique(post);
+    }
+    if (StringUtils.isNotBlank(post.getPostCode())) {
+      return postService.checkCodeUnique(post);
+    }
+    return false;
   }
 }

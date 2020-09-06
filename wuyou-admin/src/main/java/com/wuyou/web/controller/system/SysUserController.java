@@ -5,7 +5,7 @@ import com.wuyou.common.annotation.Log;
 import com.wuyou.common.core.controller.BaseController;
 import com.wuyou.common.core.domain.Result;
 import com.wuyou.common.enums.BusinessType;
-import com.wuyou.common.utils.ObjectUtils;
+import com.wuyou.common.utils.NumberUtils;
 import com.wuyou.common.utils.poi.ExcelUtil;
 import com.wuyou.framework.shiro.service.SysPasswordService;
 import com.wuyou.framework.util.ShiroUtils;
@@ -62,11 +62,11 @@ public class SysUserController extends BaseController {
   }
 
   /**
-   * 列表
+   * 列出
    *
    * @param page 分页对象
    * @param user 查询条件
-   * @return 用户
+   * @return 用户列表
    */
   @RequiresPermissions("system:user:list")
   @ResponseBody
@@ -79,7 +79,7 @@ public class SysUserController extends BaseController {
    * 导出 Excel
    *
    * @param user 查询条件
-   * @return 用户
+   * @return Excel 文件
    */
   @RequiresPermissions("system:user:export")
   @Log(title = LOG_TITLE, businessType = BusinessType.EXPORT)
@@ -135,7 +135,7 @@ public class SysUserController extends BaseController {
     List<SysRole> roles = roleService.listByUserId(userId);
     mmap.put("roles", SysUser.isAdmin(userId) ? roles : roles.stream().filter(r -> !r.isAdmin()).collect(Collectors.toList()));
     mmap.put("posts", postService.listByUser(userId));
-    if (ObjectUtils.greaterThanZero(userId)) {
+    if (NumberUtils.greaterThanZero(userId)) {
       mmap.put("user", userService.getById(userId));
     }
     return PREFIX + "/edit";

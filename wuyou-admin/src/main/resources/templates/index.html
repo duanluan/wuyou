@@ -36,7 +36,7 @@
             <a class="menuItem noactive" title="个人中心" th:href="@{/system/users/profile}">
               <div class="hide" th:text="个人中心"></div>
               <div class="pull-left image">
-                <img th:src="(${#strings.isEmpty(user.avatar)}) ? @{/img/profile.jpg} : @{${user.avatar}}" th:onerror="this.src='img/profile.jpg'" class="img-circle" alt="User Image"
+                <img th:src="(${#strings.isEmpty(user.avatar)}) ? @{/img/profile.jpg} : @{${user.avatar}}" th:onerror="this.src='img/profile.jpg'" class="img-circle" alt="User Image">
               </div>
             </a>
             <div class="pull-left info">
@@ -300,8 +300,9 @@ function applyPath(url) {
 
 $(function () {
   if ($.common.equals("history", mode) && window.performance.navigation.type == 1) {
+    const url = storage.get('publicPath')
     if ($.common.isNotEmpty(url)) {
-      applyPath(storage.get('publicPath'));
+      applyPath(url);
     }
   } else {
     var hash = location.hash;

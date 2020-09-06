@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+  <th:block th:include="include :: header('岗位列表')"/>
+</head>
+<body class="gray-bg">
+<div class="container-div">
+  <div class="row">
+    <div class="col-sm-12 search-collapse">
+      <form class="from-inline select-list" role="form" id="post-form">
+        <div class="form-group">
+          <label class="control-label">岗位编码：</label>
+          <input type="text" class="form-control" name="postCode" placeholder="请输入岗位编码"/>
+        </div>
+        <div class="form-group">
+          <label class="control-label">岗位名称：</label>
+          <input type="text" class="form-control" name="postName" placeholder="请输入岗位名称"/>
+        </div>
+        <div class="form-group">
+          <label class="control-label">岗位状态：</label>
+          <select class="form-control" name="status" th:with="type=${@dict.getType('sys_normal_disable')}">
+            <option value="">所有</option>
+            <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+          </select>
+        </div>
+        <div class="form-control">
+          <button type="button" class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</button>
+          <button type="button" class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="btn-group-sm" id="toolbar" role="group">
+      <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:post:add">
+        <i class="fa fa-plus"></i> 新增
+      </a>
+      <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:post:edit">
+        <i class="fa fa-edit"></i> 修改
+      </a>
+      <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:post:remove">
+        <i class="fa fa-remove"></i> 删除
+      </a>
+      <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:post:export">
+        <i class="fa fa-download"></i> 导出
+      </a>
+    </div>
+
+    <div class="col-sm-12 select-table table-striped">
+      <table id="bootstrap-table"></table>
+    </div>
+  </div>
+</div>
+<th:block th:include="include :: footer"/>
+<script th:inline="javascript">
+const editFlag = [[${@permission.hasPermi('system:post:edit')}]],
+  removeFlag = [[${@permission.hasPermi('system:post:remove')}]],
+  sysNormalDisables = [[${@dict.getType('sys_normal_disable')}]],
+  prefix = ctx + "system/posts";
+
+$(() => {
+  $.table.init({
+    method: 'GET',
+    url: prefix + "/list",
+    createUrl: prefix + "/0",
+    updateUrl: prefix + "/{id}",
+    removeUrl: prefix,
+    exportUrl: prefix + "/export",
+    sortName: "postSort",
+    modalName: "岗位",
+    columns: [{
+      checkbox: true
+    }, {
+      field: 'postId',
+      title: '岗位编号'
+    }, {
+      field: 'postCode',
+      title: '岗位编码',
+      sortable: true
+    }, {
+      field: 'postName',
+      title: '岗位名称',
+      sortable: true
+    }, {
+      field: 'postSort',
+      title: '显示顺序',
+      sortable: true
+    }, {
+      field: 'status',
+      title: '状态',
+      align: 'center',
+      formatter: (value, row, index) => {
+        return $.table.selectDictLabel(sysNormalDisables, value);
+      }
+    }, {
+      field: 'createTime',
+      title: '创建时间',
+      sortable: true
+    }, {
+      title: '操作',
+      align: 'center',
+      formatter: (value, row, index) => {
+        const id = row.postId;
+        return `
+          <a class="btn btn-success btn-xs ${editFlag}" href="javascript:void(0)" onclick="$.operate.edit(${id})"><i class="fa fa-edit"></i> 编辑</a>
+          <a class="btn btn-danger btn-xs '${removeFlag}" href="javascript:void(0)" onclick="$.operate.remove(${id})"><i class="fa fa-remove"></i> 删除</a>
+        `;
+      }
+    }]
+  });
+});
+</script>
+</body>
+</html>

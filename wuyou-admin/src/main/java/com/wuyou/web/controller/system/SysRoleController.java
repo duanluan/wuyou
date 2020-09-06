@@ -6,7 +6,7 @@ import com.wuyou.common.annotation.Log;
 import com.wuyou.common.core.controller.BaseController;
 import com.wuyou.common.core.domain.Result;
 import com.wuyou.common.enums.BusinessType;
-import com.wuyou.common.utils.ObjectUtils;
+import com.wuyou.common.utils.NumberUtils;
 import com.wuyou.common.utils.poi.ExcelUtil;
 import com.wuyou.framework.util.ShiroUtils;
 import com.wuyou.system.domain.SysRole;
@@ -45,12 +45,24 @@ public class SysRoleController extends BaseController {
   @Autowired
   private ISysUserRoleService userRoleService;
 
+  /**
+   * 管理页面
+   *
+   * @return 管理页面路径
+   */
   @RequiresPermissions("system:role:view")
   @GetMapping
-  public String role() {
+  public String list() {
     return PREFIX + "/list";
   }
 
+  /**
+   * 列出
+   *
+   * @param page 分页对象
+   * @param role 查询条件
+   * @return 角色列表
+   */
   @RequiresPermissions("system:role:list")
   @ResponseBody
   @GetMapping("/list")
@@ -58,6 +70,12 @@ public class SysRoleController extends BaseController {
     return Result.success(roleService.page(page, role));
   }
 
+  /**
+   * 导出 Excel
+   *
+   * @param role 查询条件
+   * @return Excel 文件
+   */
   @Log(title = "角色管理", businessType = BusinessType.EXPORT)
   @RequiresPermissions("system:role:export")
   @ResponseBody
@@ -77,7 +95,7 @@ public class SysRoleController extends BaseController {
    */
   @GetMapping("/{roleId}")
   public String edit(@PathVariable("roleId") Long roleId, ModelMap mmap) {
-    if (ObjectUtils.greaterThanZero(roleId)) {
+    if (NumberUtils.greaterThanZero(roleId)) {
       mmap.put("role", roleService.getById(roleId));
     }
     return PREFIX + "/edit";
@@ -101,7 +119,7 @@ public class SysRoleController extends BaseController {
     }
     role.setCreateBy(ShiroUtils.getLoginName());
     ShiroUtils.clearCachedAuthorizationInfo();
-    return custom(roleService.insert(role));
+    return custom(roleService.save(role));
   }
 
   /**

@@ -72,14 +72,6 @@ public interface ISysRoleService extends IService<SysRole> {
   boolean deleteByIds(String ids) throws Exception;
 
   /**
-   * 新增保存角色信息
-   *
-   * @param role 角色信息
-   * @return 结果
-   */
-  boolean insert(SysRole role);
-
-  /**
    * 修改保存角色信息
    *
    * @param role 角色信息

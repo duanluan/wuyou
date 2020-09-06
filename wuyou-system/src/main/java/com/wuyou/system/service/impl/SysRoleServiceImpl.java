@@ -156,19 +156,6 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
   }
 
   /**
-   * 新增保存角色信息
-   *
-   * @param role 角色信息
-   * @return 结果
-   */
-  @Transactional
-  @Override
-  public boolean insert(SysRole role) {
-    // 新增角色信息
-    return super.save(role);
-  }
-
-  /**
    * 修改保存角色信息
    *
    * @param role 角色信息
