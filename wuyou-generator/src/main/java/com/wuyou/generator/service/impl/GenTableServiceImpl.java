@@ -279,6 +279,9 @@ public class GenTableServiceImpl extends ServiceImpl<GenTableMapper, GenTable> i
     List<String> tableColumnNames = tableColumns.stream().map(GenTableColumn::getColumnName).collect(Collectors.toList());
 
     List<GenTableColumn> dbTableColumnList = genTableColumnMapper.listByTableName(tableName);
+    if (CollectionUtils.sizeIsEmpty(dbTableColumnList)) {
+      throw new BusinessException("同步数据失败，原表结构不存在");
+    }
     List<String> dbTableColumnNameList = dbTableColumnList.stream().map(GenTableColumn::getColumnName).collect(Collectors.toList());
 
     dbTableColumnList.forEach(column -> {
