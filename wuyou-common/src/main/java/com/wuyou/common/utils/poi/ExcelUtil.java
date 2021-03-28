@@ -736,7 +736,7 @@ public class ExcelUtil<T> {
             val = DateUtil.getJavaDate((Double) val);
           } else {
             if ((Double) val % 1 > 0) {
-              val = new DecimalFormat("0.00").format(val);
+              val = new BigDecimal(val.toString());
             } else {
               val = new DecimalFormat("0").format(val);
             }
