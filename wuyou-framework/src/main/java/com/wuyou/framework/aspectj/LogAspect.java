@@ -1,5 +1,7 @@
 package com.wuyou.framework.aspectj;
 
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.support.spring.PropertyPreFilters;
 import com.wuyou.common.annotation.Log;
 import com.wuyou.common.enums.BusinessStatus;
 import com.wuyou.common.json.JSON;
@@ -10,6 +12,7 @@ import com.wuyou.framework.util.ShiroUtils;
 import com.wuyou.system.domain.SysOperLog;
 import com.wuyou.system.domain.SysUser;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.Signature;
@@ -32,6 +35,11 @@ import java.util.Map;
 @Aspect
 @Component
 public class LogAspect {
+
+  /**
+   * 排除敏感属性字段
+   */
+  public static final String[] EXCLUDE_PROPERTIES = {"password", "oldPassword", "newPassword", "confirmPassword"};
 
   /**
    * 配置织入点
@@ -140,8 +148,12 @@ public class LogAspect {
    */
   private void setRequestValue(SysOperLog operLog) throws Exception {
     Map<String, String[]> map = ServletUtils.getRequest().getParameterMap();
-    String params = JSON.marshal(map);
-    operLog.setOperParam(StringUtils.substring(params, 0, 2000));
+    if (MapUtils.isNotEmpty(map)) {
+      PropertyPreFilters.MySimplePropertyPreFilter excludefilter = new PropertyPreFilters().addFilter();
+      excludefilter.addExcludes(EXCLUDE_PROPERTIES);
+      String params = JSONObject.toJSONString(map, excludefilter);
+      operLog.setOperParam(StringUtils.substring(params, 0, 2000));
+    }
   }
 
   /**

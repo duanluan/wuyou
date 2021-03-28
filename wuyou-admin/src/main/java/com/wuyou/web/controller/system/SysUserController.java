@@ -210,7 +210,6 @@ public class SysUserController extends BaseController {
    * @param userId 用户 ID
    * @return 重置密码页面路径
    */
-  @Log(title = "重置密码", businessType = BusinessType.UPDATE)
   @RequiresPermissions("system:user:resetPwd")
   @GetMapping("/{userId}/resetPwd")
   public String resetPwd(@PathVariable("userId") Long userId, ModelMap mmap) {
