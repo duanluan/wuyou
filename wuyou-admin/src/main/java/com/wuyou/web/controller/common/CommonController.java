@@ -9,6 +9,7 @@ import com.wuyou.common.utils.file.FileUploadUtils;
 import com.wuyou.common.utils.file.FileUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -47,10 +48,8 @@ public class CommonController {
       }
       String realFileName = System.currentTimeMillis() + fileName.substring(fileName.indexOf("_") + 1);
       String filePath = Global.getDownloadPath() + fileName;
-
-      response.setCharacterEncoding(CHARACTER_ENCODING);
-      response.setContentType("multipart/form-data");
-      response.setHeader("Content-Disposition", "attachment;fileName=" + FileUtils.setFileDownloadHeader(request, realFileName));
+      response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
+      FileUtils.setAttachmentResponseHeader(response, realFileName);
       FileUtils.writeBytes(filePath, response.getOutputStream());
       if (delete) {
         FileUtils.deleteFile(filePath);
@@ -93,10 +92,8 @@ public class CommonController {
     String downloadPath = localPath + StringUtils.substringAfter(resource, Constants.RESOURCE_PREFIX);
     // 下载名称
     String downloadName = StringUtils.substringAfterLast(downloadPath, "/");
-    response.setCharacterEncoding(CHARACTER_ENCODING);
-    response.setContentType("multipart/form-data");
-    response.setHeader("Content-Disposition",
-      "attachment;fileName=" + FileUtils.setFileDownloadHeader(request, downloadName));
+    response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
+    FileUtils.setAttachmentResponseHeader(response, downloadName);
     FileUtils.writeBytes(downloadPath, response.getOutputStream());
   }
 }
