@@ -76,7 +76,6 @@ public interface IGenTableService extends IService<GenTable> {
    * 修改业务
    *
    * @param genTable 业务信息
-   * @return 结果
    */
   void updateGenTable(GenTable genTable);
 
@@ -84,7 +83,6 @@ public interface IGenTableService extends IService<GenTable> {
    * 删除业务信息
    *
    * @param ids 需要删除的数据ID
-   * @return 结果
    */
   void removeByIds(String ids);
 
@@ -116,9 +114,15 @@ public interface IGenTableService extends IService<GenTable> {
    * 生成代码（自定义路径）
    *
    * @param tableName 表名称
-   * @return 数据
    */
   void generatorCode(String tableName);
+
+  /**
+   * 同步数据库
+   *
+   * @param tableName 表名称
+   */
+  void synchDb(String tableName);
 
   /**
    * 批量生成代码（下载方式）

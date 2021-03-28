@@ -18,6 +18,7 @@ import com.wuyou.generator.util.GenUtils;
 import com.wuyou.generator.util.VelocityInitializer;
 import com.wuyou.generator.util.VelocityUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -37,6 +38,7 @@ import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -55,7 +57,6 @@ public class GenTableServiceImpl extends ServiceImpl<GenTableMapper, GenTable> i
   private GenTableMapper genTableMapper;
   @Autowired
   private GenTableColumnMapper genTableColumnMapper;
-
   @Autowired
   private IGenTableColumnService genTableColumnService;
 
@@ -129,7 +130,6 @@ public class GenTableServiceImpl extends ServiceImpl<GenTableMapper, GenTable> i
    * 修改业务
    *
    * @param genTable 业务信息
-   * @return 结果
    */
   @Transactional
   @Override
@@ -145,7 +145,6 @@ public class GenTableServiceImpl extends ServiceImpl<GenTableMapper, GenTable> i
    * 删除业务对象
    *
    * @param ids 需要删除的数据ID
-   * @return 结果
    */
   @Transactional
   @Override
@@ -169,7 +168,7 @@ public class GenTableServiceImpl extends ServiceImpl<GenTableMapper, GenTable> i
         GenUtils.initTable(table, operName);
         if (super.save(table)) {
           // 保存列信息
-          List<GenTableColumn> genTableColumns = genTableColumnMapper.listByName(tableName);
+          List<GenTableColumn> genTableColumns = genTableColumnMapper.listByTableName(tableName);
           for (GenTableColumn column : genTableColumns) {
             GenUtils.initColumnField(column, table);
             genTableColumnMapper.insert(column);
@@ -233,7 +232,6 @@ public class GenTableServiceImpl extends ServiceImpl<GenTableMapper, GenTable> i
    * 生成代码（自定义路径）
    *
    * @param tableName 表名称
-   * @return 数据
    */
   @Override
   public void generatorCode(String tableName) {
@@ -265,6 +263,34 @@ public class GenTableServiceImpl extends ServiceImpl<GenTableMapper, GenTable> i
           throw new BusinessException("渲染模板失败，表名：" + table.getTableName());
         }
       }
+    }
+  }
+
+  /**
+   * 同步数据库
+   *
+   * @param tableName 表名称
+   */
+  @Override
+  @Transactional
+  public void synchDb(String tableName) {
+    GenTable table = genTableMapper.getByName(tableName);
+    List<GenTableColumn> tableColumns = table.getColumns();
+    List<String> tableColumnNames = tableColumns.stream().map(GenTableColumn::getColumnName).collect(Collectors.toList());
+
+    List<GenTableColumn> dbTableColumnList = genTableColumnMapper.listByTableName(tableName);
+    List<String> dbTableColumnNameList = dbTableColumnList.stream().map(GenTableColumn::getColumnName).collect(Collectors.toList());
+
+    dbTableColumnList.forEach(column -> {
+      if (!tableColumnNames.contains(column.getColumnName())) {
+        GenUtils.initColumnField(column, table);
+        genTableColumnMapper.insert(column);
+      }
+    });
+
+    List<Long> columnIdList = tableColumns.stream().filter(column -> !dbTableColumnNameList.contains(column.getColumnName())).map(GenTableColumn::getColumnId).collect(Collectors.toList());
+    if (!CollectionUtils.sizeIsEmpty(columnIdList)) {
+      genTableColumnMapper.deleteBatchIds(columnIdList);
     }
   }
 

@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wuyou.generator.mapper.GenTableColumnMapper">
 
-  <select id="listByName" resultType="com.wuyou.generator.domain.GenTableColumn">
+  <select id="listByTableName" resultType="com.wuyou.generator.domain.GenTableColumn">
     select column_name,
            (case when (is_nullable = 'no' <![CDATA[ && ]]> column_key != 'PRI') then '1' end) as is_required,
            (case when column_key = 'PRI' then '1' else '0' end)                 as is_pk,

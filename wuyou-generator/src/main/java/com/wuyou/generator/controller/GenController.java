@@ -189,8 +189,20 @@ public class GenController extends BaseController {
   @Log(title = "代码生成", businessType = BusinessType.GENCODE)
   @GetMapping("/genCode/{tableName}")
   @ResponseBody
-  public AjaxResult genCode(HttpServletResponse response, @PathVariable("tableName") String tableName) {
+  public AjaxResult genCode(@PathVariable("tableName") String tableName) {
     genTableService.generatorCode(tableName);
+    return AjaxResult.success();
+  }
+
+  /**
+   * 同步数据库
+   */
+  @RequiresPermissions("tool:gen:edit")
+  @Log(title = "代码生成", businessType = BusinessType.UPDATE)
+  @GetMapping("/synchDb/{tableName}")
+  @ResponseBody
+  public AjaxResult synchDb(@PathVariable("tableName") String tableName) {
+    genTableService.synchDb(tableName);
     return AjaxResult.success();
   }
 

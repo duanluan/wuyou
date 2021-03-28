@@ -17,5 +17,5 @@ public interface GenTableColumnMapper extends BaseMapper<GenTableColumn> {
    * @param tableName 表名称
    * @return 列信息
    */
-  List<GenTableColumn> listByName(String tableName);
+  List<GenTableColumn> listByTableName(String tableName);
 }
