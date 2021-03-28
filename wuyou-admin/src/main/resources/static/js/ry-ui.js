@@ -156,8 +156,8 @@ var table = {
       },
       // 请求获取数据后处理回调函数
       responseHandler: function (res) {
-        if (typeof table.options.responseHandler == "function") {
-          table.options.responseHandler(res);
+        if (typeof table.get(this.id).responseHandler == "function") {
+          table.get(this.id).responseHandler(res);
         }
         if (res.code == 0) {
           const records = res.data.records;
