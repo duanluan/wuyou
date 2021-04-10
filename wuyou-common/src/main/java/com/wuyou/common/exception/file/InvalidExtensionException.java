@@ -37,8 +37,7 @@ public class InvalidExtensionException extends FileUploadException {
   }
 
   public static class InvalidImageExtensionException extends InvalidExtensionException {
-
-  private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
     public InvalidImageExtensionException(String[] allowedExtension, String extension, String filename) {
       super(allowedExtension, extension, filename);
@@ -46,8 +45,7 @@ public class InvalidExtensionException extends FileUploadException {
   }
 
   public static class InvalidFlashExtensionException extends InvalidExtensionException {
-
-  private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
     public InvalidFlashExtensionException(String[] allowedExtension, String extension, String filename) {
       super(allowedExtension, extension, filename);
@@ -55,10 +53,17 @@ public class InvalidExtensionException extends FileUploadException {
   }
 
   public static class InvalidMediaExtensionException extends InvalidExtensionException {
-
-  private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
     public InvalidMediaExtensionException(String[] allowedExtension, String extension, String filename) {
+      super(allowedExtension, extension, filename);
+    }
+  }
+
+  public static class InvalidVideoExtensionException extends InvalidExtensionException {
+    private static final long serialVersionUID = 1L;
+
+    public InvalidVideoExtensionException(String[] allowedExtension, String extension, String filename) {
       super(allowedExtension, extension, filename);
     }
   }
