@@ -250,9 +250,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     for (SysMenu tChild : childList) {
       if (hasChild(list, tChild)) {
         // 判断是否有子节点
-        for (SysMenu n : childList) {
-          recursionFn(list, n);
-        }
+        recursionFn(list, tChild);
       }
     }
   }
