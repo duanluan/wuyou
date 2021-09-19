@@ -22,15 +22,15 @@
           <label class="col-sm-3 control-label is-required">菜单类型：</label>
           <div class="col-sm-8">
             <label class="radio-box">
-              <input type="radio" name="menuType" value="M"/>
+              <input type="radio" name="menuType" value="1"/>
               目录
             </label>
             <label class="radio-box">
-              <input type="radio" name="menuType" value="C"/>
+              <input type="radio" name="menuType" value="2"/>
               菜单
             </label>
             <label class="radio-box">
-              <input type="radio" name="menuType" value="F"/>
+              <input type="radio" name="menuType" value="3"/>
               按钮
             </label>
           </div>
@@ -155,19 +155,19 @@
         });
         $('input').on('ifChecked', function (event) {
           var menuType = $(event.target).val();
-          if (menuType == "M") {
+          if (menuType == "1") {
             $("#url").parents(".form-group").hide();
             $("#perms").parents(".form-group").hide();
             $("#icon").parents(".form-group").show();
             $("#target").parents(".form-group").hide();
             $("input[name='visible']").parents(".form-group").show();
-          } else if (menuType == "C") {
+          } else if (menuType == "2") {
             $("#url").parents(".form-group").show();
             $("#perms").parents(".form-group").show();
             $("#icon").parents(".form-group").show();
             $("#target").parents(".form-group").show();
             $("input[name='visible']").parents(".form-group").show();
-          } else if (menuType == "F") {
+          } else if (menuType == "3") {
             $("#url").parents(".form-group").hide();
             $("#perms").parents(".form-group").show();
             $("#icon").parents(".form-group").hide();

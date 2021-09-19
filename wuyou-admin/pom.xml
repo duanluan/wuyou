@@ -99,6 +99,12 @@
       <groupId>com.wuyou</groupId>
       <artifactId>wuyou-generator</artifactId>
     </dependency>
+    <dependency>
+      <groupId>com.wuyou</groupId>
+      <artifactId>wuyou-blog</artifactId>
+      <version>1.1.1</version>
+      <scope>compile</scope>
+    </dependency>
   </dependencies>
 
   <build>

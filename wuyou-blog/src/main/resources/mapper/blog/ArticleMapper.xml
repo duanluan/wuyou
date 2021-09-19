@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuyou.blog.mapper.ArticleMapper">
+
+  <select id="page" resultType="com.wuyou.blog.domain.vo.ArticleListVO">
+    select a.*, su.user_name authorName
+    from article a
+    left join sys_user su on su.user_id = a.author_id
+    where deleted = 0
+    <if test="query.title != null and query.title != ''">
+      and title = #{query.title}
+    </if>
+  </select>
+</mapper>
