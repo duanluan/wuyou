@@ -9,25 +9,8 @@
     <div class="col-sm-12 search-collapse">
       <form class="form-inline select-list" role="form">
         <div class="form-group">
-          <label class="control-label">角色名称：</label>
-          <input type="text" class="form-control" name="roleName" placeholder="请输入角色名称"/>
-        </div>
-        <div class="form-group">
-          <label class="control-label">权限字符：</label>
-          <input type="text" class="form-control" name="roleKey" placeholder="请输入权限字符"/>
-        </div>
-        <div class="form-group">
-          <label class="control-label">角色状态：</label>
-          <select class="form-control" name="status" th:with="type=${@dict.getType('sys_normal_disable')}">
-            <option value="">所有</option>
-            <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
-          </select>
-        </div>
-        <div class="form-group select-time">
-          <label class="control-label">创建时间：</label>
-          <input type="text" class="form-control time-input" id="startTime" placeholder="开始时间" name="params[beginTime]"/>
-          <span>-</span>
-          <input type="text" class="form-control time-input" id="endTime" placeholder="结束时间" name="params[endTime]"/>
+          <label class="control-label">标题名称：</label>
+          <input type="text" class="form-control" name="roleName" placeholder="请输入标题名称"/>
         </div>
         <div class="form-group">
           <button type="button" class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</button>
@@ -61,12 +44,15 @@
 const editFlag = [[${@permission.hasPermi('system:role:edit')}]],
   removeFlag = [[${@permission.hasPermi('system:role:remove')}]],
 
-  prefix = ctx + "system/roles";
-
+  prefix = ctx + "blog/articles";
 
 $(() => {
+  // $.table 是 bootstrap-table 插件定义的一个全局对象
+  // $.table.init 是加载表格的方法
   $.table.init({
+    // 请求类型
     method: 'GET',
+    // 请求数据的地址
     url: prefix + "/list",
     createUrl: prefix + "/0",
     updateUrl: prefix + "/{id}",
@@ -74,35 +60,31 @@ $(() => {
     exportUrl: prefix + "/export",
     sortName: "roleSort",
     modalName: "角色",
+    // 表格的列
     columns: [{
+      // 当前列是否为多选框
       checkbox: true
     }, {
-      field: 'roleId',
-      title: '角色编号'
+      // 返回数据的对象的属性
+      field: 'id',
+      // 列名
+      title: '编号'
     }, {
-      field: 'roleName',
-      title: '角色名称',
-      sortable: true
+      field: 'title',
+      title: '标题'
     }, {
-      field: 'roleKey',
-      title: '权限字符',
-      sortable: true
+      field: 'content',
+      title: '内容'
     }, {
-      field: 'roleSort',
-      title: '显示顺序',
-      sortable: true
+      field: 'authorName',
+      title: '作者名称'
     }, {
-      visible: editFlag == 'hidden' ? false : true,
-      title: '角色状态',
-      align: 'center',
-      formatter: (value, row, index) => {
-        return statusTools(row);
-      }
+      field: 'abstractContent',
+      title: '摘要'
     }, {
       field: 'createTime',
-      title: '创建时间',
-      sortable: true
-    }, {
+      title: '创建时间'
+    },{
       title: '操作',
       align: 'center',
       formatter: (value, row, index) => {
