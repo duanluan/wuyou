@@ -230,6 +230,8 @@
     <module>wuyou-quartz</module>
     <module>wuyou-generator</module>
     <module>wuyou-common</module>
+
+    <module>wuyou-blog</module>
   </modules>
   <packaging>pom</packaging>
 
