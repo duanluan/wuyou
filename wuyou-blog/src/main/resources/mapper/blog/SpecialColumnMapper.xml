@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuyou.blog.mapper.SpecialColumnMapper">
+
+
+  <select id="page" resultType="com.wuyou.blog.domain.vo.SpecialColumnListVO">
+    select * from special_column where deleted = 0
+  </select>
+</mapper>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
-  <th:block th:include="include :: header('文章列表')"/>
+  <th:block th:include="include :: header('专栏列表')"/>
 </head>
 <body class="gray-bg">
 <div class="container-div">
@@ -9,8 +9,8 @@
     <div class="col-sm-12 search-collapse">
       <form class="form-inline select-list" role="form">
         <div class="form-group">
-          <label class="control-label">标题名称：</label>
-          <input type="text" class="form-control" name="roleName" placeholder="请输入标题名称"/>
+          <label class="control-label">专栏名称：</label>
+          <input type="text" class="form-control" name="roleName" placeholder="请输入专栏名称"/>
         </div>
         <div class="form-group">
           <button type="button" class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</button>
@@ -44,7 +44,7 @@
 const editFlag = [[${@permission.hasPermi('system:role:edit')}]],
   removeFlag = [[${@permission.hasPermi('system:role:remove')}]],
 
-  prefix = ctx + "blog/articles";
+  prefix = ctx + "blog/specialColumns";
 
 $(() => {
   // $.table 是 bootstrap-table 插件定义的一个全局对象
@@ -70,17 +70,11 @@ $(() => {
       // 列名
       title: '编号'
     }, {
-      field: 'title',
-      title: '标题'
+      field: 'name',
+      title: '名称'
     }, {
-      field: 'content',
-      title: '内容'
-    }, {
-      field: 'authorName',
-      title: '作者名称'
-    }, {
-      field: 'abstractContent',
-      title: '摘要'
+      field: 'desc',
+      title: '描述'
     }, {
       field: 'createTime',
       title: '创建时间'
